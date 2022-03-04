@@ -13,7 +13,7 @@ build-job:       # This job runs in the build stage, which runs first.
       - 'echo | dotnet --version'
   script:
     - echo "Building the application"
-    - dotnet build /MediaHub/MediaHub.sln
+    - dotnet build MediaHub/MediaHub.sln
 
 unit-test-job:   
   stage: test 
