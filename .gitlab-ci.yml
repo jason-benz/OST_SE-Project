@@ -1,0 +1,27 @@
+image: mcr.microsoft.com/dotnet/sdk:6.0
+
+stages:          # List of stages for jobs, and their order of execution
+  - build
+  - test
+  - deploy
+
+build-job:       # This job runs in the build stage, which runs first.
+  stage: build
+  only:
+      - main
+  before_script:
+      - 'echo | dotnet --version'
+  script:
+    - echo "Building the application"
+    - dotnet build 
+
+unit-test-job:   
+  stage: test 
+  script:
+    - echo "Currently there are no unti testings in place."
+
+deploy-job:  
+  stage: deploy 
+  script:
+    - echo "Currently there is no automatic deployment"
+
