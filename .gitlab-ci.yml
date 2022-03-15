@@ -23,5 +23,7 @@ unit-test-job:
 deploy-job:  
   stage: deploy 
   script:
-    - echo "Currently there is no automatic deployment"
+    - echo "Preparing the deployment to the test server"
+  only:
+    - main
 
