@@ -7,13 +7,16 @@ stages:          # List of stages for jobs, and their order of execution
 
 build-job:       # This job runs in the build stage, which runs first.
   stage: build
+  image: 
   only:
-    - main
+    - cd
   before_script:
     - 'echo | dotnet --version'
   script:
     - echo "Building the application"
     - dotnet build MediaHub/MediaHub.sln
+    - echo "Preparing Project"
+    - dotnet publish MediaHub/MediaHub.sln -c release
   artifacts:
     paths:
       - "MediaHub/bin/"
@@ -24,17 +27,14 @@ unit-test-job:
   script:
     - echo "Currently there are no unti testings in place."
 
-deploy-job:  
-  stage: deploy 
+build-image-job:  
+  stage: deploy
+  image: docker:latest 
   artifacts:
     paths:
       - src/App/bin/release
   script:
-    - echo "Preparing the deployment to the test server"
-    - echo "Loging into docker registry"
     - docker login registry.gitlab.ost.ch:45023 -u $CD_USERNAME_REGISTRY -p $CD_KEY_GITLAB
-    - echo "Preparing Project"
-    - dotnet publish MediaHub/MediaHub.sln -c release
     - docker build -f ./MediaHub/Dockerfile -t registry.gitlab.ost.ch:45023/seproj/2022-fs/g04-mediahub/code/mediahub .
     - docker push registry.gitlab.ost.ch:45023/seproj/2022-fs/g04-mediahub/code/mediahub
     - docker logout
