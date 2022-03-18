@@ -34,7 +34,7 @@ build-image-job:
     paths:
       - src/App/bin/release
   script:
-    - docker login -u $CD_USERNAME_REGISTRY -p $CD_KEY_GITLAB registry.gitlab.ost.ch:45023
+    - echo "$CD_KEY_GITLAB" | docker login --username $CD_USERNAME_REGISTRY --password-stdin registry.gitlab.ost.ch:45023
     - docker build -f ./MediaHub/Dockerfile -t registry.gitlab.ost.ch:45023/seproj/2022-fs/g04-mediahub/code/mediahub .
     - docker push registry.gitlab.ost.ch:45023/seproj/2022-fs/g04-mediahub/code/mediahub
     - docker logout
