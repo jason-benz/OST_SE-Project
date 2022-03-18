@@ -8,9 +8,9 @@ stages:          # List of stages for jobs, and their order of execution
 build-job:       # This job runs in the build stage, which runs first.
   stage: build
   only:
-      - main
+    - main
   before_script:
-      - 'echo | dotnet --version'
+    - 'echo | dotnet --version'
   script:
     - echo "Building the application"
     - dotnet build MediaHub/MediaHub.sln
@@ -39,5 +39,5 @@ deploy-job:
     - docker push registry.gitlab.ost.ch:45023/seproj/2022-fs/g04-mediahub/code/mediahub
     - docker logout
   only:
-    - cicd
+    - cd
 
