@@ -38,8 +38,6 @@ deploy-job:
     - docker build -f ./MediaHub/Dockerfile -t registry.gitlab.ost.ch:45023/seproj/2022-fs/g04-mediahub/code/mediahub .
     - docker push registry.gitlab.ost.ch:45023/seproj/2022-fs/g04-mediahub/code/mediahub
     - docker logout
-  dependencies:
-    - build
   only:
     - cicd
 
