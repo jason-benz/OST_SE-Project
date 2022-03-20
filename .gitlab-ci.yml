@@ -25,7 +25,7 @@ unit-test-job:
     - echo "Currently there are no unti testings in place."
 
 docker-build:  
-  stage: build
+  stage: deploy
   image: docker:latest 
   services:
     - docker:dind
