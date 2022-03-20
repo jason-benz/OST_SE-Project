@@ -27,6 +27,8 @@ unit-test-job:
 build-image-job:  
   stage: deploy
   image: docker:latest 
+  services:
+    - docker:dind
   artifacts:
     paths:
       - src/App/bin/release
