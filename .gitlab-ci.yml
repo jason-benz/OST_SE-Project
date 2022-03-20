@@ -1,6 +1,6 @@
 image: mcr.microsoft.com/dotnet/sdk:6.0
 
-stages:          # List of stages for jobs, and their order of execution
+stages:
   - build
   - test
   - deploy
@@ -31,7 +31,7 @@ build-image-job:
     paths:
       - src/App/bin/release
   before_script:
-    - docker login -u "$CD_USERNAME_REGISTRY" -p "$CD_KEY_GITLAB"" registry.gitlab.ost.ch:45023     
+    - docker login -u "$CD_USERNAME_REGISTRY" -p "$CD_KEY_GITLAB" registry.gitlab.ost.ch:45023     
   script:
     - echo "$CD_KEY_GITLAB" | 
     - docker build -f ./MediaHub/Dockerfile -t registry.gitlab.ost.ch:45023/seproj/2022-fs/g04-mediahub/code/mediahub .
