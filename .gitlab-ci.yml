@@ -36,7 +36,7 @@ docker-build:
     - docker info
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
-    - docker build --pull -f ./MediaHub/Dockerfile -t registry.gitlab.ost.ch:45023/seproj/2022-fs/g04-mediahub/code/mediahub .
+    - docker build --pull -f ./MediaHub/MediaHub/Dockerfile -t registry.gitlab.ost.ch:45023/seproj/2022-fs/g04-mediahub/code/mediahub .
     - docker push registry.gitlab.ost.ch:45023/seproj/2022-fs/g04-mediahub/code/mediahub
     - docker logout
   only:
