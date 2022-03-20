@@ -24,8 +24,8 @@ unit-test-job:
   script:
     - echo "Currently there are no unti testings in place."
 
-build-image-job:  
-  stage: deploy
+docker-build:  
+  stage: build
   image: docker:latest 
   services:
     - docker:dind
@@ -33,10 +33,9 @@ build-image-job:
     paths:
       - src/App/bin/release
   before_script:
-    - docker login -u "$CD_USERNAME_REGISTRY" -p "$CD_KEY_GITLAB" registry.gitlab.ost.ch:45023     
+    - docker login -u "$CD_USERNAME_REGISTRY" -p "$CD_KEY_GITLAB" CI_REGISTRY
   script:
-    - echo "$CD_KEY_GITLAB" | 
-    - docker build -f ./MediaHub/Dockerfile -t registry.gitlab.ost.ch:45023/seproj/2022-fs/g04-mediahub/code/mediahub .
+    - docker build --pull -f ./MediaHub/Dockerfile -t registry.gitlab.ost.ch:45023/seproj/2022-fs/g04-mediahub/code/mediahub .
     - docker push registry.gitlab.ost.ch:45023/seproj/2022-fs/g04-mediahub/code/mediahub
     - docker logout
   only:
