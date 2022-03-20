@@ -34,7 +34,7 @@ docker-build:
       - src/App/bin/release
   before_script:
     - docker info
-    - echo $CD_KEY_GITLAB | docker login -u $CD_USERNAME_REGISTRY --password-stdin CI_REGISTRY
+    - echo $CD_KEY_GITLAB | docker login -username $CD_USERNAME_REGISTRY --password-stdin $CI_REGISTRY
   script:
     - docker build --pull -f ./MediaHub/Dockerfile -t registry.gitlab.ost.ch:45023/seproj/2022-fs/g04-mediahub/code/mediahub .
     - docker push registry.gitlab.ost.ch:45023/seproj/2022-fs/g04-mediahub/code/mediahub
