@@ -29,7 +29,10 @@ docker-build:
   image: docker:latest 
   services:
     - docker:dind
-  artifacts:
+      alias: dockerdaemon
+  variables:
+    DOCKER_HOST: tcp://dockerdaemon:2375/   
+  artifacts: 
     paths:
       - src/App/bin/release
   before_script:
