@@ -38,4 +38,4 @@ docker-build:
     - docker push registry.gitlab.ost.ch:45023/seproj/2022-fs/g04-mediahub/code/mediahub
     - docker logout
   only:
-    - cd
+    - main
