@@ -40,3 +40,17 @@ docker-build:
   only:
     - cd
 
+update_deployment:
+  stage: deploy
+  image: ubuntu:latest
+  before_script:
+    - echo "Ready to connect to server and update images"
+    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - echo "$CD_SSH_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+  script:
+    - ssh root@sifsv-80057.i.ost.ch
+    - cd /tmp/
+    - mkdir test
