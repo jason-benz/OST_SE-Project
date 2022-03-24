@@ -60,4 +60,4 @@ sonarqube-check:
       - "dotnet sonarscanner end /d:sonar.login=\"$SONAR_TOKEN\""
   allow_failure: true
   only:
-    - feature_sonarqube # or the name of your main branch
+    - main # or the name of your main branch
