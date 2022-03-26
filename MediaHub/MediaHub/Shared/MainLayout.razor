@@ -1,4 +1,6 @@
-﻿@inherits LayoutComponentBase
+﻿@using MediaHub.Services
+@inherits LayoutComponentBase
+@inject IdentityService _identityService
 
 <PageTitle>MediaHub</PageTitle>
 
@@ -18,3 +20,13 @@
         </article>
     </main>
 </div>
+@code
+{
+    [CascadingParameter]
+    private Task<AuthenticationState> _AuthenticationState { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _identityService._AuthenticationState = await _AuthenticationState;
+    }
+}
