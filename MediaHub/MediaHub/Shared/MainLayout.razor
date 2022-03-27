@@ -23,10 +23,11 @@
 @code
 {
     [CascadingParameter]
-    private Task<AuthenticationState> _AuthenticationState { get; set; }
+    private Task<AuthenticationState> AuthenticationState { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        _identityService._AuthenticationState = await _AuthenticationState;
+        
+        _identityService.AuthenticationState = await AuthenticationState;
     }
 }

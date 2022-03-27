@@ -8,16 +8,20 @@ namespace MediaHub.Services;
 
 public class IdentityService : IIdentityService
 {
-    public AuthenticationState _AuthenticationState { get; set; }
+    public AuthenticationState AuthenticationState { private get; set; }
     
     public string? LoginName
     {
-        get => _AuthenticationState.User.Identity?.Name;
+        get => AuthenticationState.User.Identity?.Name;
     }
 
     public bool IsAuthenticated
     {
-        get => _AuthenticationState.User.Identity.IsAuthenticated;
+        get => AuthenticationState.User.Identity != null && AuthenticationState.User.Identity.IsAuthenticated;
     }
 
+    public string? UserId
+    {
+        get => AuthenticationState.User.FindFirst(c => c.Type.Contains("nameidentifier"))?.Value;
+    }
 }
