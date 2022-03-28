@@ -9,6 +9,7 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["MediaHub/MediaHub.csproj", "MediaHub/"]
 RUN dotnet restore "MediaHub/MediaHub.csproj"
+RUN dotnet user-secrets set SendGridKey "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" --project "MediaHub/MediaHub.csproj"
 COPY . .
 WORKDIR "/src/MediaHub"
 RUN dotnet build "MediaHub.csproj" -c Release -o /app/build
