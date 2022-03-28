@@ -11,7 +11,7 @@ build-job:       # This job runs in the build stage, which runs first.
     - 'echo | dotnet --version'
   script:
     - echo "Building the application"
-    - dotnet user-secrets set SendGridKey $CI_SENDGRID_KEY 
+    - dotnet user-secrets set SendGridKey $CI_SENDGRID_KEY --project "MediaHub/MediaHub/MediaHub.csproj"
     - dotnet build MediaHub/MediaHub.sln
     - echo "Preparing Project"
     - dotnet publish MediaHub/MediaHub.sln -c release
