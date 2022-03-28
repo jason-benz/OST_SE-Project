@@ -37,5 +37,3 @@ docker-build:
     - docker build --pull -f ./MediaHub/Dockerfile -t registry.gitlab.ost.ch:45023/seproj/2022-fs/g04-mediahub/code/mediahub .
     - docker push registry.gitlab.ost.ch:45023/seproj/2022-fs/g04-mediahub/code/mediahub
     - docker logout
-  only:
-    - main
