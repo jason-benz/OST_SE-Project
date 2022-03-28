@@ -11,6 +11,7 @@ build-job:       # This job runs in the build stage, which runs first.
     - 'echo | dotnet --version'
   script:
     - echo "Building the application"
+    - dotnet user-secrets set SendGridKey $CI_SENDGRID_KEY 
     - dotnet build MediaHub/MediaHub.sln
     - echo "Preparing Project"
     - dotnet publish MediaHub/MediaHub.sln -c release
@@ -34,7 +35,6 @@ docker-build:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
     - cd ./MediaHub
-    - dotnet user-secrets set SendGridKey $CI_SENDGRID_KEY 
     - docker build --pull -f ./MediaHub/Dockerfile -t registry.gitlab.ost.ch:45023/seproj/2022-fs/g04-mediahub/code/mediahub .
     - docker push registry.gitlab.ost.ch:45023/seproj/2022-fs/g04-mediahub/code/mediahub
     - docker logout
