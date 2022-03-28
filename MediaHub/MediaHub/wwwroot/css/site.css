@@ -62,3 +62,7 @@ a, .btn-link {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+#mySidebar {
+    background-image: linear-gradient(180deg, #000096 0%, rgba(0, 0, 100, 0) 100%);
+}
