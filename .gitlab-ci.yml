@@ -51,7 +51,7 @@ deploy-application:
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
   script:
-    - ssh -o StrictHostKeyChecking=no root@152.96.80.57 "/tmp/code/server-deployment.sh; logout;"
+    - ssh -o StrictHostKeyChecking=no root@152.96.80.57 "/tmp/code/server-deployment.sh; exit;"
 
 
 sonarqube-check:
