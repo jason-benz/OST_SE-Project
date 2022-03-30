@@ -24,6 +24,7 @@ build_container () {
 
 update_running_container () {
     echo "Starting to update current deployment, downtime will occur"
+    export PATH="$PATH:$HOME/.dotnet/tools/"
     docker-compose down
     cd ${CODEFOLDER}
     docker-compose up -d
