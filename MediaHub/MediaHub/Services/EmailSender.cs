@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Options;
 using SendGrid;
@@ -12,19 +13,23 @@ public class EmailSender : IEmailSender
     public EmailSender(IOptions<AuthMessageSenderOptions> optionsAccessor,
         ILogger<EmailSender> logger)
     {
-        Options = optionsAccessor.Value;
         _logger = logger;
+        IConfigurationRoot configuration = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", false, true)
+            .Build();
+        SendGridKey = configuration.GetConnectionString("SendGrid");
     }
 
-    public AuthMessageSenderOptions Options { get; } //Set with Secret Manager.
+    public string SendGridKey { get; } //Set with Secret Manager.
 
     public async Task SendEmailAsync(string toEmail, string subject, string message)
     {
-        if (string.IsNullOrEmpty(Options.SendGridKey))
+        if (string.IsNullOrEmpty(SendGridKey))
         {
             throw new Exception("Null SendGridKey");
         }
-        await Execute(Options.SendGridKey, subject, message, toEmail);
+        await Execute(SendGridKey, subject, message, toEmail);
     }
 
     public async Task Execute(string apiKey, string subject, string message, string toEmail)
