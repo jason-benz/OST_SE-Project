@@ -1,6 +1,7 @@
 ﻿@using MediaHub.Services
 @inherits LayoutComponentBase
 @inject IdentityService _identityService
+@inject NavigationManager _navigationManager
 
 <PageTitle>MediaHub</PageTitle>
 
@@ -25,12 +26,12 @@
     <NotAuthorized>
         <div class="page">
             <main>
-                <article class="content px-4">
-                @Body
-                <LoginDisplay />
-                </article>
+                <div class="top-row px-4 auth">
+                    <LoginDisplay />
+                </div>
             </main>
         </div>
+        <!--@NavigateToLogin()-->
     </NotAuthorized>
 </AuthorizeView>
 
@@ -41,7 +42,12 @@
 
     protected override async Task OnInitializedAsync()
     {
-        
         _identityService.AuthenticationState = await AuthenticationState;
+    }
+    
+    private bool NavigateToLogin()
+    {
+        _navigationManager.NavigateTo("Identity/Account/Authentication");
+        return true;
     }
 }
