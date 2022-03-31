@@ -24,14 +24,7 @@
         </div>
     </Authorized>
     <NotAuthorized>
-        <div class="page">
-            <main>
-                <div class="top-row px-4 auth">
-                    <LoginDisplay />
-                </div>
-            </main>
-        </div>
-        <!--@NavigateToLogin()-->
+        @{_navigationManager.NavigateTo("Identity/Account/Login");}
     </NotAuthorized>
 </AuthorizeView>
 
@@ -44,10 +37,5 @@
     {
         _identityService.AuthenticationState = await AuthenticationState;
     }
-    
-    private bool NavigateToLogin()
-    {
-        _navigationManager.NavigateTo("Identity/Account/Authentication");
-        return true;
-    }
+
 }

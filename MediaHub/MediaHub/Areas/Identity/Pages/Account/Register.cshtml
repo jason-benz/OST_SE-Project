@@ -1,9 +1,18 @@
 ﻿@page
 @model RegisterModel
 
-<div class="col-md-4">
-        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>Create a new account.</h2>
+<div class="centeredFront">
+    <a href="~/"><img src="../../../logo_light.png" /></a>
+
+    <h1>Meet, share, exchange!</h1>
+    <h2>Meet people with similar Book or Movie preferences, share your opinion and exchange with others!</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <section>
+        <form id="registerForm" class="shadow-box" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <h1>Register</h1>
+            <h2>Create a new account</h2>
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-floating">
@@ -23,4 +32,9 @@
             </div>
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
         </form>
+        </section>
+        <h1>or</h1>
+        <h2><a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Login with existing user</a></h2>
+    </div>
+</div>
 </div>
