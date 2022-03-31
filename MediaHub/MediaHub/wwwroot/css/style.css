@@ -80,6 +80,10 @@ a, .btn-link {
     column-gap: 50px;
 }
 
+.col-md-4 a{
+    color: rgb(0, 0, 150);
+}
+
 .container {
     max-width: 1440px;
 }
@@ -102,6 +106,8 @@ a, .btn-link {
 
 .btn-primary {
     margin-top: 15px;
+    background-color: rgb(0, 0, 150);
+    border-color: rgb(0, 0, 100);
 }
 
 .centeredFront .checkbox > .form-label {
