@@ -31,10 +31,13 @@
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+            <div class="login-links">
+                <p>
+                    <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Login with existing user</a>
+                </p>
+            </div>
         </form>
         </section>
-        <h1>or</h1>
-        <h2><a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Login with existing user</a></h2>
     </div>
 </div>
 </div>

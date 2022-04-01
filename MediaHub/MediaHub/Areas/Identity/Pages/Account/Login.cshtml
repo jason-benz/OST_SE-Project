@@ -43,11 +43,12 @@
                     <p>
                         <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
                     </p>
+                    <p>
+                        Don't have an account? <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Sign up!</a>
+                    </p>
                 </div>
             </form>
         </section>
-        <h1>or</h1>
-        <h2><a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a></h2>
     </div>
 </div>
 
