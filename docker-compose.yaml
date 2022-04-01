@@ -1,16 +1,18 @@
 version: '3.4'
 
 services:
-
   mediahub:
-    image: registry.gitlab.ost.ch:45023/seproj/2022-fs/g04-mediahub/code/mediahub
+    image: mediahubapplication
+    container_name: mediahub
     ports:
       - 80:80
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
     depends_on:
         - db
-        
   db:
     image: "mcr.microsoft.com/mssql/server:2019-latest"
+    container_name: db
     ports:
       - 1433:1433
     environment:
