@@ -25,7 +25,7 @@ unit-test-job:
     - echo "Currently there are no unti testings in place."
 
 docker-build:  
-  stage: deploy
+  stage: build
   image: docker:latest 
   services:
     - docker:dind 
@@ -39,6 +39,20 @@ docker-build:
     - docker logout
   only:
     - main
+
+deploy-application:
+  stage: deploy
+  image: alpine
+  when: manual
+  before_script:
+    - apk add openssh-client
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+  script:
+    - ssh -o StrictHostKeyChecking=no root@152.96.80.57 "/tmp/code/server-deployment.sh; exit;"
+
 
 sonarqube-check:
   stage: deploy
