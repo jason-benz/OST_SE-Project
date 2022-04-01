@@ -27,7 +27,7 @@ builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuth
 
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddSingleton<IdentityService>();
-builder.Services.AddTransient<IEmailSender, EmailSender>();
+//builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 var app = builder.Build();
 
