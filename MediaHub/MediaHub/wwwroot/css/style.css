@@ -115,6 +115,18 @@ a, .btn-link {
     margin-bottom: 0;
 }
 
+.navbar {
+    flex-wrap: nowrap;
+}
+
+.logo-small {
+    width: 200px;
+}
+
+#mySidebar > .top-row {
+    background-color: rgb(255 255 255 / 50%);
+}
+
 @media (min-width: 855px) {
     #account, #registerForm {
         width: min(48vw, 500px);
