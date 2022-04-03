@@ -1,0 +1,48 @@
+@page "/Media"
+
+<PageTitle>Media</PageTitle>
+@using MediaHub.Services
+@using MediaHub.Data.Model
+@using Microsoft.AspNetCore.Routing.Matching
+@inject MediaService MediaServiceInstance 
+
+<h3>Media</h3>
+
+@if (movies == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <th>Artwork</th>
+            <th>Title</th>
+            <th>Writer</th>
+            <th>Year</th>
+            <th>Rating</th>
+        </thead>
+        <tbody>
+        @foreach (var movie in movies)
+        {
+            <tr>
+                <td><img width="100px" src="@movie.PosterUrl"></td>
+                <td>@movie.Title</td>
+                <td></td>
+                <td>@movie.ReleaseDate</td>
+                <td>@movie.Rating</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+@code
+{
+    private List<IMovie> movies;
+
+    protected override async Task OnInitializedAsync()
+    {
+        movies = await MediaServiceInstance.GetMoviesAsync();
+    }
+    
+}
