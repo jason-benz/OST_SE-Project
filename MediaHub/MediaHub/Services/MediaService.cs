@@ -9,7 +9,7 @@ public class MediaService : IMediaService
     {
         List<IMovie> movies = new List<IMovie>();
         // read data from other service 
-        movies = await _api.Search("Spiderman");
+        movies = await _api.Search(DateTime.Now.Year.ToString());
         return movies;
     }
 
