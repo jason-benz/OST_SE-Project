@@ -2,6 +2,6 @@
 
 public interface IMediaApi
 {
-    public IMovieTMDB GetMovieById(int id);
-    public List<IMovieTMDB> Search(string query);
+    public Task<IMovie> GetMovieById(int id);
+    public Task<List<IMovie>> Search(string query);
 }
