@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MediaHub.Data.Persistency
+namespace MediaHub.Data.Model
 {
     [Table("UserProfile")]
     public class UserProfile

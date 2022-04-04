@@ -1,8 +1,8 @@
-﻿using MediaHub.Data.Persistency;
+﻿using MediaHub.Data.Model;
 
-namespace MediaHub.Services
+namespace MediaHub.Data.ViewModel
 {
-    public interface IUserProfileService
+    public interface IUserProfileViewModel
     {
         public UserProfile GetUserProfileById(string userId);
 
