@@ -6,5 +6,5 @@ public interface IMediaService
 {
     public IMovie GetMovie(int id);
 
-    public Task<List<IMovie>> GetMoviesAsync();
+    public Task<List<IMovie>> GetMoviesAsync(string searchString);
 }
