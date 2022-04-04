@@ -1,7 +1,7 @@
 ﻿@page "/editUserProfile"
 
 @using MediaHub.Services
-@inject UserProfileService _userProfileServiceInstance
+@inject IUserProfileServiceInstance _userProfileServiceInstance
 @inject IdentityService _identityServiceInstance
 
 <h3>Edit your profile</h3>
@@ -21,11 +21,16 @@
         <textarea id="bio" class="form-control" maxlength="255" @bind="_userProfile.Biography" @bind:event="oninput">@_userProfile.Biography</textarea>
     </div>
     <br />
-    <button type="submit" onclick="@SaveChanges" class="btn btn-primary">Save changes</button>
+    <button type="button" onclick="@SaveChanges" class="btn btn-primary">Save changes</button>
+    @if (_showSaveChangesHint)
+    {
+        <label id="saveChangesHint">Changes were saved successfully</label>
+    }
 </form>
 
 @code {
     private Data.Persistency.UserProfile _userProfile;
+    private bool _showSaveChangesHint = false;
 
     protected override void OnInitialized()
     {
@@ -35,7 +40,9 @@
 
     private async Task<int> SaveChanges()
     {
-        return await _userProfileServiceInstance.UpdateUserProfileAsync(_userProfile);
+        var result = await _userProfileServiceInstance.UpdateUserProfileAsync(_userProfile);
+        _showSaveChangesHint = true;
+        return result;
     }
 
     private async Task UploadProfilePicture(InputFileChangeEventArgs e)
