@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaHub", "MediaHub\MediaHub.csproj", "{4A8ADF5E-E8B2-4749-B90F-5645BF99038E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediaHub", "MediaHub\MediaHub.csproj", "{4A8ADF5E-E8B2-4749-B90F-5645BF99038E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaHub.Data", "MediaHub.Data\MediaHub.Data.csproj", "{544F3CA0-0B86-4933-B970-3F7020979D84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediaHub.Data", "MediaHub.Data\MediaHub.Data.csproj", "{544F3CA0-0B86-4933-B970-3F7020979D84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaHub.Test", "MediaHub.Test\MediaHub.Test.csproj", "{394BA403-2734-42B4-A7B4-00DE10BDAF15}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediaHub.Test", "MediaHub.Test\MediaHub.Test.csproj", "{394BA403-2734-42B4-A7B4-00DE10BDAF15}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{B69EFB22-3F0D-4990-8E6E-2A186FDFED0B}"
 EndProject
