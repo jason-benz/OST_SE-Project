@@ -18,6 +18,8 @@ The normal development mode does requrie the developer to start a dockerized Mic
 
 To start the SQL Server container the first time the following command can be used. The container does also expose the SQL ports onto the local machine. This enables the developer to connect to localhost:1433 do administrate the SQL Server and it's databases. For this various tools can be used.
 
+**Attention:** under Windows the single quots must be replaced with double quotes!
+
 ```
 docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=SA1234567!s' -p 1433:1433 -d --name db mcr.microsoft.com/mssql/server:2019-latest
 ```
@@ -37,8 +39,8 @@ The deployment can only be triggered from the main branch and needs to be trigge
 
 <img alt="Manual Pipeline" src="img/pipeline.png">
 
-### Deploymen Script on Server
+### Deployment Script on Server
 
 The deployment does trigger an SSH connection to the server where the server does update the code from the main branch of the repository. Afterwards a new docker image is build and the old image/running container is destroyed. The database is persistent and does not get replaced in the process of a new deployment (The bash script lays under: ./server-deployment.sh).
 
-Atention! The deployment does exchange the appsettings.json file for an adjusted version with another connection string to the database.
+**Attention:** The deployment does exchange the appsettings.json file for an adjusted version with another connection string to the database.
