@@ -6,9 +6,9 @@
 @using Microsoft.AspNetCore.Routing.Matching
 @inject MediaService MediaServiceInstance 
 
-<h3 class="center-heading">Search for Media</h3>
+<h1 class="center-heading">Search for Media</h1>
 
-<form class="media-search center" @onsubmit=SearchCall>
+<form class="media-search" @onsubmit=SearchCall>
     <input class="form-control" type="search" placeholder="Search for Media ..." @bind="searchString"/>
     <button type="submit" class="btn btn-primary">Search</button>
 </form>

@@ -13,8 +13,7 @@ public class MediaService : IMediaService
         {
             searchString = DateTime.Now.Year.ToString();
         }
-        movies = await _api.Search(searchString);
-        return movies;
+        return await _api.Search(searchString);
     }
 
     public IMovie GetMovie(int id)
