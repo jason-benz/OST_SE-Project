@@ -5,11 +5,15 @@ namespace MediaHub.Services;
 public class MediaService : IMediaService
 {
     private TmdbApi _api = new TmdbApi();
-    public async Task<List<IMovie>> GetMoviesAsync()
+    public async Task<List<IMovie>> GetMoviesAsync(string searchString)
     {
         List<IMovie> movies = new List<IMovie>();
         // read data from other service 
-        movies = await _api.Search(DateTime.Now.Year.ToString());
+        if(searchString == "")
+        {
+            searchString = DateTime.Now.Year.ToString();
+        }
+        movies = await _api.Search(searchString);
         return movies;
     }
 

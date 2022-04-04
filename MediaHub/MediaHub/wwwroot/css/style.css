@@ -127,6 +127,30 @@ a, .btn-link {
     background-color: rgb(255 255 255 / 50%);
 }
 
+.media-search {
+    display: flex;
+    align-items: center;
+    max-width: 60rem;
+}
+
+.media-search button{
+    margin-top: 0;
+}
+
+.search-result-box {
+    margin: auto;
+    width: 50vw;
+    background: #F0F0F0;
+}
+
+.center {
+    margin: auto;
+}
+
+.center-heading {
+    text-align: center;
+}
+
 @media (min-width: 855px) {
     #account, #registerForm {
         width: min(48vw, 500px);
