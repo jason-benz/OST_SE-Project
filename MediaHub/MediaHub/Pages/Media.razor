@@ -23,7 +23,7 @@
                 <tr>
                 <th>Artwork</th>
                 <th>Title</th>
-                <th>Writer</th>
+                <th>Genres</th>
                 <th>Year</th>
                 <th>Rating</th>
                 </tr>
@@ -34,7 +34,7 @@
             <tr>
                 <td><img width="100px" src="@movie.PosterUrl"></td>
                 <td>@movie.Title</td>
-                <td></td>
+                <td>@string.Join(", ", @movie.Genres)</td>
                 <td>@movie.ReleaseDate</td>
                 <td>@movie.Rating</td>
             </tr>
@@ -64,5 +64,4 @@
 
     private string searchString { get; set; } = "";
 
-    
 }
