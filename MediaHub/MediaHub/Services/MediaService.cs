@@ -16,10 +16,8 @@ public class MediaService : IMediaService
         return await _api.Search(searchString);
     }
 
-    public IMovie GetMovie(int id)
+    public async Task<IMovie> GetMovie(int id)
     {
-        // get movie from service
-
-        return null;
+        return await _api.GetMovieById(id);
     }
 }
