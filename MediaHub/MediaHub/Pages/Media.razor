@@ -1,4 +1,4 @@
-@page "/Media"
+@page "/media"
 
 <PageTitle>Media</PageTitle>
 @using MediaHub.Services
@@ -6,22 +6,28 @@
 @using Microsoft.AspNetCore.Routing.Matching
 @inject MediaService MediaServiceInstance 
 
-<h3>Media</h3>
+<h1 class="center-heading">Search for Media</h1>
 
-@if (movies == null)
+<form class="media-search" @onsubmit=SearchCall>
+    <input class="form-control" type="search" placeholder="Search for Media ..." @bind="searchString"/>
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+@if (movies != null)
 {
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <table class="table">
-        <thead>
-            <th>Artwork</th>
-            <th>Title</th>
-            <th>Writer</th>
-            <th>Year</th>
-            <th>Rating</th>
-        </thead>
+    if (movies.Count != 0)
+    {
+        <div class="search-result-box">
+        <table class="table">
+            <thead>
+                <tr>
+                <th>Artwork</th>
+                <th>Title</th>
+                <th>Writer</th>
+                <th>Year</th>
+                <th>Rating</th>
+                </tr>
+            </thead>
         <tbody>
         @foreach (var movie in movies)
         {
@@ -34,15 +40,29 @@ else
             </tr>
         }
         </tbody>
-    </table>
+        </table>
+        </div>
+    } else
+    {
+        <p>Sorry, but there is no media found according to your search text.</p>
+    }
+
 }
 @code
 {
     private List<IMovie> movies;
 
-    protected override async Task OnInitializedAsync()
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    movies = await MediaServiceInstance.GetMoviesAsync(searchString);
+    //}
+
+    protected async Task SearchCall()
     {
-        movies = await MediaServiceInstance.GetMoviesAsync();
+        movies = await MediaServiceInstance.GetMoviesAsync(searchString);
     }
+
+    private string searchString { get; set; } = "";
+
     
 }
