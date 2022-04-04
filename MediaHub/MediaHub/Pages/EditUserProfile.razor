@@ -1,7 +1,9 @@
 ﻿@page "/editUserProfile"
 
 @using MediaHub.Services
-@inject IUserProfileServiceInstance _userProfileServiceInstance
+@using MediaHub.Data.ViewModel
+
+@inject IUserProfileViewModel _userProfileViewModel
 @inject IdentityService _identityServiceInstance
 
 <h3>Edit your profile</h3>
@@ -29,18 +31,18 @@
 </form>
 
 @code {
-    private Data.Persistency.UserProfile _userProfile;
+    private Data.Model.UserProfile _userProfile;
     private bool _showSaveChangesHint = false;
 
     protected override void OnInitialized()
     {
         string userId = _identityServiceInstance.UserId;
-        _userProfile = _userProfileServiceInstance.GetUserProfileById(userId);
+        _userProfile = _userProfileViewModel.GetUserProfileById(userId);
     }
 
     private async Task<int> SaveChanges()
     {
-        var result = await _userProfileServiceInstance.UpdateUserProfileAsync(_userProfile);
+        var result = await _userProfileViewModel.UpdateUserProfileAsync(_userProfile);
         _showSaveChangesHint = true;
         return result;
     }

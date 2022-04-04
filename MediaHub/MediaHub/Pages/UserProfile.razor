@@ -1,7 +1,9 @@
 ﻿@page "/userProfile/{Username}"
 
 @using MediaHub.Services
-@inject UserProfileService _userProfileServiceInstance
+@using MediaHub.Data.ViewModel
+
+@inject IUserProfileViewModel _userProfileServiceInstance
 @inject IdentityService _identityServiceInstance
 
 @if (_userProfile == null)
@@ -18,7 +20,7 @@ else
 
 
 @code {
-    private Data.Persistency.UserProfile _userProfile;
+    private Data.Model.UserProfile _userProfile;
     
     [Parameter]
     public string Username { get; set; }
