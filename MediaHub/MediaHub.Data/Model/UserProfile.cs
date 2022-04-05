@@ -27,5 +27,26 @@ namespace MediaHub.Data.Model
             Biography = string.Empty;
             ProfilePicture = string.Empty;
         }
+
+        /// <summary>
+        /// Compares all UserProfile properties
+        /// </summary>
+        public override bool Equals(object? obj)
+        {
+            if ((obj == null) || !this.GetType().Equals(obj.GetType()))
+            {
+                return false;
+            }
+            else
+            {
+                UserProfile up = (UserProfile)obj;
+                return (UserId == up.UserId) 
+                    && (Username == up.Username)
+                    && (Biography == up.Biography)
+                    && (ProfilePicture == up.ProfilePicture);
+            }
+        }
+
+        public override int GetHashCode() => HashCode.Combine(UserId, Username, Biography);
     }
 }
