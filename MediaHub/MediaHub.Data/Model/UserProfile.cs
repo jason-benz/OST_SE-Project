@@ -13,8 +13,11 @@ namespace MediaHub.Data.Model
         public string Biography { get; set; }
         public string ProfilePicture { get; set; }
 
-#pragma warning disable CS8618 // Empty ctor needed for EF
-        public UserProfile() { }
+#pragma warning disable CS8618
+        /// <summary>
+        /// Empty ctor needed for EF
+        /// </summary>
+        protected UserProfile() { }
 #pragma warning restore CS8618
 
         public UserProfile(string userId)
