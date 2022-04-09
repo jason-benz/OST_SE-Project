@@ -9,8 +9,13 @@ namespace MediaHub.Data.Model
         [Key]
         [Column("Id", TypeName = "NVARCHAR(450)")]
         public string UserId { get; private set; }
+
+        [Column("Username", TypeName = "NVARCHAR(50)")]
         public string Username { get; set; }
+
+        [Column("Biography", TypeName = "NVARCHAR(256)")]
         public string Biography { get; set; }
+
         public string ProfilePicture { get; set; }
         public ICollection<MediaRating> Ratings { get; set; }
 

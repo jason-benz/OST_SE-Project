@@ -16,11 +16,11 @@ namespace MediaHub.Data.Persistency
             return context.UserProfiles.SingleOrDefault(up => up.Username == username);
         }
 
-        public async Task<int> UpdateUserProfileAsync(UserProfile userProfile)
+        public void UpdateUserProfile(UserProfile userProfile)
         {
-            await using MediaHubDBContext context = new();
+            using MediaHubDBContext context = new();
             context.Update(userProfile);
-            return await context.SaveChangesAsync();
+            context.SaveChanges();
         }
     }
 }

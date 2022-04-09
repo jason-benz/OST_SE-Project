@@ -16,14 +16,14 @@ namespace MediaHub.Data.ViewModel
             return _userProfileDataManager.GetUserProfileById(userId);
         }
 
-        public UserProfile GetUserProfileByUsername(string userName)
+        public UserProfile GetUserProfileByUsername(string username)
         {
-            return _userProfileDataManager.GetUserProfileByUsername(userName);
+            return _userProfileDataManager.GetUserProfileByUsername(username);
         }
 
-        public async Task<int> UpdateUserProfileAsync(UserProfile userProfile)
+        public void UpdateUserProfile(UserProfile userProfile)
         {
-            return await _userProfileDataManager.UpdateUserProfileAsync(userProfile);
+            _userProfileDataManager.UpdateUserProfile(userProfile);
         }
     }
 }
