@@ -3,8 +3,9 @@
 <PageTitle>Media Details</PageTitle>
 @using MediaHub.Services
 @using MediaHub.Data.Model
+@using MediaHub.Data.ViewModel
 @using Microsoft.AspNetCore.Routing.Matching
-@inject MediaService MediaServiceInstance 
+@inject IMediaSearchViewModel MediaServiceInstance 
 
 @if (movie != null)
 {

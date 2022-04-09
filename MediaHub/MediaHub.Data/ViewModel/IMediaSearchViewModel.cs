@@ -2,7 +2,7 @@ using MediaHub.Data.Model;
 
 namespace MediaHub.Data.ViewModel;
 
-public interface IMediaService
+public interface IMediaSearchViewModel
 {
     public Task<IMovie> GetMovie(int id);
 

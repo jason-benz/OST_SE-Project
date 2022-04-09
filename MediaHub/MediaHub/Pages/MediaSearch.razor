@@ -3,10 +3,11 @@
 <PageTitle>Search Media</PageTitle>
 @using MediaHub.Services
 @using MediaHub.Data.Model
+@using MediaHub.Data.ViewModel
 @using Microsoft.AspNetCore.Routing.Matching
 @using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
 @inject ProtectedSessionStorage SessionStorage
-@inject MediaService MediaServiceInstance
+@inject IMediaSearchViewModel MediaServiceInstance
 
 <h1 class="center-heading">Search for Media</h1>
 

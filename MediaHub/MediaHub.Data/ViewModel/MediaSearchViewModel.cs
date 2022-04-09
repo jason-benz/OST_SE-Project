@@ -2,10 +2,10 @@ using MediaHub.Data.Model;
 
 namespace MediaHub.Data.ViewModel;
 
-public class MediaService : IMediaService
+public class MediaSearchViewModel : IMediaSearchViewModel
 {
     private readonly IMediaApi _api;
-    public MediaService(IMediaApi api)
+    public MediaSearchViewModel(IMediaApi api)
     {
         _api = api;
     }
