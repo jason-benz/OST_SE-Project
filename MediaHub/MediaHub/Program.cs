@@ -1,5 +1,8 @@
 using MediaHub.Areas.Identity;
 using MediaHub.Data;
+using MediaHub.Data.Model;
+using MediaHub.Data.ViewModel;
+using MediaHub.Pages;
 using MediaHub.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -28,7 +31,7 @@ builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddSingleton<IdentityService>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
-builder.Services.AddSingleton<MediaService>();
+builder.Services.AddSingleton<IMediaService>(new MediaService(new TmdbApi()));
 
 var app = builder.Build();
 
