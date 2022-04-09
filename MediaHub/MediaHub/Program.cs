@@ -1,13 +1,9 @@
 using MediaHub.Areas.Identity;
 using MediaHub.Data;
-<<<<<<< HEAD
 using MediaHub.Data.Persistency;
 using MediaHub.Data.ViewModel;
-=======
 using MediaHub.Data.Model;
-using MediaHub.Data.ViewModel;
 using MediaHub.Pages;
->>>>>>> feature_show-media-page
 using MediaHub.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -33,7 +29,6 @@ builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddSingleton<IdentityService>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 
-builder.Services.AddSingleton<MediaService>();
 builder.Services.AddSingleton<IUserProfileViewModel>(new UserProfileViewModel(new UserProfileDataManager()));
 builder.Services.AddSingleton<IMediaSearchViewModel>(new MediaSearchViewModel(new TmdbApi()));
 
