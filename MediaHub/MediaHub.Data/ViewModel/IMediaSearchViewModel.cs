@@ -1,6 +1,6 @@
 using MediaHub.Data.Model;
 
-namespace MediaHub.Services;
+namespace MediaHub.Data.ViewModel;
 
 public interface IMediaService
 {
