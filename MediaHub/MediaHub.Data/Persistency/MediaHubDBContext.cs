@@ -24,7 +24,7 @@ public class MediaHubDBContext : DbContext
                 .AddJsonFile("appsettings.json", false, true)
                 .Build();
             
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("DataConnection"))
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging();
         }
