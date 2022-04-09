@@ -1,0 +1,79 @@
+@page "/mediaSearch"
+
+<PageTitle>Search Media</PageTitle>
+@using MediaHub.Services
+@using MediaHub.Data.Model
+@using MediaHub.Data.ViewModel
+@using Microsoft.AspNetCore.Routing.Matching
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject ProtectedSessionStorage SessionStorage
+@inject IMediaSearchViewModel MediaServiceInstance
+
+<h1 class="center-heading">Search for Media</h1>
+
+<form class="media-search" @onsubmit=SearchCall>
+    <input class="form-control" type="search" placeholder="Search for Media ..." @bind="searchString"/>
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+@if (mediaList != null)
+{
+    if (mediaList.Count != 0)
+    {
+        <div class="search-result-box">
+        <table class="table">
+            <thead>
+                <tr>
+                <th>Artwork</th>
+                <th>Title</th>
+                <th>Genres</th>
+                <th>Year</th>
+                <th>Rating</th>
+                </tr>
+            </thead>
+        <tbody>
+        @foreach (var media in mediaList)
+        {
+            <tr>
+                <td><NavLink href="@media.Url"><img width="100px" src="@media.PosterUrl"></NavLink></td>
+                <td>@media.Title</td>
+                <td>@string.Join(", ", media.Genres)</td>
+                <td>@media.ReleaseDate</td>
+                <td>@media.Rating</td>
+            </tr>
+        }
+        </tbody>
+        </table>
+        </div>
+    } else
+    {
+        <p class="center-heading">Sorry, but there is no media found according to your search text.</p>
+    }
+
+}
+@code
+{
+    private List<IMovie>? mediaList;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await SessionStorage.GetAsync<string>("SearchString");
+        if (result.Success)
+        {
+            if(result.Value != null)
+            {
+                searchString = result.Value;
+                await SearchCall();
+            }
+        }
+    }
+
+    protected async Task SearchCall()
+    {
+        await SessionStorage.SetAsync("SearchString", searchString);
+        mediaList = await MediaServiceInstance.GetMoviesAsync(searchString);
+    }
+
+    private string searchString { get; set; } = "";
+
+}
