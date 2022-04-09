@@ -6,8 +6,8 @@ namespace MediaHub.Data.ViewModel
     {
         public UserProfile GetUserProfileById(string userId);
 
-        public UserProfile GetUserProfileByUsername(string userName);
+        public UserProfile GetUserProfileByUsername(string username);
 
-        public Task<int> UpdateUserProfileAsync(UserProfile userProfile);
+        public void UpdateUserProfile(UserProfile userProfile);
     }
 }
