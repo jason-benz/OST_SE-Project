@@ -8,7 +8,7 @@ namespace MediaHub.Data.Persistency;
 public class MediaHubDBContext : DbContext
 {
     public DbSet<UserProfile> UserProfiles { get; set; }
-
+    public DbSet<MediaRating> Ratings { get; set; }
     public MediaHubDBContext()
     {
     }

@@ -12,6 +12,7 @@ namespace MediaHub.Data.Model
         public string Username { get; set; }
         public string Biography { get; set; }
         public string ProfilePicture { get; set; }
+        public ICollection<MediaRating> Ratings { get; set; }
 
 #pragma warning disable CS8618
         /// <summary>
@@ -26,6 +27,7 @@ namespace MediaHub.Data.Model
             Username = $"Guest-{Guid.NewGuid()}";
             Biography = string.Empty;
             ProfilePicture = string.Empty;
+            Ratings = new List<MediaRating>();
         }
 
         /// <summary>
