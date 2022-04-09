@@ -1,15 +1,17 @@
 using MediaHub.Data.Model;
 
-namespace MediaHub.Services;
+namespace MediaHub.Data.ViewModel;
 
 public class MediaService : IMediaService
 {
-    private TmdbApi _api = new TmdbApi();
+    private readonly IMediaApi _api;
+    public MediaService(IMediaApi api)
+    {
+        _api = api;
+    }
     public async Task<List<IMovie>> GetMoviesAsync(string searchString)
     {
-        List<IMovie> movies = new List<IMovie>();
-        // read data from other service 
-        if(searchString == "")
+        if(searchString == String.Empty)
         {
             searchString = DateTime.Now.Year.ToString();
         }
