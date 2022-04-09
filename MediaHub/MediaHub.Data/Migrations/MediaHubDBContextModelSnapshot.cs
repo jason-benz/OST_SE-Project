@@ -58,7 +58,8 @@ namespace MediaHub.Data.Migrations
 
                     b.Property<string>("Biography")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR(256)")
+                        .HasColumnName("Biography");
 
                     b.Property<string>("ProfilePicture")
                         .IsRequired()
@@ -66,7 +67,8 @@ namespace MediaHub.Data.Migrations
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR(50)")
+                        .HasColumnName("Username");
 
                     b.HasKey("UserId");
 
