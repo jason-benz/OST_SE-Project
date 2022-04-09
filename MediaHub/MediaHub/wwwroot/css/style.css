@@ -143,7 +143,7 @@ a, .btn-link {
     max-width: 60rem;
     background: #F0F0F0;
     max-height: 70vh;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
 }
 
@@ -157,6 +157,53 @@ a, .btn-link {
         margin-top: 50px;
         margin-bottom: 20px;
         text-align: center;
+}
+
+.detaile-view-container {
+    display: grid;
+    grid-template:
+        "title title" auto
+        "image details" auto
+        "body body" 20vh
+        / 1fr 3fr;
+    row-gap: 20px;
+    column-gap: 10px;
+    background: #F0F0F0;
+    max-height: 80vh;
+    max-width: 80vw;
+    margin: auto;
+    padding: 2vh 2vw;
+    overflow-y: auto;
+}
+
+.title-and-add-button {
+    display: flex;
+    justify-content: space-between;
+}
+
+    .title-and-add-button > button {
+        margin-top: 0;
+        height: fit-content;
+    }
+
+
+.media-data-table .caption {
+    width: 150px;
+    font-weight: bold;
+}
+
+.detaile-view-container > .title-and-add-button {
+    grid-area: title;
+}
+
+.detaile-view-container > img {
+    grid-area: image;
+    width: 200px;
+    justify-self: center;
+}
+
+.detaile-view-container > .media-data-table {
+    grid-area: details;
 }
 
 @media (min-width: 855px) {

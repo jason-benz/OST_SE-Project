@@ -31,7 +31,7 @@ builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddSingleton<IdentityService>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
-builder.Services.AddSingleton<IMediaService>(new MediaService(new TmdbApi()));
+builder.Services.AddSingleton<IMediaSearchViewModel>(new MediaSearchViewModel(new TmdbApi()));
 
 var app = builder.Build();
 
