@@ -8,4 +8,9 @@
   &lt;TestAncestor&gt;
     &lt;TestId&gt;xUnit::394BA403-2734-42B4-A7B4-00DE10BDAF15::net6.0::MediaHub.Test.MediaRatingPersistencyTest&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=f35b7cf5_002D4301_002D4be7_002Da0e5_002Df23ca8e72c6a/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="MediaRatingPersistencyTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::394BA403-2734-42B4-A7B4-00DE10BDAF15::net6.0::MediaHub.Test.MediaRatingPersistencyTest&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
