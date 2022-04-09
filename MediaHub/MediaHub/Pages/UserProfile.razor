@@ -1,0 +1,33 @@
+﻿@page "/userProfile/{Username}"
+
+@using MediaHub.Services
+@using MediaHub.Data.ViewModel
+
+@inject IUserProfileViewModel _userProfileServiceInstance
+@inject IdentityService _identityServiceInstance
+
+@if (_userProfile == null)
+{
+    <h3>Unknown profile</h3>
+    <p>User with the username '@Username' was not found.</p>
+}
+else
+{
+    <h3>@_userProfile.Username's Profile</h3>
+    <img src="@_userProfile.ProfilePicture" alt="No profile picture set..."/>
+    <p>@_userProfile.Biography</p>
+}
+
+
+@code {
+    private Data.Model.UserProfile _userProfile;
+    
+    [Parameter]
+    public string Username { get; set; }
+
+    protected override void OnInitialized()
+    {
+        string userId = _identityServiceInstance.UserId;
+        _userProfile = _userProfileServiceInstance.GetUserProfileByUsername(Username);
+    }
+}
