@@ -5,7 +5,7 @@ namespace MediaHub.Test;
 
 public class TmdbApiTest
 {
-    private TmdbApi tmdb;
+    private readonly TmdbApi tmdb;
     
     public TmdbApiTest()
     {
@@ -16,11 +16,16 @@ public class TmdbApiTest
     public async void TestSearchEndpoint()
     {
         var res = await tmdb.Search("matrix");
+        foreach (var movie in res)
+        {
+            Assert.NotNull(movie);
+        }
     }
 
     [Fact]
     public async void TestMovieEndpoint()
     {
-        var res = await tmdb.GetMovieById(675353);
+        var movie = await tmdb.GetMovieById(675353);
+        Assert.NotNull(movie);
     }
 }

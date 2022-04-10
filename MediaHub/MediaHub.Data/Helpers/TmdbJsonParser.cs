@@ -28,7 +28,7 @@ public class TmdbJsonParser
     
     public Movie ParseMovieEndpointJsonToMovie(JObject json)
     {
-        var genres = ParseGenreIdsToString(json);
+        var genres = ParseGenreIdsToString((JArray)json.Property("genres").Value);
         return new Movie(int.Parse(json.Property("id").Value.ToString()))
         {
             Title = json.Property("title")?.Value.ToString(),
@@ -41,19 +41,19 @@ public class TmdbJsonParser
         };
     }
     
-    private static List<string> ParseGenreIdsToString(dynamic? json)
+    private static List<string> ParseGenreIdsToString(JArray genreIds)
     {
         var genres = new List<string>();
 
-        if (json == null)
+        if (genreIds == null)
         {
             const string errorMessage = "JSON is null";
             throw new Exception(errorMessage);
         }
 
-        foreach (var curr in json.genres)
+        foreach (JObject genre in genreIds)
         {
-            genres.Add(curr.name.ToString());
+            genres.Add(genre.Property("name").Value.ToString());
         }
 
         return genres;
