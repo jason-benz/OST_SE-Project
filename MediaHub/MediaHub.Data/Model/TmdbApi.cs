@@ -15,7 +15,6 @@ public class TmdbApi : IMediaApi
     private TmdbJsonParser jsonParser;
     private readonly Task<Dictionary<int, string>> _genreTask;
 
-    // TODO integration tests --> marco 
     // TODO apikey in a config file
 
     public TmdbApi()
