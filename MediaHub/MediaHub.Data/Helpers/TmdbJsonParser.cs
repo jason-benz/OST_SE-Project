@@ -12,11 +12,18 @@ public class TmdbJsonParser
         _basePosterPath = basePosterPath;
     }
     
-    public async Task<List<Movie>> ParseSearchEndpointJsonToMovieResults(JObject json, Dictionary<int, string> genres)
+    public List<Movie> ParseSearchEndpointJsonToMovieResults(JObject json, Dictionary<int, string> genres)
     {
 
         var movieResults = new List<Movie>();
-        foreach (var movieJson in json.Property("results").Value)
+
+        var results = json.Property("results")?.Value;
+        if (results == null)
+        {
+            return new List<Movie>();
+        }
+        
+        foreach (var movieJson in results)
         {
             Movie movie = ParseSearchJsonToMovie((JObject)movieJson, genres);
             movieResults.Add(movie);
@@ -27,7 +34,9 @@ public class TmdbJsonParser
     
     public Movie ParseMovieEndpointJsonToMovie(JObject json)
     {
-        List<string>? genres = ParseGenreIdsToString((JArray)json.Property("genres")?.Value) ?? new List<string>();
+        var genreJson = (JArray) json.Property("genres")?.Value;
+        List<string> genres = ParseGenreIdsToString(genreJson);
+        
         return new Movie(int.Parse(json.Property("id")?.Value.ToString()!))
         {
             Title = json.Property("title")?.Value.ToString(),
@@ -40,20 +49,19 @@ public class TmdbJsonParser
         };
     }
     
-    private static List<string>? ParseGenreIdsToString(JArray? genreIds)
+    private static List<string> ParseGenreIdsToString(JArray? genreIds)
     {
-        var genres = new List<string?>();
+        var genres = new List<string>();
 
         if (genreIds == null)
         {
-            const string errorMessage = "JSON is null";
-            throw new Exception(errorMessage);
+            return genres;
         }
 
         foreach (var jToken in genreIds)
         {
             var genre = (JObject) jToken;
-            genres.Add(genre.Property("name")?.Value.ToString());
+            genres.Add(genre.Property("name")?.Value!.ToString()!);
         }
 
         return genres;
