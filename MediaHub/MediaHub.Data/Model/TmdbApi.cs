@@ -42,16 +42,7 @@ public class TmdbApi : IMediaApi
     private static async Task<Dictionary<int, string>> GetAllGenres()
     {
         var json = await GetResponseFromApi("/genre/movie/list", new Dictionary<string, string>());
-
-        var genres = new Dictionary<int, string>();
-        JArray j = (JArray)json.Property("genres").Value;
-        foreach (JObject genre in j)
-        {
-            genres.Add(genre.GetValue("id").ToObject<int>(), genre.GetValue("name").ToString());
-            //genres.Add(genre.Property("id").ToObject<int>(), genre.Property("name").ToString());
-        }
-
-        return genres;
+        return TmdbJsonParser.ParseAllGenres(json);
     }
 
     private static async Task<JObject> GetResponseFromApi(string endpoint, Dictionary<string, string> urlParams)

@@ -1,5 +1,4 @@
-﻿using System;
-using MediaHub.Data.Model;
+﻿using MediaHub.Data.Model;
 using Xunit;
 namespace MediaHub.Test;
 
@@ -12,6 +11,9 @@ public class TmdbApiTest
         tmdb = new TmdbApi();
     }
     
+    /* Note to devs:
+      Insert a breakpoint in the tests and check whether values seem to be correct, before pushing code.
+      Cannot be done automatically as Search is non-deterministic. */
     [Fact]
     public async void TestSearchEndpoint()
     {

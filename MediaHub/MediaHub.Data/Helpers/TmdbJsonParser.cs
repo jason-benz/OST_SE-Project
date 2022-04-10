@@ -1,5 +1,4 @@
 ﻿using MediaHub.Data.Model;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace MediaHub.Data.Helpers;
@@ -28,22 +27,22 @@ public class TmdbJsonParser
     
     public Movie ParseMovieEndpointJsonToMovie(JObject json)
     {
-        var genres = ParseGenreIdsToString((JArray)json.Property("genres").Value);
-        return new Movie(int.Parse(json.Property("id").Value.ToString()))
+        List<string>? genres = ParseGenreIdsToString((JArray)json.Property("genres")?.Value) ?? new List<string>();
+        return new Movie(int.Parse(json.Property("id")?.Value.ToString()!))
         {
             Title = json.Property("title")?.Value.ToString(),
             PosterUrl = _basePosterPath + json.Property("poster_path"),
             Genres = genres,
-            Rating = ParseRating(json.Property("vote_average").Value.ToString()),
-            Overview = json.Property("overview").ToString(),
-            Runtime = json.Property("runtime").ToString(),
-            ReleaseDate = json.Property("release_date").ToString()
+            Rating = ParseRating(json.Property("vote_average")?.Value.ToString()),
+            Overview = json.Property("overview")?.ToString(),
+            Runtime = json.Property("runtime")?.ToString(),
+            ReleaseDate = json.Property("release_date")?.ToString()
         };
     }
     
-    private static List<string> ParseGenreIdsToString(JArray genreIds)
+    private static List<string>? ParseGenreIdsToString(JArray? genreIds)
     {
-        var genres = new List<string>();
+        var genres = new List<string?>();
 
         if (genreIds == null)
         {
@@ -51,9 +50,10 @@ public class TmdbJsonParser
             throw new Exception(errorMessage);
         }
 
-        foreach (JObject genre in genreIds)
+        foreach (var jToken in genreIds)
         {
-            genres.Add(genre.Property("name").Value.ToString());
+            var genre = (JObject) jToken;
+            genres.Add(genre.Property("name")?.Value.ToString());
         }
 
         return genres;
@@ -63,19 +63,19 @@ public class TmdbJsonParser
     {
         var genresOfMovie = new List<string>();
 
-        foreach (var key in (JArray)movieJson.Property("genre_ids").Value)
+        foreach (var key in (JArray)movieJson.Property("genre_ids")?.Value)
         {
             genresOfMovie.Add(genres[key.ToObject<int>()]);
         }
 
         return new Movie(int.Parse(movieJson.Property("id").Value.ToString()))
         {
-            Title = movieJson.Property("original_title").Value.ToString(),
-            PosterUrl = _basePosterPath + movieJson.Property("poster_path").Value,
+            Title = movieJson.Property("original_title")?.Value.ToString(),
+            PosterUrl = _basePosterPath + movieJson.Property("poster_path")?.Value,
             Genres = genresOfMovie,
-            Rating = ParseRating(movieJson.Property("vote_average").Value.ToString()),
-            Overview = movieJson.Property("overview").Value.ToString(),
-            ReleaseDate = movieJson.Property("release_date").Value.ToString()
+            Rating = ParseRating(movieJson.Property("vote_average")?.Value.ToString()),
+            Overview = movieJson.Property("overview")?.Value.ToString(),
+            ReleaseDate = movieJson.Property("release_date")?.Value.ToString()
         };
     }
     
@@ -85,8 +85,21 @@ public class TmdbJsonParser
         return json;
     }
 
-    private static int ParseRating(string json)
+    private static int ParseRating(string? json)
     {
         return (int) Math.Round(double.Parse(json));
+    }
+
+    public static Dictionary<int, string> ParseAllGenres(JObject json)
+    {
+        var genres = new Dictionary<int, string>();
+        JArray? g = (JArray)json.Property("genres")?.Value;
+        foreach (var jToken in g)
+        {
+            var genre = (JObject) jToken;
+            genres.Add(genre.GetValue("id")!.ToObject<int>(), genre.GetValue("name")!.ToString());
+        }
+
+        return genres;
     }
 }
