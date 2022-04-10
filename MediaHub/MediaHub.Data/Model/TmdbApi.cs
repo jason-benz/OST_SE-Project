@@ -28,7 +28,7 @@ public class TmdbApi : IMediaApi
         var urlParams = new Dictionary<string, string>() {{"query", query}};
         var json = await GetResponseFromApi("/search/movie", urlParams);
         var genres = await _genreTask;
-        return await jsonParser.ParseSearchEndpointJsonToMovieResults(json, genres);
+        return jsonParser.ParseSearchEndpointJsonToMovieResults(json, genres);
     }
 
     public async Task<Movie> GetMovieById(int id)
