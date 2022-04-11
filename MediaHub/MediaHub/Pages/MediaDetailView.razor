@@ -55,7 +55,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        movie = await MediaServiceInstance.GetMovie(Id);
+        movie = await MediaServiceInstance.GetMovieAsync(Id);
     }
 
     //TODO implement functionality to add and remove media-ID to and from favorites-list of user
