@@ -71,7 +71,7 @@
     protected async Task SearchCall()
     {
         await SessionStorage.SetAsync("SearchString", searchString);
-        mediaList = await MediaServiceInstance.GetMoviesAsync(searchString);
+        mediaList = await MediaServiceInstance.GetMoviesListAsync(searchString);
     }
 
     private string searchString { get; set; } = "";
