@@ -1,4 +1,5 @@
 ﻿using MediaHub.Data.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace MediaHub.Data.Persistency
 {
@@ -7,7 +8,8 @@ namespace MediaHub.Data.Persistency
         public UserProfile GetUserProfileById(string userId)
         {
             using MediaHubDBContext context = new();
-            return context.UserProfiles.Single(up => up.UserId == userId);
+            var profile = context.UserProfiles.Include(p => p.Ratings).Single(up => up.UserId == userId);
+            return profile;
         }
 
         public UserProfile GetUserProfileByUsername(string username)
