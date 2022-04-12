@@ -21,7 +21,7 @@ public class MediaRatingPersistencyTest : IDisposable
          rating = new MediaRating()
          {
             Profile = profile,
-            ShowInProfile = false,
+            IsAddedToProfile = false,
             Rating = 10
          };
          context.UserProfiles.Add(profile);
