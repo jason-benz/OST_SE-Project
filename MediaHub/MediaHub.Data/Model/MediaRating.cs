@@ -8,25 +8,23 @@ public class MediaRating
 {
     [Key] 
     public int Id { get; set; }
-    [NotMapped]
-    public Movie Movie { get; set; }
+    public int MovieId { get; set; }
     public string ProfileId { get; set; }
     [ForeignKey(nameof(ProfileId))]
     public UserProfile Profile { get; set; }
 
-    public bool ShowInProfile { get; set; } = false;
+    public bool IsAddedToProfile { get; set; }
     private byte? _rating;
-    private const byte RATING_RANGE_MAX = 10;
+    private const byte RatingRangeMax = 10;
     public byte? Rating
     {
         get => _rating;
         set
         {
-            if (value > RATING_RANGE_MAX)
+            if (value > RatingRangeMax)
             {
                 throw new ArgumentOutOfRangeException("Rating cannot be greater than 10");
             }
-
             _rating = value;
         }
     }

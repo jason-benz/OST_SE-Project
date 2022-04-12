@@ -1,18 +1,29 @@
 ﻿using MediaHub.Data.Model;
 using System;
+using System.Collections.Generic;
 
 namespace MediaHub.Test.UserProfileTest
 {
     internal class UserProfileDataManagerMock : IUserProfileDataManager
     {
+        public UserProfile UpdatedUserProfile { get; set; }
+        public MediaRating TestRating { get; set; } = null; 
         public UserProfile GetUserProfileById(string userId)
         {
-            return new UserProfile(userId)
+            var userProfile = new UserProfile(userId)
             {
                 Username = "Mock test username",
                 Biography = "Mock test biography",
+                Ratings = new List<MediaRating>(),
                 ProfilePicture = ProfilePicture.GetTestProfilePicture()
             };
+            if (TestRating != null)
+            { 
+                TestRating.Profile = userProfile;
+                userProfile.Ratings.Add(TestRating);    
+            }
+            
+            return userProfile;
         }
 
         public UserProfile GetUserProfileByUsername(string username)
@@ -27,7 +38,7 @@ namespace MediaHub.Test.UserProfileTest
 
         public void UpdateUserProfile(UserProfile userProfile)
         {
-            // Method in mock is empty, because the single use case is to update the userprofile without return value
+            UpdatedUserProfile = userProfile;
         }
     }
 }

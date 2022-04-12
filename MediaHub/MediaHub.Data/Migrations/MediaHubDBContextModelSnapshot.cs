@@ -37,7 +37,11 @@ namespace MediaHub.Data.Migrations
                     b.Property<byte?>("Rating")
                         .HasColumnType("tinyint");
 
-                    b.Property<bool>("ShowInProfile")
+                    b.Property("MovieId")
+                        .IsRequired()
+                        .HasColumnType("int");
+                    
+                    b.Property<bool>("IsAddedToProfile")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
