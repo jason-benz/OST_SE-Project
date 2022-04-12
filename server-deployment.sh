@@ -11,6 +11,7 @@ echo "Starting to update the deplyoment of ${PROJECT} "
 checkout_repository () {
     echo "Updating git repository"
     cd ${CODEFOLDER}
+    git reset --hard
     git pull
     cp /tmp/config/appsettings.json ${CODEFOLDER}/MediaHub/MediaHub/appsettings.json
     echo "Repository updated"
