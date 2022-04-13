@@ -25,14 +25,14 @@ public class MediaSearchViewModelIntegrationTest
     [Fact]
     public void GetMoviesByString()
     {
-        List<IMovie> movies = _mediaSearchViewModel.GetMoviesListAsync("avengers").Result;
+        List<IMovie> movies = _mediaSearchViewModel.GetMoviesAsync("avengers").Result;
         Assert.True(movies.TrueForAll( movie => movie.Title.Contains("avengers", StringComparison.OrdinalIgnoreCase)));
     }
 
     [Fact]
     public void GetMoviesByEmptyString()
     {
-        List<IMovie> movies = _mediaSearchViewModel.GetMoviesListAsync("").Result;
+        List<IMovie> movies = _mediaSearchViewModel.GetMoviesAsync("").Result;
         Assert.True(movies.TrueForAll(movie => movie.Title.Contains(DateTime.Now.Year.ToString())));
     }
 }
