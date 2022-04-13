@@ -33,14 +33,14 @@ namespace MediaHub.Test.MediaSearchTest
         [Fact]
         public void GetMoviesByString()
         {
-            List<IMovie> movies = _mediaSearchViewModel.GetMoviesListAsync("MockMovie").Result;
+            List<IMovie> movies = _mediaSearchViewModel.GetMoviesAsync("MockMovie").Result;
             Assert.Equal(12, movies[0].Id);
         }
 
         [Fact]
         public void GetMoviesByEmptyString()
         {
-            List<IMovie> movies = _mediaSearchViewModel.GetMoviesListAsync("").Result;
+            List<IMovie> movies = _mediaSearchViewModel.GetMoviesAsync("").Result;
             Assert.Contains(DateTime.Now.Year.ToString(), movies[0].Title);
         }
 

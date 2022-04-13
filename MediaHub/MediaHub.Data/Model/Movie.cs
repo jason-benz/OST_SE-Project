@@ -23,8 +23,6 @@ public class Movie : IMovie
     public string Runtime { get; }
     public string ReleaseDate { get; }
 
-    public string Url { get { return "movieDetailView/" + this.Id; } }
-
     public override bool Equals(object? obj)
     {
         if ((obj == null) || !this.GetType().Equals(obj.GetType()))
