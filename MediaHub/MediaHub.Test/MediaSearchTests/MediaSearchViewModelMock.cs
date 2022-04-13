@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
-using MediaHub;
 using MediaHub.Data.Model;
 using MediaHub.Data.ViewModel;
 
@@ -17,10 +15,10 @@ internal class MediaSearchViewModelMock : IMediaSearchViewModel
         {
             return MockMovie;
         }
-        throw new System.Exception("Movie not found");
+        throw new Exception("Movie not found");
     }
 
-    public async Task<List<IMovie>> GetMoviesListAsync(string searchString)
+    public async Task<List<IMovie>> GetMoviesAsync(string searchString)
     {
         if (searchString == "MockMovie")
         {
@@ -39,7 +37,7 @@ internal class MediaSearchViewModelMock : IMediaSearchViewModel
             return movies;
         }
 
-        if (searchString == String.Empty)
+        if (searchString == string.Empty)
         {
             List<IMovie> movies = new List<IMovie>();
             movies.Add(MockMovie);

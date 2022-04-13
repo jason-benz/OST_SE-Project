@@ -35,7 +35,7 @@
         @foreach (var media in mediaList)
         {
             <tr>
-                <td><NavLink href="@media.Url"><img width="100px" src="@media.PosterUrl"></NavLink></td>
+                <td><NavLink href=@{"movieDetailView/"+@media.Id}><img width="100px" src="@media.PosterUrl"></NavLink></td>
                 <td>@media.Title</td>
                 <td>@string.Join(", ", media.Genres)</td>
                 <td>@media.ReleaseDate</td>
@@ -71,7 +71,7 @@
     protected async Task SearchCall()
     {
         await SessionStorage.SetAsync("SearchString", searchString);
-        mediaList = await MediaServiceInstance.GetMoviesListAsync(searchString);
+        mediaList = await MediaServiceInstance.GetMoviesAsync(searchString);
     }
 
     private string searchString { get; set; } = "";
