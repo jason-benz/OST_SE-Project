@@ -6,5 +6,5 @@ public interface IMediaSearchViewModel
 {
     public Task<IMovie> GetMovieAsync(int id);
 
-    public Task<List<IMovie>> GetMoviesListAsync(string searchString);
+    public Task<List<IMovie>> GetMoviesAsync(string searchString);
 }

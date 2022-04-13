@@ -9,7 +9,7 @@ public class MediaSearchViewModel : IMediaSearchViewModel
     {
         _api = api;
     }
-    public async Task<List<IMovie>> GetMoviesListAsync(string searchString)
+    public async Task<List<IMovie>> GetMoviesAsync(string searchString)
     {
         if(searchString == String.Empty)
         {
