@@ -49,8 +49,8 @@
     {
         <p class="center-heading">Sorry, but there is no media found according to your search text.</p>
     }
-
 }
+
 @code
 {
     private List<IMovie>? mediaList;
@@ -71,7 +71,7 @@
     protected async Task SearchCall()
     {
         await SessionStorage.SetAsync("SearchString", searchString);
-        mediaList = await MediaServiceInstance.GetMoviesAsync(searchString);
+        mediaList = await MediaServiceInstance.GetMoviesListAsync(searchString);
     }
 
     private string searchString { get; set; } = "";
