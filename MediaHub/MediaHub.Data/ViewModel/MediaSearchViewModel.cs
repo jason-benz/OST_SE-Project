@@ -15,10 +15,17 @@ public class MediaSearchViewModel : IMediaSearchViewModel
         {
             searchString = DateTime.Now.Year.ToString();
         }
-        return await _api.Search(searchString);
+
+        try
+        {
+            return await _api.Search(searchString);
+        }
+        catch (Exception) {
+            return new List<IMovie>();
+        }
     }
 
-    public async Task<IMovie> GetMovie(int id)
+    public async Task<IMovie> GetMovieAsync(int id)
     {
         return await _api.GetMovieById(id);
     }

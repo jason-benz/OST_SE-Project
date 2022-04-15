@@ -10,6 +10,4 @@ public interface IMovie
     string Overview { get; }
     string Runtime { get; } // not included in /search endpoint of api
     string ReleaseDate { get; }
-
-    public string Url { get; }
 }
