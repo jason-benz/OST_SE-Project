@@ -24,6 +24,10 @@
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
     </ItemGroup>
+	
+	<ItemGroup>
+      <ProjectReference Include="..\MediaHub.Data\MediaHub.Data.csproj" />
+    </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\MediaHub.Data\MediaHub.Data.csproj" />

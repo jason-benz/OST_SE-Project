@@ -23,5 +23,23 @@ public class Movie : IMovie
     public string Runtime { get; }
     public string ReleaseDate { get; }
 
-    public string Url { get { return "movieDetailView/" + this.Id; } }
+    public override bool Equals(object? obj)
+    {
+        if ((obj == null) || !this.GetType().Equals(obj.GetType()))
+        {
+            return false;
+        }
+
+        Movie other = (Movie)obj;
+        return (Id == other.Id)
+               && (Title == other.Title)
+               && (PosterUrl == other.PosterUrl)
+               && (Genres.All(other.Genres.Contains))
+               && (Rating == other.Rating)
+               && (Overview == other.Overview)
+               && (Runtime == other.Runtime)
+               && (ReleaseDate == other.ReleaseDate);
+    }
+
+    public override int GetHashCode() => HashCode.Combine(Id, Title, Overview);
 }
