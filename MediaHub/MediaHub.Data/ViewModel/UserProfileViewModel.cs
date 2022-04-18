@@ -11,19 +11,41 @@ namespace MediaHub.Data.ViewModel
             _userProfileDataManager = userProfileDataManager;
         }
 
-        public UserProfile GetUserProfileById(string userId)
+        public UserProfile? GetUserProfileById(string userId)
         {
-            return _userProfileDataManager.GetUserProfileById(userId);
+            try
+            {
+                return _userProfileDataManager.GetUserProfileById(userId);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
-        public UserProfile GetUserProfileByUsername(string username)
+        public UserProfile? GetUserProfileByUsername(string username)
         {
-            return _userProfileDataManager.GetUserProfileByUsername(username);
+            try
+            {
+                return _userProfileDataManager.GetUserProfileByUsername(username);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            
         }
 
         public void UpdateUserProfile(UserProfile userProfile)
         {
-            _userProfileDataManager.UpdateUserProfile(userProfile);
+            try
+            {
+                _userProfileDataManager.UpdateUserProfile(userProfile);
+            }
+            catch (Exception)
+            {
+                throw new Exception("An unknown error occured");
+            }
         }
 
         public bool IsUsernameAvailable(string username)
