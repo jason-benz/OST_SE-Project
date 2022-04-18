@@ -4,13 +4,13 @@ namespace MediaHub.Data.Persistency
 {
     public class UserProfileDataManager : IUserProfileDataManager
     {
-        public UserProfile GetUserProfileById(string userId)
+        public UserProfile? GetUserProfileById(string userId)
         {
             using MediaHubDBContext context = new();
-            return context.UserProfiles.Single(up => up.UserId == userId);
+            return context.UserProfiles.SingleOrDefault(up => up.UserId == userId);
         }
 
-        public UserProfile GetUserProfileByUsername(string username)
+        public UserProfile? GetUserProfileByUsername(string username)
         {
             using MediaHubDBContext context = new();
             return context.UserProfiles.SingleOrDefault(up => up.Username == username);
