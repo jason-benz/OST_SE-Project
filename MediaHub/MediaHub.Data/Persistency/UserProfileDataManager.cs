@@ -22,5 +22,11 @@ namespace MediaHub.Data.Persistency
             context.Update(userProfile);
             context.SaveChanges();
         }
+
+        public bool IsUsernameAvailable(string username)
+        {
+            using MediaHubDBContext context = new();
+            return !context.UserProfiles.Any(up => up.Username == username);
+        }
     }
 }

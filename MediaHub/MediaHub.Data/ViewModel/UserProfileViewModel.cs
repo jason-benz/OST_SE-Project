@@ -25,5 +25,10 @@ namespace MediaHub.Data.ViewModel
         {
             _userProfileDataManager.UpdateUserProfile(userProfile);
         }
+
+        public bool IsUsernameAvailable(string username)
+        {
+            return _userProfileDataManager.IsUsernameAvailable(username);
+        }
     }
 }
