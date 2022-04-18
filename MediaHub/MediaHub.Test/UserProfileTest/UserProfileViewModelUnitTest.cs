@@ -37,5 +37,21 @@ namespace MediaHub.Test.UserProfileTest
             var exception = Record.Exception(() => new UserProfileViewModelUnitTest());
             Assert.Null(exception);
         }
+
+        [Fact]
+        public void IsUsernameAvailable_True()
+        {
+            var username = "true";
+            var isUsernameAvailable = _userProfileViewModel.IsUsernameAvailable(username);
+            Assert.True(isUsernameAvailable);
+        }
+
+        [Fact]
+        public void IsUsernameAvailable_False()
+        {
+            var username = "some taken user";
+            var isUsernameAvailable = _userProfileViewModel.IsUsernameAvailable(username);
+            Assert.False(isUsernameAvailable);
+        }
     }
 }

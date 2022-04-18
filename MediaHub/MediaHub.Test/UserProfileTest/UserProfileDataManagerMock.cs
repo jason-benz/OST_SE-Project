@@ -25,6 +25,16 @@ namespace MediaHub.Test.UserProfileTest
             };
         }
 
+        public bool IsUsernameAvailable(string username)
+        {
+            if (username == "true")
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public void UpdateUserProfile(UserProfile userProfile)
         {
             // Method in mock is empty, because the single use case is to update the userprofile without return value
