@@ -43,6 +43,22 @@ namespace MediaHub.Test.UserProfileTest
             Assert.True(actualUserProfile.Equals(expectedUserProfile));
         }
 
+        [Fact]
+        public void IsUsernameAvailable_True()
+        {
+            var isUsernameAvailable = _userProfileDataManager.IsUsernameAvailable(Guid.NewGuid().ToString());
+            Assert.True(isUsernameAvailable);
+        }
+
+        [Fact]
+        public void IsUsernameAvailable_False()
+        {
+            var takenUsername = InsertTestUserProfileInDB().Username;
+
+            var isUsernameAvailable = _userProfileDataManager.IsUsernameAvailable(takenUsername);
+            Assert.False(isUsernameAvailable);
+        }
+
         private UserProfile InsertTestUserProfileInDB()
         {
             var guid = Guid.NewGuid();
