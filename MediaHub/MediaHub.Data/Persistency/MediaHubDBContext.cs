@@ -1,3 +1,4 @@
+using MediaHub.Data.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -6,6 +7,7 @@ namespace MediaHub.Data.Persistency;
 
 public class MediaHubDBContext : DbContext
 {
+    public DbSet<UserProfile> UserProfiles { get; set; }
 
     public MediaHubDBContext()
     {
