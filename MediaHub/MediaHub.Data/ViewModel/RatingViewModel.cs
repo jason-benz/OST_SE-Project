@@ -35,6 +35,21 @@ public class RatingViewModel : IRatingViewModel
         UpdateProfile();
     }
 
+    public byte Rating
+    {
+        get => _rating!.Rating;
+        set
+        {
+            ExceptionIfNotLoadedFirst();
+            _rating!.Rating = value;
+            UpdateProfile();
+        }
+    }
+
+    public byte? GetRating()
+    {
+        return _rating?.Rating;
+    }
     public void SetRating(byte value)
     {
         ExceptionIfNotLoadedFirst();
