@@ -46,17 +46,6 @@ public class RatingViewModel : IRatingViewModel
         }
     }
 
-    public byte? GetRating()
-    {
-        return _rating?.Rating;
-    }
-    public void SetRating(byte value)
-    {
-        ExceptionIfNotLoadedFirst();
-        _rating!.Rating = value;
-        UpdateProfile();
-    }
-    
     private void LoadRatings()
     {
         if (_profile?.Ratings.Count == 0)
