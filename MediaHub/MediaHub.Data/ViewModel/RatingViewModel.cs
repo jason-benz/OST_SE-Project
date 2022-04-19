@@ -6,7 +6,7 @@ public class RatingViewModel : IRatingViewModel
 {
     private MediaRating? _rating;
     private UserProfile? _profile;
-    private IMovie? _movie;
+    private Movie? _movie;
     private readonly IUserProfileDataManager _profileDataManager;
     private const string UndefinedProfileId = "0";
     private const int UndefinedMovieId = 0;
@@ -15,7 +15,7 @@ public class RatingViewModel : IRatingViewModel
         _profileDataManager = profileDataManager;
     }
     
-    public void Load(string userId, IMovie movie)
+    public void Load(string userId, Movie movie)
     {
         _movie = movie;
         _profile = _profileDataManager.GetUserProfileById(userId);
