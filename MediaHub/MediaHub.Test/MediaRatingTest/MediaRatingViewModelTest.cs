@@ -88,6 +88,15 @@ public class MediaRatingVieModelTest
     }
     private void LoadViewModel()
     {
-        _ratingViewModel.Load("MockId-1", new Movie(44, "", "", new List<string>(), 1, "","",""));
+        _ratingViewModel.Load("MockId-1", new Movie(44)
+        {
+            Title = "",
+            Genres = new List<string>(),
+            Rating = 1,
+            Runtime = "",
+            ReleaseDate = "",
+            Overview = "",
+            PosterUrl = ""
+        } );
     }
 }
