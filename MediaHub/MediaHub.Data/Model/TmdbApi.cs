@@ -2,6 +2,8 @@
 using MediaHub.Data.Helpers;
 using MediaHub.Data.Model;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -9,18 +11,23 @@ namespace MediaHub.Data.Model;
 
 public class TmdbApi : IMediaApi
 {
-    private static readonly string _baseUrl = "https://api.themoviedb.org/3";
-    private static readonly string _basePosterPath = "https://image.tmdb.org/t/p/original";
-    private static readonly string _apiKeyV3 = "8feb42ff0cda9ec9c0a5e015a846fdbd";
-    private TmdbJsonParser jsonParser;
+    private readonly string _baseUrl;
+    private readonly string _basePosterPath;
+    private readonly string _apiKeyV3;
+    private readonly TmdbJsonParser _jsonParser;
     private readonly Task<Dictionary<int, string>> _genreTask;
-
-    // TODO apikey in a config file
-
+    
     public TmdbApi()
     {
+        IConfigurationRoot configuration = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", false, true).Build();
+        _apiKeyV3 = configuration.GetConnectionString("TmdbApiKey") ?? throw new InvalidOperationException();
+        _baseUrl = configuration.GetConnectionString("TmdbBaseUrl") ?? throw new InvalidOperationException();
+        _basePosterPath = configuration.GetConnectionString("TmdbBasePosterPath") ?? throw new InvalidOperationException();
+        
         _genreTask = GetAllGenres();
-        jsonParser = new TmdbJsonParser(_basePosterPath);
+        _jsonParser = new TmdbJsonParser(_basePosterPath);
     }
 
     public async Task<List<Movie>> Search(string query)
@@ -28,7 +35,7 @@ public class TmdbApi : IMediaApi
         var urlParams = new Dictionary<string, string>() {{"query", query}};
         var json = await GetResponseFromApi("/search/movie", urlParams);
         var genres = await _genreTask;
-        return jsonParser.ParseSearchEndpointJsonToMovieResults(json, genres);
+        return _jsonParser.ParseSearchEndpointJsonToMovieResults(json, genres);
     }
 
     public async Task<Movie> GetMovieById(int id)
@@ -36,16 +43,16 @@ public class TmdbApi : IMediaApi
         var urlParams = new Dictionary<string, string>();
         var json = await GetResponseFromApi("/movie/" + id, urlParams);
         var genreMap = await _genreTask;
-        return jsonParser.ParseMovieEndpointJsonToMovie(json);
+        return _jsonParser.ParseMovieEndpointJsonToMovie(json);
     }
 
-    private static async Task<Dictionary<int, string>> GetAllGenres()
+    private async Task<Dictionary<int, string>> GetAllGenres()
     {
         var json = await GetResponseFromApi("/genre/movie/list", new Dictionary<string, string>());
         return TmdbJsonParser.ParseAllGenres(json);
     }
 
-    private static async Task<JObject> GetResponseFromApi(string endpoint, Dictionary<string, string> urlParams)
+    private async Task<JObject> GetResponseFromApi(string endpoint, Dictionary<string, string> urlParams)
     {
         var requestUrl = BuildRequestUri(endpoint, urlParams);
         var response = await ExecuteGetRequest(requestUrl);
@@ -59,7 +66,7 @@ public class TmdbApi : IMediaApi
         return await response.Content.ReadAsStringAsync();
     }
 
-    private static Uri BuildRequestUri(string endpoint, Dictionary<string, string>? urlParams)
+    private Uri BuildRequestUri(string endpoint, Dictionary<string, string>? urlParams)
     {
         urlParams = urlParams ?? new Dictionary<string, string>();
         urlParams.Add("api_key", _apiKeyV3);
