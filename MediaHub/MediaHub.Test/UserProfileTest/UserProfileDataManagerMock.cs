@@ -12,7 +12,7 @@ namespace MediaHub.Test.UserProfileTest
         {
             switch (userId)
             {
-                case "1":
+                case "MockId-1":
                     var profile = new UserProfile(userId)
                                     {
                                         Username = "Mock test username",
@@ -27,7 +27,7 @@ namespace MediaHub.Test.UserProfileTest
                     }
 
                     return profile;
-                case "2":
+                case "MockId-2":
                     return null;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(userId));

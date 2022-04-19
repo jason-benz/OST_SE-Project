@@ -17,7 +17,7 @@ namespace MediaHub.Test.UserProfileTest
         [Fact]
         public void GetUserProfileById_Succesfull()
         {
-            string userId = "1";
+            string userId = "MockId-1";
             UserProfile? userProfile = _userProfileViewModel.GetUserProfileById(userId);
             Assert.Equal(userId, userProfile?.UserId);
         }
