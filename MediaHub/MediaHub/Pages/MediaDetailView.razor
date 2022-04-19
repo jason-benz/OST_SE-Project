@@ -9,6 +9,7 @@
 @inject IMediaSearchViewModel _mediaSearchViewModel 
 @inject IdentityService _identityService
 @inject IRatingViewModel _ratingViewModel
+
 @if (_movie != null)
 {
 <div class="detaile-view-container">
@@ -62,14 +63,5 @@
     {
         _movie = await _mediaSearchViewModel.GetMovieAsync(Id);
         _ratingViewModel.Load(_identityService!.UserId!, _movie); //force not null --> handled by microsoft auth framework
-    }
-
-    //TODO implement functionality to add and remove media-ID to and from favorites-list of user
-
-    //Only for concept-demonstration purpose:
-    private bool isInFavorites = false;
-    private void SwitchFavorites()
-    {
-        isInFavorites = !isInFavorites;
     }
 }
