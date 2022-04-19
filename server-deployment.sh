@@ -14,6 +14,7 @@ checkout_repository () {
     git reset --hard
     git pull
     cp /tmp/config/appsettings.json ${CODEFOLDER}/MediaHub/MediaHub/appsettings.json
+    cp /tmp/config/appsettings_data.json ${CODEFOLDER}/MediaHub/MediaHub.Data/appsettings.json
     echo "Repository updated"
 }
 
