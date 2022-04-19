@@ -28,7 +28,6 @@ builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddSingleton<IdentityService>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
-
 var profileManager = new UserProfileDataManager();
 builder.Services.AddSingleton<IUserProfileViewModel>(new UserProfileViewModel(profileManager));
 builder.Services.AddSingleton<IMediaSearchViewModel>(new MediaSearchViewModel(new TmdbApi()));

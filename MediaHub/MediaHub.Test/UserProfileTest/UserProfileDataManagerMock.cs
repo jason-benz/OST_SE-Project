@@ -8,37 +8,72 @@ namespace MediaHub.Test.UserProfileTest
     {
         public UserProfile UpdatedUserProfile { get; set; }
         public MediaRating TestRating { get; set; } = null; 
-        public UserProfile GetUserProfileById(string userId)
+        public UserProfile? GetUserProfileById(string userId)
         {
-            var userProfile = new UserProfile(userId)
+            switch (userId)
             {
-                Username = "Mock test username",
-                Biography = "Mock test biography",
-                Ratings = new List<MediaRating>(),
-                ProfilePicture = ProfilePicture.GetTestProfilePicture()
-            };
-            if (TestRating != null)
-            { 
-                TestRating.Profile = userProfile;
-                userProfile.Ratings.Add(TestRating);    
+                case "1":
+                    var profile = new UserProfile(userId)
+                                    {
+                                        Username = "Mock test username",
+                                        Biography = "Mock test biography",
+                                        Ratings = new List<MediaRating>(),
+                                        ProfilePicture = ProfilePicture.GetTestProfilePicture()
+                                    };
+                    if (TestRating != null)
+                    {
+                        TestRating.Profile = profile;
+                        profile.Ratings.Add(TestRating);
+                    }
+
+                    return profile;
+                case "2":
+                    return null;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(userId));
             }
-            
-            return userProfile;
         }
 
-        public UserProfile GetUserProfileByUsername(string username)
+        public UserProfile? GetUserProfileByUsername(string username)
         {
-            return new UserProfile(Guid.NewGuid().ToString())
+            switch (username)
             {
-                Username = username,
-                Biography = "Mock test biography of method 'GetUserProfileByUsername'",
-                ProfilePicture = ProfilePicture.GetTestProfilePicture()
-            };
+                case "MockUser-1":
+                    return new UserProfile(Guid.NewGuid().ToString())
+                    {
+                        Username = username,
+                        Biography = "Mock test biography of method 'GetUserProfileByUsername'",
+                        ProfilePicture = ProfilePicture.GetTestProfilePicture()
+                    };
+                case "MockUser-2":
+                    return null;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(username));
+            }
+        }
+
+        public bool IsUsernameAvailable(string username)
+        {
+            if (username == "true")
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public void UpdateUserProfile(UserProfile userProfile)
         {
             UpdatedUserProfile = userProfile;
+            switch (userProfile.UserId)
+            {
+                case "MockId-1":
+                    break;
+                case "MockId-2":
+                    throw new Exception();
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(userProfile));
+            }
         }
     }
 }
