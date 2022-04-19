@@ -3,9 +3,11 @@
 @using MediaHub.Services
 @using MediaHub.Data.ViewModel
 @using Microsoft.CodeAnalysis.CSharp.Syntax
+@using MediaHub.Data.Persistency
 
 @inject IUserProfileViewModel _userProfileViewModel
 @inject IdentityService _identityServiceInstance
+@inject ILogService _logger
 
 <h3>Edit your profile</h3>
 
@@ -62,6 +64,8 @@ else
 
     private void SaveChanges()
     {
+        _logger.LogInformation("test", ILogService.LogCategory.Identity);        
+        
         if (IsUsernameAvailable())
         {
             _userProfile.Username = NewUsername;
