@@ -1,0 +1,36 @@
+﻿@page "/chat"
+@using MediaHub.Services
+@using MediaHub.Data.Model
+@using MediaHub.Data.ViewModel
+@using Microsoft.AspNetCore.Routing.Matching
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+
+@inject IdentityService _identityServiceInstance
+@inject IChatViewModel _chatServiceInstance
+
+@if (_identityServiceInstance.UserId == null)
+{
+    <p>There is a problem with your profile. Please contact support.</p>
+}
+else
+{
+    <div>
+        @foreach (var message in messages)
+        {
+            @message.Content; // TODO
+        }
+        
+    </div>
+}
+
+@code
+{
+    private List<Message> messages;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _chatServiceInstance.InsertMessage(_identityServiceInstance.UserId, _identityServiceInstance.UserId, "Dies ist eine Testnachricht");
+        messages = _chatServiceInstance.GetAllMessages();
+    }
+}
+
