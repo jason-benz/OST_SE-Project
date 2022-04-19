@@ -13,7 +13,7 @@ build-job:       # This job runs in the build stage, which runs first.
     - echo "Building the application"
     - dotnet build MediaHub/MediaHub.sln
     - echo "Preparing Project"
-    - dotnet publish MediaHub/MediaHub.sln -c release
+    - dotnet publish MediaHub/MediaHub/MediaHub.csproj -c release
   artifacts:
     paths:
       - "MediaHub/MediaHub/bin/*"
