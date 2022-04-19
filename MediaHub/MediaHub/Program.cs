@@ -3,14 +3,22 @@ using MediaHub.Data;
 using MediaHub.Data.Persistency;
 using MediaHub.Data.Model;
 using MediaHub.Data.ViewModel;
-using MediaHub.Pages;
 using MediaHub.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Logging
+
+var logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .CreateLogger();
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -30,7 +38,7 @@ builder.Services.AddSingleton<IdentityService>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddSingleton<IUserProfileViewModel>(new UserProfileViewModel(new UserProfileDataManager()));
 builder.Services.AddSingleton<IMediaSearchViewModel>(new MediaSearchViewModel(new TmdbApi()));
-
+builder.Services.AddSingleton<ILogService>(new SerilogService(logger));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
