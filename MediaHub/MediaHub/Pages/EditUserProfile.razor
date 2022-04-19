@@ -2,13 +2,14 @@
 
 @using MediaHub.Services
 @using MediaHub.Data.ViewModel
+@using Microsoft.CodeAnalysis.CSharp.Syntax
 
 @inject IUserProfileViewModel _userProfileViewModel
 @inject IdentityService _identityServiceInstance
 
 <h3>Edit your profile</h3>
 
-@if (_identityServiceInstance.UserId == null)
+@if (_identityServiceInstance.UserId == null || _userProfile == null)
 {
     <p>There is a problem with your profile. Please contact support.</p>
 }
@@ -22,7 +23,11 @@ else
         </div>
         <div class="form-group">
             <label for="username">Username</label>
-            <input id="username" class="form-control" @bind-value="_userProfile.Username" maxlength="50" required />
+            <input id="username" class="form-control" @bind-value="NewUsername" maxlength="50" required />
+            @if (_showUsernameHint)
+            {
+                <label>Username is already taken! Please choose another one.</label>
+            }
         </div>
         <div class="form-group">
             <label for="bio">Biography (max. 255 characters)</label>
@@ -32,14 +37,22 @@ else
         <button type="button" @onclick="SaveChanges" class="btn btn-primary">Save changes</button>
         @if (_showSaveChangesHint)
         {
-            <label id="saveChangesHint">Changes were saved successfully</label>
+            <label>Changes were saved successfully</label>
         }
     </form>
 }
 
 @code {
     private Data.Model.UserProfile _userProfile;
-    private bool _showSaveChangesHint = false;
+    private bool _showSaveChangesHint;
+    private bool _showUsernameHint;
+    
+    private string _newUsername = string.Empty;
+    private string NewUsername
+    {
+        get => string.IsNullOrWhiteSpace(_newUsername) ? _userProfile.Username : _newUsername;
+        set => _newUsername = value;
+    }
 
     protected override void OnInitialized()
     {
@@ -49,8 +62,21 @@ else
 
     private void SaveChanges()
     {
-        _userProfileViewModel.UpdateUserProfile(_userProfile);
-        _showSaveChangesHint = true;
+        if (IsUsernameAvailable())
+        {
+            _userProfile.Username = NewUsername;
+            _userProfileViewModel.UpdateUserProfile(_userProfile);
+            _showSaveChangesHint = true;
+        }
+        else
+        {
+            _showUsernameHint = true;
+        }
+    }
+
+    private bool IsUsernameAvailable()
+    {
+        return _userProfile.Username == _newUsername || _userProfileViewModel.IsUsernameAvailable(_newUsername);
     }
 
     private async Task UploadProfilePicture(InputFileChangeEventArgs e)
