@@ -1,10 +1,13 @@
 ﻿@page "/userProfile/{Username}"
 
 @using MediaHub.Services
+@using MediaHub.View
 @using MediaHub.Data.ViewModel
+@using MediaHub.Data.Model
 
 @inject IUserProfileViewModel _userProfileServiceInstance
 @inject IdentityService _identityServiceInstance
+@inject IMediaSearchViewModel _mediaSearchViewModel
 
 @if (_userProfile == null)
 {
@@ -16,12 +19,14 @@ else
     <h3>@_userProfile.Username's Profile</h3>
     <img src="@_userProfile.ProfilePicture" alt="No profile picture set..."/>
     <p>@_userProfile.Biography</p>
+    <h3>Media added to this profile:</h3>
+    <MediaTable MediaList="_media" AlternativeText="There is currently no media added to this profile"/>
 }
 
 
 @code {
     private Data.Model.UserProfile _userProfile;
-    
+    private List<IMovie> _media = new List<IMovie>();
     [Parameter]
     public string Username { get; set; }
 
@@ -29,5 +34,10 @@ else
     {
         string userId = _identityServiceInstance.UserId;
         _userProfile = _userProfileServiceInstance.GetUserProfileByUsername(Username);
+        var mediaIdList = _userProfile?.Ratings?.Where(r => r.IsAddedToProfile)?.Select(r => r.MovieId);
+        foreach (var id in mediaIdList)
+        {
+            _media.Add(_mediaSearchViewModel.GetMovieAsync(id).Result); //todo test (hangs itself in async method)
+        }
     }
 }

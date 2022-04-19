@@ -14,7 +14,7 @@ namespace MediaHub.Data.Persistency
         public UserProfile? GetUserProfileByUsername(string username)
         {
             using MediaHubDBContext context = new();
-            return context.UserProfiles.SingleOrDefault(up => up.Username == username);
+            return context.UserProfiles.Include(p => p.Ratings).SingleOrDefault(up => up.Username == username);
         }
 
         public void UpdateUserProfile(UserProfile userProfile)

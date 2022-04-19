@@ -1,0 +1,46 @@
+@using MediaHub.Data.Model
+@namespace MediaHub.View
+
+@if (MediaList != null)
+{
+   @if (MediaList.Count > 0)
+   {
+       <table class="table">
+               <thead>
+                   <tr>
+                   <th>Artwork</th>
+                   <th>Title</th>
+                   <th>Genres</th>
+                   <th>Year</th>
+                   <th>Rating</th>
+                   </tr>
+               </thead>
+               <tbody>
+               @foreach (var media in MediaList)
+               {
+                   <tr>
+                       <td><NavLink href=@{"movieDetailView/"+@media.Id}><img width="100px" src="@media.PosterUrl"></NavLink></td>
+                       <td>@media.Title</td>
+                       <td>@string.Join(", ", media.Genres)</td>
+                       <td>@media.ReleaseDate</td>
+                       <td>@media.Rating</td>
+                   </tr>
+               }
+               </tbody>
+       </table>
+   }
+   else
+   {
+       <p>@AlternativeText</p>
+   }
+}
+
+@code {
+
+    [Parameter]
+    public ICollection<IMovie>? MediaList { get; set; } 
+
+    [Parameter]
+    public string AlternativeText { get; set; } = "No media found.";
+
+}
