@@ -35,8 +35,7 @@ update_running_container () {
     sleep 10s
     dotnet-ef database update --connection 'Server=localhost;Database=mediahub;User=SA;Password=SA1234567!s;'
     #cd /Users/marcoagostini/Documents/Code/epj/code/MediaHub/MediaHub.Data
-    #dotnet ef database update
-}
+    dotnet-ef database update --connection 'Server=localhost;Database=mediahub_data;User=SA;Password=SA1234567!s;'
 
 checkout_repository
 build_container
