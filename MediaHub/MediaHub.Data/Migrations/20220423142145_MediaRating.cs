@@ -14,10 +14,10 @@ namespace MediaHub.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    MovieIdentifier = table.Column<int>(type: "int", nullable: false),
                     ProfileId = table.Column<string>(type: "NVARCHAR(450)", nullable: false),
-                    MovieId = table.Column<int>(type: "int", nullable: false),
                     IsAddedToProfile = table.Column<bool>(type: "bit", nullable: false),
-                    Rating = table.Column<byte>(type: "tinyint", nullable: true)
+                    Rating = table.Column<byte>(type: "tinyint", nullable: false)
                 },
                 constraints: table =>
                 {

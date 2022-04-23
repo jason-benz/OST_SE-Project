@@ -34,7 +34,7 @@ else
     {
         string userId = _identityServiceInstance.UserId;
         _userProfile = _userProfileServiceInstance.GetUserProfileByUsername(Username);
-        var mediaIdList = _userProfile?.Ratings?.Where(r => r.IsAddedToProfile)?.Select(r => r.MovieId);
+        var mediaIdList = _userProfile?.Ratings?.Where(r => r.IsAddedToProfile)?.Select(r => r.MovieIdentifier);
         foreach (var id in mediaIdList)
         {
             _media.Add(_mediaSearchViewModel.GetMovieAsync(id).Result); //todo test (hangs itself in async method)
