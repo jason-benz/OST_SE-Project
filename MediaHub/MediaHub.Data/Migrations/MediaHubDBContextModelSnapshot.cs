@@ -32,7 +32,7 @@ namespace MediaHub.Data.Migrations
                     b.Property<bool>("IsAddedToProfile")
                         .HasColumnType("bit");
 
-                    b.Property<int>("MovieIdentifier")
+                    b.Property<int>("MovieId")
                         .HasColumnType("int");
 
                     b.Property<string>("ProfileId")
