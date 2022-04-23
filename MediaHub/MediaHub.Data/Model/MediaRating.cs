@@ -14,9 +14,9 @@ public class MediaRating
     public UserProfile Profile { get; set; }
 
     public bool IsAddedToProfile { get; set; }
-    private byte? _rating;
+    private byte _rating;
     private const byte RatingRangeMax = 10;
-    public byte? Rating
+    public byte Rating
     {
         get => _rating;
         set
