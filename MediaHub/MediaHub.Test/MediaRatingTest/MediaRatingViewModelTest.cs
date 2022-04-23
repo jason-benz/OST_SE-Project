@@ -65,7 +65,7 @@ public class MediaRatingVieModelTest
         InjectTestRating(42);
         LoadViewModel();
         _ratingViewModel.Rating = 3;
-        Assert.Equal(42, _profileDataManager.UpdatedUserProfile.Ratings.ElementAt(0).MovieIdentifier);
+        Assert.Equal(42, _profileDataManager.UpdatedUserProfile.Ratings.ElementAt(0).MovieId);
     }
 
     [Fact]
@@ -84,7 +84,7 @@ public class MediaRatingVieModelTest
     private void InjectTestRating(int movieId)
     {
         InjectTestRating();
-        _profileDataManager.TestRating.MovieIdentifier = movieId;
+        _profileDataManager.TestRating.MovieId = movieId;
     }
     private void LoadViewModel()
     {

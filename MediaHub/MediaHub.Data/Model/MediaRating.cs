@@ -8,7 +8,7 @@ public class MediaRating
 {
     [Key] 
     public int Id { get; set; }
-    public int MovieIdentifier { get; set; }
+    public int MovieId { get; set; }
     public string ProfileId { get; set; }
     [ForeignKey(nameof(ProfileId))]
     public UserProfile Profile { get; set; }
