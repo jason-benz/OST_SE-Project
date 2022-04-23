@@ -53,7 +53,7 @@ public class RatingViewModel : IRatingViewModel
         else
         {
             _rating = _profile?.Ratings
-                           .Where(r => r.MovieId == _movie?.Id)
+                           .Where(r => r.MovieIdentifier == _movie?.Id)
                            .FirstOrDefault(new MediaRating()); 
         }
            
@@ -64,7 +64,7 @@ public class RatingViewModel : IRatingViewModel
         _rating = new MediaRating()
         {
             Profile = _profile ?? new UserProfile(UndefinedProfileId),
-            MovieId = _movie?.Id ?? UndefinedMovieId
+            MovieIdentifier = _movie?.Id ?? UndefinedMovieId
         };
         _profile?.Ratings.Add(_rating);
     }
