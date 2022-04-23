@@ -61,7 +61,7 @@ public class TmdbApi : IMediaApi
     private static async Task<string> ExecuteGetRequest(Uri requestUrl)
     {
         var client = new HttpClient();
-        var response = await client.GetAsync(requestUrl);
+        var response =  client.GetAsync(requestUrl).Result;
         return await response.Content.ReadAsStringAsync();
     }
 
