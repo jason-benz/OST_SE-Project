@@ -24,7 +24,7 @@ public class MediaHubDBContext : DbContext
         {
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings_data.json", false, true)
+                .AddJsonFile("appsettings.json", false, true)
                 .Build();
             
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("DataConnection"))
