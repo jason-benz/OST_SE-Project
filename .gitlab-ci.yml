@@ -23,7 +23,7 @@ unit-test-job:
   stage: test 
   script:
     - echo "Starting to run all Unit tests"
-    - cd /MediaHub/MediaHub.Test
+    - cd ./MediaHub/MediaHub.Test
     - dotnet test --filter Category=Unit
 
 docker-build:  
