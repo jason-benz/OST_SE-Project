@@ -21,19 +21,19 @@ public class MediaRatingVieModelTest
         _ratingViewModel = new RatingViewModel(_profileDataManager);
     }
 
-    [Fact]
+    [Fact, Trait("Category", "Unit")]
     public void TestToggleIsAddedToProfileThrows()
     {
         Assert.Throws<InvalidOperationException>(_ratingViewModel.ToggleIsAddedToProfile);
     }
 
-    [Fact]
+    [Fact, Trait("Category", "Unit")]
     public void TestSetRatingThrows()
     {
         Assert.Throws<InvalidOperationException>(() => _ratingViewModel.Rating = 0);
     }
 
-    [Fact]
+    [Fact, Trait("Category", "Unit")]
     public void TestToggleIsAddedToProfileDoesNotThrowAfterLoad()
     {
         InjectTestRating();
@@ -41,7 +41,7 @@ public class MediaRatingVieModelTest
         var exceptions = Record.Exception(() => _ratingViewModel.ToggleIsAddedToProfile());
         Assert.Null(exceptions);
     }
-    [Fact]
+    [Fact, Trait("Category", "Unit")]
     public void TestSetRatingDoesNotThrowAfterLoad()
     {
         InjectTestRating();
@@ -50,7 +50,7 @@ public class MediaRatingVieModelTest
         Assert.Null(exceptions);
     }
 
-    [Fact]
+    [Fact, Trait("Category", "Unit")]
     public void TestRatingContainsProfile()
     {
         InjectTestRating();
@@ -59,7 +59,7 @@ public class MediaRatingVieModelTest
         Assert.Equal("MockId-1", _profileDataManager.UpdatedUserProfile.UserId);
     }
 
-    [Fact]
+    [Fact, Trait("Category", "Unit")]
     public void TestRatingContainsMovie()
     {
         InjectTestRating(42);
@@ -68,7 +68,7 @@ public class MediaRatingVieModelTest
         Assert.Equal(42, _profileDataManager.UpdatedUserProfile.Ratings.ElementAt(0).MovieId);
     }
 
-    [Fact]
+    [Fact, Trait("Category", "Unit")]
     public void TestViewModelGeneratesNewRatingIfNone()
     {
         LoadViewModel();
