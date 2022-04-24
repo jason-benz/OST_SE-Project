@@ -22,7 +22,8 @@ build-job:       # This job runs in the build stage, which runs first.
 unit-test-job:   
   stage: test 
   script:
-    - echo "Currently there are no unti testings in place."
+    - echo "Starting to run all Unit tests"
+    - dotnet test --filter Category=Unit
 
 docker-build:  
   stage: build
