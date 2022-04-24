@@ -18,7 +18,7 @@ namespace MediaHub.Test.MediaSearchTest
         public void GetMovieById()
         {
             var movie = _mediaSearchViewModel.GetMovieAsync(12).Result;
-            Assert.Equal(13, movie.Id);
+            Assert.Equal(12, movie.Id);
         }
 
         [Fact, Trait("Category", "Unit")]
