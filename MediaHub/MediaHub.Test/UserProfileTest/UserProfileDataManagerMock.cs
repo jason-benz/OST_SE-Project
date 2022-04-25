@@ -1,27 +1,37 @@
 ﻿using MediaHub.Data.Model;
 using System;
+using System.Collections.Generic;
 
 namespace MediaHub.Test.UserProfileTest
 {
     internal class UserProfileDataManagerMock : IUserProfileDataManager
     {
+        public UserProfile UpdatedUserProfile { get; set; }
+        public MediaRating TestRating { get; set; } = null; 
         public UserProfile? GetUserProfileById(string userId)
         {
             switch (userId)
             {
-                case "1":
-                    return new UserProfile(userId)
+                case "MockId-1":
+                    var profile = new UserProfile(userId)
+                                    {
+                                        Username = "Mock test username",
+                                        Biography = "Mock test biography",
+                                        Ratings = new List<MediaRating>(),
+                                        ProfilePicture = ProfilePicture.GetTestProfilePicture()
+                                    };
+                    if (TestRating != null)
                     {
-                        Username = "Mock test username",
-                        Biography = "Mock test biography",
-                        ProfilePicture = ProfilePicture.GetTestProfilePicture()
-                    };
-                case "2":
+                        TestRating.Profile = profile;
+                        profile.Ratings.Add(TestRating);
+                    }
+
+                    return profile;
+                case "MockId-2":
                     return null;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(userId));
             }
-            
         }
 
         public UserProfile? GetUserProfileByUsername(string username)
@@ -54,6 +64,7 @@ namespace MediaHub.Test.UserProfileTest
 
         public void UpdateUserProfile(UserProfile userProfile)
         {
+            UpdatedUserProfile = userProfile;
             switch (userProfile.UserId)
             {
                 case "MockId-1":
