@@ -18,7 +18,7 @@ var logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
     .Enrich.FromLogContext()
     .CreateLogger();
-var logService = SerilogService.CreateAndGetSingleton(logger);
+ILogService logService = SerilogService.CreateAndGetSingleton(logger);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
