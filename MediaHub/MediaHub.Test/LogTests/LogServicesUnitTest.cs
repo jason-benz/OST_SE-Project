@@ -21,18 +21,12 @@ namespace MediaHub.Test.UserProfileTest
             _logService = new SerilogService(_logConfig);
         }
 
-        [Fact, Trait("Category", "Unit")]
-        public void SingletonCreationTest()
-        {
-            var singleton1 = SerilogService.CreateAndGetSingleton(_logConfig);
-            var singleton2 = SerilogService.GetSingleton();
-            Assert.Equal(singleton1, singleton2);
-        }
+        
 
         [Fact, Trait("Category", "Unit")]
         public void GetSingletonbeforeCreateThrows()
         {
-            var exception = Record.Exception(() => SerilogService.GetSingleton());
+            var exception = Record.Exception(() => ILogService.Singleton);
             Assert.NotNull(exception);
         }
         

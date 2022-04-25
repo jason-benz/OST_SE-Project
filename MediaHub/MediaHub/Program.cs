@@ -18,7 +18,7 @@ var logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
     .Enrich.FromLogContext()
     .CreateLogger();
-ILogService logService = SerilogService.CreateAndGetSingleton(logger);
+ILogService.Singleton = new SerilogService(logger);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -39,7 +39,7 @@ builder.Services.AddTransient<IEmailSender, EmailSender>();
 var profileManager = new UserProfileDataManager();
 builder.Services.AddSingleton<IUserProfileViewModel>(new UserProfileViewModel(profileManager));
 builder.Services.AddSingleton<IMediaSearchViewModel>(new MediaSearchViewModel(new TmdbApi()));
-builder.Services.AddSingleton(logService);
+builder.Services.AddSingleton(ILogService.Singleton);
 builder.Services.AddSingleton<IRatingViewModel>(new RatingViewModel(profileManager));
 var app = builder.Build();
 
