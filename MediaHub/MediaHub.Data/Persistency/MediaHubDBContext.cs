@@ -8,7 +8,7 @@ namespace MediaHub.Data.Persistency;
 public class MediaHubDBContext : DbContext
 {
     public DbSet<UserProfile> UserProfiles { get; set; }
-
+    public DbSet<MediaRating> Ratings { get; set; }
     public MediaHubDBContext()
     {
     }
@@ -23,7 +23,7 @@ public class MediaHubDBContext : DbContext
         {
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", false, true)
+                .AddJsonFile("appsettings.json",false,true)
                 .Build();
             
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("DataConnection"))

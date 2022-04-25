@@ -14,14 +14,14 @@ namespace MediaHub.Test.MediaSearchTest
             _mediaSearchViewModel = new MediaSearchViewModelMock();
         }
         
-        [Fact]
+        [Fact, Trait("Category", "Unit")]
         public void GetMovieById()
         {
             var movie = _mediaSearchViewModel.GetMovieAsync(12).Result;
             Assert.Equal(12, movie.Id);
         }
 
-        [Fact]
+        [Fact, Trait("Category", "Unit")]
         public void GetMovieByIdException()
         {
             Assert.ThrowsAsync<System.Exception>(async() =>
@@ -30,14 +30,14 @@ namespace MediaHub.Test.MediaSearchTest
             });
         }
 
-        [Fact]
+        [Fact, Trait("Category", "Unit")]
         public void GetMoviesByString()
         {
             List<IMovie> movies = _mediaSearchViewModel.GetMoviesAsync("MockMovie").Result;
             Assert.Equal(12, movies[0].Id);
         }
 
-        [Fact]
+        [Fact, Trait("Category", "Unit")]
         public void GetMoviesByEmptyString()
         {
             List<IMovie> movies = _mediaSearchViewModel.GetMoviesAsync("").Result;

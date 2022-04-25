@@ -14,6 +14,7 @@ checkout_repository () {
     git reset --hard
     git pull
     cp /tmp/config/appsettings.json ${CODEFOLDER}/MediaHub/MediaHub/appsettings.json
+    cp /tmp/config/appsettings_data.json ${CODEFOLDER}/MediaHub/MediaHub.Data/appsettings.json
     echo "Repository updated"
 }
 
@@ -33,9 +34,8 @@ update_running_container () {
     cd ${CODEFOLDER}/MediaHub/MediaHub
     sleep 10s
     dotnet-ef database update --connection 'Server=localhost;Database=mediahub;User=SA;Password=SA1234567!s;'
-    #cd /Users/marcoagostini/Documents/Code/epj/code/MediaHub/MediaHub.Data
-    #dotnet ef database update
-}
+    cd ${CODEFOLDER}/MediaHub/MediaHub.Data
+    dotnet-ef database update --connection 'Server=localhost;Database=mediahub_data;User=SA;Password=SA1234567!s;'
 
 checkout_repository
 build_container

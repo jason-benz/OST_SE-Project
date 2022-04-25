@@ -14,15 +14,15 @@ namespace MediaHub.Test.UserProfileTest
             _userProfileViewModel = new UserProfileViewModel(new UserProfileDataManagerMock());            
         }
 
-        [Fact]
+        [Fact, Trait("Category", "Unit")]
         public void GetUserProfileById_Succesfull()
         {
-            string userId = "1";
+            string userId = "MockId-1";
             UserProfile? userProfile = _userProfileViewModel.GetUserProfileById(userId);
             Assert.Equal(userId, userProfile?.UserId);
         }
 
-        [Fact]
+        [Fact, Trait("Category", "Unit")]
         public void GetUserProfileById_Null()
         {
             string userId = "2";
@@ -30,7 +30,7 @@ namespace MediaHub.Test.UserProfileTest
             Assert.Null(userProfile);
         }
 
-        [Fact]
+        [Fact, Trait("Category", "Unit")]
         public void GetUserProfileByUsername_Successfull()
         {
             string username = "MockUser-1";
@@ -38,7 +38,7 @@ namespace MediaHub.Test.UserProfileTest
             Assert.Equal(username, userProfile?.Username);
         }
 
-        [Fact]
+        [Fact, Trait("Category", "Unit")]
         public void GetUserProfileByUsername_Null()
         {
             string username = "MockUser-2";
@@ -46,7 +46,7 @@ namespace MediaHub.Test.UserProfileTest
             Assert.Null(userProfile);
         }
 
-        [Fact]
+        [Fact, Trait("Category", "Unit")]
         public void UpdateUserProfile_WithoutException()
         {
             var userProfile = new UserProfile("MockId-1");
@@ -54,7 +54,7 @@ namespace MediaHub.Test.UserProfileTest
             Assert.Null(exception);
         }
 
-        [Fact]
+        [Fact, Trait("Category", "Unit")]
         public void UpdateUserProfile_WithException()
         {
             var userProfile = new UserProfile("MockId-2");
@@ -62,7 +62,7 @@ namespace MediaHub.Test.UserProfileTest
             Assert.NotNull(exception);
         }
 
-        [Fact]
+        [Fact, Trait("Category", "Unit")]
         public void IsUsernameAvailable_True()
         {
             var username = "true";
@@ -70,7 +70,7 @@ namespace MediaHub.Test.UserProfileTest
             Assert.True(isUsernameAvailable);
         }
 
-        [Fact]
+        [Fact, Trait("Category", "Unit")]
         public void IsUsernameAvailable_False()
         {
             var username = "some taken user";

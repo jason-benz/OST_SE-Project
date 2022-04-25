@@ -1,14 +1,13 @@
 using MediaHub.Areas.Identity;
 using MediaHub.Data;
 using MediaHub.Data.Persistency;
-using MediaHub.Data.Model;
 using MediaHub.Data.ViewModel;
+using MediaHub.Data.Model;
 using MediaHub.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -36,9 +35,11 @@ builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddSingleton<IdentityService>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
-builder.Services.AddSingleton<IUserProfileViewModel>(new UserProfileViewModel(new UserProfileDataManager()));
+var profileManager = new UserProfileDataManager();
+builder.Services.AddSingleton<IUserProfileViewModel>(new UserProfileViewModel(profileManager));
 builder.Services.AddSingleton<IMediaSearchViewModel>(new MediaSearchViewModel(new TmdbApi()));
 builder.Services.AddSingleton<ILogService>(new SerilogService(logger));
+builder.Services.AddSingleton<IRatingViewModel>(new RatingViewModel(profileManager));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
