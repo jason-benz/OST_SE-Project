@@ -16,17 +16,29 @@
 }
 else
 {
-    <h3>@_userProfile.Username's Profile</h3>
-    <img src="@_userProfile.ProfilePicture" alt="No profile picture set..."/>
-    <p>@_userProfile.Biography</p>
-    <h3>Media added to this profile:</h3>
-    <MediaTable MediaList="_media" AlternativeText="There is currently no media added to this profile"/>
+    <div class="userProfileOverview">
+        <div class="userProfileColumn">
+            <h3>@_userProfile.Username's Profile</h3>
+            <img src="@_userProfile.ProfilePicture" alt="No profile picture set..."/>
+            <p>@_userProfile.Biography</p>
+        </div>
+        <div class="userProfileColumn">
+            <h3>Media added to this profile:</h3>
+            <div class="addedMovies">
+                        <MediaTable ShowReleaseDate="false" MediaList="_media" UserRatings="_userRatings" AlternativeText="There is currently no media added to this profile"/>
+            </div>
+        </div> 
+        
+    </div>
+    
+    
 }
 
 
 @code {
     private Data.Model.UserProfile _userProfile;
     private List<Movie> _media = new List<Movie>();
+    private IEnumerable<MediaRating> _userRatings; 
     [Parameter]
     public string Username { get; set; }
 
@@ -34,7 +46,12 @@ else
     {
         string userId = _identityServiceInstance.UserId;
         _userProfile = _userProfileServiceInstance.GetUserProfileByUsername(Username);
-        var mediaIdList = _userProfile?.Ratings?.Where(r => r.IsAddedToProfile)?.Select(r => r.MovieId);
+        var mediaIdList = _userProfile?.Ratings
+            .Where(r => r.IsAddedToProfile)
+            .Select(r => r.MovieId);
+        _userRatings = _userProfile?.Ratings
+            .Where(r => r.IsAddedToProfile);
+        
         foreach (var id in mediaIdList)
         {
             _media.Add(_mediaSearchViewModel.GetMovieAsync(id).Result); //todo test (hangs itself in async method)
