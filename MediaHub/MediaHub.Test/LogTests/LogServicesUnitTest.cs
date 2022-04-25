@@ -2,6 +2,7 @@
 using MediaHub.Services;
 using MediaHub.Data.Persistency;
 using Serilog;
+using Serilog.Core;
 using Xunit;
 
 namespace MediaHub.Test.UserProfileTest
@@ -11,14 +12,30 @@ namespace MediaHub.Test.UserProfileTest
         private ILogService _logService;
 
         private string _logFileName = "./log.txt";
+        private Logger _logConfig; 
         public LogServicesUnitTest()
         {
-            var logConfig = new LoggerConfiguration()
+            _logConfig = new LoggerConfiguration()
                 .WriteTo.File(_logFileName)
                 .CreateLogger();
-            _logService = SerilogService.GetOrCreateSingleton(logConfig);
+            _logService = new SerilogService(_logConfig);
         }
 
+        [Fact, Trait("Category", "Unit")]
+        public void SingletonCreationTest()
+        {
+            var singleton1 = SerilogService.CreateAndGetSingleton(_logConfig);
+            var singleton2 = SerilogService.GetSingleton();
+            Assert.Equal(singleton1, singleton2);
+        }
+
+        [Fact, Trait("Category", "Unit")]
+        public void GetSingletonbeforeCreateThrows()
+        {
+            var exception = Record.Exception(() => SerilogService.GetSingleton());
+            Assert.NotNull(exception);
+        }
+        
         [Fact, Trait("Category", "Unit")]
         public void InformationLogTypeTest()
         {

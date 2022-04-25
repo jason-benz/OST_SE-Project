@@ -6,20 +6,25 @@ namespace MediaHub.Services;
 public class SerilogService : ILogService
 {
     private Logger _logger;
-    private static SerilogService Singleton; 
+    private static SerilogService? _singleton; 
     public SerilogService(Logger logger)
     {
         _logger = logger;
     }
-    
-    public static ILogService GetOrCreateSingleton(Logger logger)
+
+    public static ILogService GetSingleton()
     {
-        if (Singleton == null)
+        if (_singleton == null)
         {
-            Singleton = new SerilogService(logger);
+            throw new Exception("Singleton was not created yet");
         }
 
-        return Singleton;
+        return _singleton;
+    }
+    public static ILogService CreateAndGetSingleton(Logger logger)
+    {
+        _singleton = new SerilogService(logger);
+        return _singleton;
     }
     public void LogInformation(string message, ILogService.LogCategory category)
     {
