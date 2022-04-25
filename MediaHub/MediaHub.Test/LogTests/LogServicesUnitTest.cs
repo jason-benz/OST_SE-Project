@@ -16,7 +16,7 @@ namespace MediaHub.Test.UserProfileTest
             var logConfig = new LoggerConfiguration()
                 .WriteTo.File(_logFileName)
                 .CreateLogger();
-            _logService = new SerilogService(logConfig);
+            _logService = SerilogService.GetOrCreateSingleton(logConfig);
         }
 
         [Fact, Trait("Category", "Unit")]

@@ -1,3 +1,4 @@
+
 namespace MediaHub.Data.Persistency;
 
 public interface ILogService
