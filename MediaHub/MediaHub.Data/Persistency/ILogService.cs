@@ -8,6 +8,11 @@ public interface ILogService
         Chat, Media, Identity
     }
 
+    static ILogService GetSingleton()
+    {
+        return null;
+    }
+
     public void LogInformation(string message, LogCategory category);
     public void LogException(string message, LogCategory category, Exception exception);
 }
