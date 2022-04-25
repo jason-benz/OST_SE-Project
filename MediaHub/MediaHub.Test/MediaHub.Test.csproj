@@ -39,4 +39,8 @@
       <ProjectReference Include="..\MediaHub.Data\MediaHub.Data.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="LogTests" />
+    </ItemGroup>
+
 </Project>

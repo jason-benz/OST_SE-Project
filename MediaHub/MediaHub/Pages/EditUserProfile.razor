@@ -64,8 +64,6 @@ else
 
     private void SaveChanges()
     {
-        _logger.LogInformation("test", ILogService.LogCategory.Identity);        
-        
         if (IsUsernameAvailable())
         {
             _userProfile.Username = NewUsername;
