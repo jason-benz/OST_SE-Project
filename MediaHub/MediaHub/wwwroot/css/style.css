@@ -211,3 +211,26 @@ a, .btn-link {
         width: min(48vw, 500px);
     }
 }
+
+.userProfileOverview {
+    display: flex;
+    flex-direction: row;
+    height: 70vh;
+    width: 100%;
+}
+
+.userProfileColumn {
+    width: 50%;
+    height: 100%;
+}
+
+.addedMovies {
+    overflow-y: scroll;
+    background-color: #E5E5E5;
+    height: 100%;
+}
+
+
+.RatingStarWrapper {
+    white-space: nowrap;
+}

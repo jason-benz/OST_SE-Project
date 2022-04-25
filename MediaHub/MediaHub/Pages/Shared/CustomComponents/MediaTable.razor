@@ -8,11 +8,18 @@
        <table class="table">
                <thead>
                    <tr>
-                   <th>Artwork</th>
-                   <th>Title</th>
-                   <th>Genres</th>
-                   <th>Year</th>
-                   <th>Rating</th>
+                       <th>Artwork</th>
+                       <th>Title</th>
+                       <th>Genres</th>
+                       @if (ShowReleaseDate)
+                       {
+                           <th>Year</th>
+                       }
+                       <th>Overall Rating</th>
+                       @if (UserRatings != null)
+                       {
+                       <th>User Rating</th>
+                       }
                    </tr>
                </thead>
                <tbody>
@@ -22,8 +29,17 @@
                        <td><NavLink href=@{"movieDetailView/"+@media.Id}><img width="100px" src="@media.PosterUrl"></NavLink></td>
                        <td>@media.Title</td>
                        <td>@string.Join(", ", media.Genres)</td>
-                       <td>@media.ReleaseDate</td>
+                       @if (ShowReleaseDate)
+                       {
+                           <td>@media.ReleaseDate</td>
+                       }
                        <td>@media.Rating</td>
+                       @if (UserRatings != null)
+                       {
+                           <td>
+                               <Rating StarSize="10px" ReadOnly="true" CurrentValue="@UserRatings.Where(r => r.MovieId == @media.Id).Select(r => r.Rating).First()"/>
+                           </td>
+                       }
                    </tr>
                }
                </tbody>
@@ -36,7 +52,12 @@
 }
 
 @code {
+    
+    [Parameter]
+    public IEnumerable<MediaRating>? UserRatings { get; set; }
 
+    [Parameter]
+    public bool ShowReleaseDate { get; set; } = true;
     [Parameter]
     public ICollection<Movie>? MediaList { get; set; } 
 
