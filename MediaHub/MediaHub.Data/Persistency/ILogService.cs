@@ -8,9 +8,21 @@ public interface ILogService
         Chat, Media, Identity
     }
 
-    static ILogService GetSingleton()
+    private static ILogService _singleton;
+    public static ILogService Singleton
     {
-        return null;
+        get
+        {
+            if (_singleton == null)
+            {
+                throw new Exception("Singleton must be set before use");
+            }
+            return _singleton;
+        }
+        set
+        {
+            _singleton = value;
+        }
     }
 
     public void LogInformation(string message, LogCategory category);
