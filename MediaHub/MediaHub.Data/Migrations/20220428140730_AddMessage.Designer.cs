@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MediaHub.Data.Migrations
 {
     [DbContext(typeof(MediaHubDBContext))]
-    [Migration("20220428092716_AddMessage")]
+    [Migration("20220428140730_AddMessage")]
     partial class AddMessage
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -69,7 +69,7 @@ namespace MediaHub.Data.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR(450)");
 
-                    b.Property<DateTime>("TimeReceived")
+                    b.Property<DateTime?>("TimeReceived")
                         .HasColumnType("datetime2");
 
                     b.HasKey("TimeSent");

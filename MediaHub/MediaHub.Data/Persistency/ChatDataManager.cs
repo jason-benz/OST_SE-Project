@@ -1,4 +1,5 @@
 ﻿using MediaHub.Data.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace MediaHub.Data.Persistency;
 
@@ -14,6 +15,13 @@ public class ChatDataManager : IChatDataManager
     public void InsertMessage(Message m)
     {
         using MediaHubDBContext context = new();
-        context.Add(m);
+        context.Entry(m.Sender).State = EntityState.Unchanged;
+        if (m.Receiver != null)
+        {
+            context.Entry(m.Receiver).State = EntityState.Unchanged;
+        }
+        
+        context.Add(m); 
+        context.SaveChanges();
     }
 }

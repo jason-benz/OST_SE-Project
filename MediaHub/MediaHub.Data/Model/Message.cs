@@ -7,14 +7,14 @@ namespace MediaHub.Data.Model;
 public class Message
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int MessageId { get; set; }
     [Column(Order=1)]
     public UserProfile Sender { get; set; }
-    [Key]
     [Column(Order=2)]  
     public UserProfile? Receiver { get; set; }
-    [Key]
     [Column(Order=3)]
     public DateTime TimeSent { get; set; }
-    public DateTime TimeReceived { get; set; }
+    public DateTime? TimeReceived { get; set; }
     public string Content { get; set; }
 }

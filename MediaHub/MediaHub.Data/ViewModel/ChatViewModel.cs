@@ -6,7 +6,7 @@ namespace MediaHub.Data.ViewModel;
 public class ChatViewModel : IChatViewModel
 {
     private readonly IChatDataManager _chatDataManager;
-    private IUserProfileDataManager _userProfileDataManager;
+    private readonly IUserProfileDataManager _userProfileDataManager;
 
     public ChatViewModel(IChatDataManager chatDataManager, IUserProfileDataManager userProfileDataManager)
     {
