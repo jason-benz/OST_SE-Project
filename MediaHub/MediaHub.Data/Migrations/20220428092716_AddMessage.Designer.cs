@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MediaHub.Data.Migrations
 {
     [DbContext(typeof(MediaHubDBContext))]
-    [Migration("20220423150511_Message")]
-    partial class Message
+    [Migration("20220428092716_AddMessage")]
+    partial class AddMessage
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -63,7 +63,6 @@ namespace MediaHub.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ReceiverUserId")
-                        .IsRequired()
                         .HasColumnType("NVARCHAR(450)");
 
                     b.Property<string>("SenderUserId")
@@ -123,8 +122,7 @@ namespace MediaHub.Data.Migrations
                     b.HasOne("MediaHub.Data.Model.UserProfile", "Receiver")
                         .WithMany()
                         .HasForeignKey("ReceiverUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("MediaHub.Data.Model.UserProfile", "Sender")
                         .WithMany()

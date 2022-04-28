@@ -61,7 +61,6 @@ namespace MediaHub.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ReceiverUserId")
-                        .IsRequired()
                         .HasColumnType("NVARCHAR(450)");
 
                     b.Property<string>("SenderUserId")
@@ -121,8 +120,7 @@ namespace MediaHub.Data.Migrations
                     b.HasOne("MediaHub.Data.Model.UserProfile", "Receiver")
                         .WithMany()
                         .HasForeignKey("ReceiverUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("MediaHub.Data.Model.UserProfile", "Sender")
                         .WithMany()
