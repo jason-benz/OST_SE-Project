@@ -8,6 +8,7 @@
 @inject IUserProfileViewModel _userProfileServiceInstance
 @inject IdentityService _identityServiceInstance
 @inject IMediaSearchViewModel _mediaSearchViewModel
+@inject IMediaTableViewModel _mediaTableViewModel
 
 @if (_userProfile == null)
 {
@@ -25,7 +26,7 @@ else
         <div class="userProfileColumn">
             <h3>Media added to this profile:</h3>
             <div class="addedMovies">
-                        <MediaTable ShowReleaseDate="false" MediaList="_media" UserRatings="_userRatings" AlternativeText="There is currently no media added to this profile"/>
+                        <MediaTable DisplayUserRatings="true" ShowReleaseDate="false" MoviesAndRatings="_moviesAndRatings" AlternativeText="There is currently no media added to this profile"/>
             </div>
         </div> 
         
@@ -38,23 +39,16 @@ else
 @code {
     private Data.Model.UserProfile _userProfile;
     private List<Movie> _media = new List<Movie>();
-    private IEnumerable<MediaRating> _userRatings; 
+    private IEnumerable<MediaRating> _userRatings;
+    private IEnumerable<IMediaTableViewModel.MovieAndRating> _moviesAndRatings;
+    
     [Parameter]
     public string Username { get; set; }
 
     protected override void OnInitialized()
     {
         string userId = _identityServiceInstance.UserId;
-        _userProfile = _userProfileServiceInstance.GetUserProfileByUsername(Username);
-        var mediaIdList = _userProfile?.Ratings
-            .Where(r => r.IsAddedToProfile)
-            .Select(r => r.MovieId);
-        _userRatings = _userProfile?.Ratings
-            .Where(r => r.IsAddedToProfile);
-        
-        foreach (var id in mediaIdList)
-        {
-            _media.Add(_mediaSearchViewModel.GetMovieAsync(id).Result); //todo test (hangs itself in async method)
-        }
+        _userProfile = _userProfileServiceInstance.GetUserProfileById(userId);
+        _moviesAndRatings = _mediaTableViewModel.GetMoviesOfUserProfileByUserIdAsync(userId);
     }
 }
