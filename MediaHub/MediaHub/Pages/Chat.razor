@@ -16,7 +16,7 @@
 else
 {
     <form class="media-search" @onsubmit=SaveMessageToDb>
-        <input type="text" placeholder="Type your message here" @bind="currentMessage"/>
+        <input type="text" placeholder="Type your message here" @bind="currentMessage" required/>
         <button type="submit" class="btn btn-primary">Send Message</button>
     </form>
 
