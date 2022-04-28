@@ -7,6 +7,7 @@
 @using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
 @inject ProtectedSessionStorage SessionStorage
 @inject IMediaSearchViewModel MediaServiceInstance
+@inject IMediaTableViewModel _mediaTableViewModel;
 
 <h1 class="center-heading">Search for Media</h1>
 
@@ -16,14 +17,19 @@
 </form>
 
 <div class="search-result-box">
-    <MediaTable MediaList="@mediaList" AlternativeText="Sorry, but there is no media found according to your search text."/>
+    <MediaTable MoviesAndRatings="@mediaList" AlternativeText="Sorry, but there is no media found according to your search text."/>
 </div>
 
 @code
 {
-    private List<Movie>? mediaList;
+    private List<IMediaTableViewModel.MovieAndRating> mediaList;
 
     protected override async Task OnInitializedAsync()
+    {
+        
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstCall)
     {
         var result = await SessionStorage.GetAsync<string>("SearchString");
         if (result.Success)
@@ -39,7 +45,7 @@
     protected async Task SearchCall()
     {
         await SessionStorage.SetAsync("SearchString", searchString);
-        mediaList = await MediaServiceInstance.GetMoviesAsync(searchString);
+        mediaList = await _mediaTableViewModel.GetMoviesByNameAsync(searchString);
     }
 
     private string searchString { get; set; } = "";
