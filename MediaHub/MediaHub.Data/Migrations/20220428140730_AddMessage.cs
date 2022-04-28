@@ -9,6 +9,11 @@ namespace MediaHub.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.RenameColumn(
+                name: "MovieIdentifier",
+                table: "MediaRating",
+                newName: "MovieId");
+
             migrationBuilder.CreateTable(
                 name: "Message",
                 columns: table => new
@@ -16,7 +21,7 @@ namespace MediaHub.Data.Migrations
                     TimeSent = table.Column<DateTime>(type: "datetime2", nullable: false),
                     SenderUserId = table.Column<string>(type: "NVARCHAR(450)", nullable: false),
                     ReceiverUserId = table.Column<string>(type: "NVARCHAR(450)", nullable: true),
-                    TimeReceived = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TimeReceived = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>

@@ -4,9 +4,10 @@
 @using MediaHub.Data.ViewModel
 @using Microsoft.AspNetCore.Routing.Matching
 @using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@using SendGrid.Helpers.Mail.Model
 
 @inject IdentityService _identityServiceInstance
-@inject IChatViewModel _chatServiceInstance
+@inject IChatViewModel _chatViewModel
 
 @if (_identityServiceInstance.UserId == null)
 {
@@ -14,23 +15,40 @@
 }
 else
 {
+    <form class="media-search" @onsubmit=SaveMessageToDb>
+        <input type="text" placeholder="Type your message here" @bind="currentMessage"/>
+        <button type="submit" class="btn btn-primary">Send Message</button>
+    </form>
+
     <div>
+        Alle Inhalte aller Nachrichten:
         @foreach (var message in messages)
         {
-            @message.Content; // TODO
+            <div class = "singleMessage">
+                @message.Content
+            </div>
+            
+            ; // TODO
         }
-        
+
     </div>
 }
 
 @code
 {
+    private string currentMessage { get; set; }= "";
     private List<Message> messages;
 
     protected override async Task OnInitializedAsync()
     {
-        _chatServiceInstance.InsertMessage(_identityServiceInstance.UserId, _identityServiceInstance.UserId, "Dies ist eine Testnachricht");
-        messages = _chatServiceInstance.GetAllMessages();
+        Console.WriteLine(_identityServiceInstance.UserId);
+        messages = _chatViewModel.GetAllMessages();
+    }
+    
+    void SaveMessageToDb()
+    {
+        // FIXME Hardcoded receiver id
+        _chatViewModel.InsertMessage(_identityServiceInstance.UserId, "c581ffdf-24e2-49e5-a540-15e0e5f51cd2", currentMessage);
     }
 }
 

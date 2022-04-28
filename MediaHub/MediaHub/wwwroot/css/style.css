@@ -206,6 +206,11 @@ a, .btn-link {
     grid-area: details;
 }
 
+.singleMessage {
+    background-color: lightblue;
+    margin: 2em;
+}
+
 @media (min-width: 855px) {
     #account, #registerForm {
         width: min(48vw, 500px);
