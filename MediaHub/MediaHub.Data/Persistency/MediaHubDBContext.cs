@@ -35,5 +35,8 @@ public class MediaHubDBContext : DbContext
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        // FIXME | Receiver cannot be deleted until sender is deleted 
+       modelBuilder.Entity<Message>().HasOne(e => e.Receiver).WithMany().IsRequired(false).OnDelete(DeleteBehavior.Restrict);
+       modelBuilder.Entity<Message>().HasOne(e => e.Sender).WithMany().OnDelete(DeleteBehavior.Cascade);
     }
 }

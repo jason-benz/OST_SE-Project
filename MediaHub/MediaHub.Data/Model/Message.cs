@@ -10,8 +10,8 @@ public class Message
     [Column(Order=1)]
     public UserProfile Sender { get; set; }
     [Key]
-    [Column(Order=2)]
-    public UserProfile Receiver { get; set; }
+    [Column(Order=2)]  
+    public UserProfile? Receiver { get; set; }
     [Key]
     [Column(Order=3)]
     public DateTime TimeSent { get; set; }

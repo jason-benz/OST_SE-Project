@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MediaHub.Data.Migrations
 {
-    public partial class Message : Migration
+    public partial class AddMessage : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,7 +15,7 @@ namespace MediaHub.Data.Migrations
                 {
                     TimeSent = table.Column<DateTime>(type: "datetime2", nullable: false),
                     SenderUserId = table.Column<string>(type: "NVARCHAR(450)", nullable: false),
-                    ReceiverUserId = table.Column<string>(type: "NVARCHAR(450)", nullable: false),
+                    ReceiverUserId = table.Column<string>(type: "NVARCHAR(450)", nullable: true),
                     TimeReceived = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -27,7 +27,7 @@ namespace MediaHub.Data.Migrations
                         column: x => x.ReceiverUserId,
                         principalTable: "UserProfile",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Message_UserProfile_SenderUserId",
                         column: x => x.SenderUserId,
@@ -51,6 +51,11 @@ namespace MediaHub.Data.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Message");
+
+            migrationBuilder.RenameColumn(
+                name: "MovieId",
+                table: "MediaRating",
+                newName: "MovieIdentifier");
         }
     }
 }
