@@ -1,5 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@using MediaHub.Services
 @inject ProtectedSessionStorage SessionStorage
+@inject IdentityService _identityServiceInstance
 
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
@@ -13,7 +15,7 @@
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <nav class="flex-column">
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All" @onclick="DeleteSessionStorageSearchString">
+            <NavLink class="nav-link" href="userProfile" Match="NavLinkMatch.All" @onclick="DeleteSessionStorageSearchString">
                 <span class="oi oi-home" aria-hidden="true"></span> Home
             </NavLink>
         </div>

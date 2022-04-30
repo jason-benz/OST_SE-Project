@@ -2,22 +2,22 @@
 @using MediaHub.Data.ViewModel
 @namespace MediaHub.View
 
-@if (MoviesAndRatings != null)
+@if (MoviesAndRatings != null && MoviesAndRatings.Count()!=0)
 {
-   <table class="table">
+   <table class="table media-table">
            <thead>
                <tr>
                    <th>Artwork</th>
                    <th>Title</th>
                    <th>Genres</th>
+                   <th>Rating</th>
                    @if (ShowReleaseDate)
                    {
                        <th>Year</th>
                    }
-                   <th>Overall Rating</th>
                    @if (DisplayUserRatings)
                    {
-                   <th>User Rating</th>
+                   <th>My Rating</th>
                    }
                </tr>
            </thead>
@@ -26,13 +26,13 @@
            {
                <tr>
                    <td><NavLink href=@{"movieDetailView/"+@movieAndRating.Movie.Id}><img width="100px" src="@movieAndRating.Movie.PosterUrl"></NavLink></td>
-                   <td>@movieAndRating.Movie.Title</td>
+                   <td><b>@movieAndRating.Movie.Title</b></td>
                    <td>@string.Join(", ", movieAndRating.Movie.Genres)</td>
+                   <td>@movieAndRating.Movie.Rating</td>
                    @if (ShowReleaseDate)
                    {
                        <td>@movieAndRating.Movie.ReleaseDate</td>
                    }
-                   <td>@movieAndRating.Movie.Rating</td>
                    @if (DisplayUserRatings)
                    {
                        <td>
@@ -46,7 +46,7 @@
    }
 else
 {
-   <p>@AlternativeText</p>
+   <p class="alternative-text">@AlternativeText</p>
 }
 
 
