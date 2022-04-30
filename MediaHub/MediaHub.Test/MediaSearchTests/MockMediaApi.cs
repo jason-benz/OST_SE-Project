@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Threading.Tasks;
 using MediaHub.Data.Model;
 
@@ -41,6 +40,6 @@ public class MockMediaApi : IMediaApi
             );
             return movies;
         }
-        throw new System.Exception("No Movies found");
+        throw new Exception("No Movies found");
     }
 }

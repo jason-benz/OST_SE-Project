@@ -2,7 +2,6 @@ using MediaHub.Data.ViewModel;
 using System;
 using System.Collections.Generic;
 using MediaHub.Data.Model;
-using MediaHub.Test.MediaSearchTest;
 using Xunit;
 
 namespace MediaHub.Test.MediaSearchTest
@@ -25,7 +24,7 @@ namespace MediaHub.Test.MediaSearchTest
         [Fact, Trait("Category", "Unit")]
         public void GetMovieByIdException()
         {
-            Assert.ThrowsAsync<System.Exception>(async() =>
+            Assert.ThrowsAsync<Exception>(async() =>
             {
                 await _mediaSearchViewModel.GetMovieAsync(13);
             });
