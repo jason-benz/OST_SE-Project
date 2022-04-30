@@ -206,11 +206,38 @@ a, .btn-link {
     grid-area: details;
 }
 
+#contactlist-container {
+    width: 30%;
+    float: left;
+}
+
+#chat-messages-container {
+    width: 70%;
+    float: right;
+}
+
+#send-msg-btn {
+    width: auto;
+    margin: 0.5em;
+}
+
+#msg-input {
+    width: 70%;
+}
+
 .singleMessage {
     background-color: lightblue;
     margin: 0.5em;
     padding: 0.5em;
     width: fit-content;
+    border-radius: 0.3em;
+}
+
+.contactListElement {
+    background-color: lightgreen;
+    margin: 0.5em;
+    padding: 0.5em;
+    width: 80%;
     border-radius: 0.3em;
 }
 
