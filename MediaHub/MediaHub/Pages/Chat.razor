@@ -15,34 +15,37 @@
 }
 else
 {
-    <h3>Contact List:</h3>
+    <div id="chat-container">
+        <div id="contactlist-container">
+            <h3>Contact List:</h3>
+            @foreach (var contact in userProfilesOfContacts)
+            {
+                <div class="contactListElement" @onclick="@(() => OpenChat(@contact.UserId))">@contact.Username</div>
+            }
+        </div>
 
-    foreach (var contact in userProfilesOfContacts)
-    {
-        <div class="contactListElement" @onclick="@(() => OpenChat(@contact.UserId))">@contact.Username</div>
-    }
+        <div id="chat-messages-container">
+            <form @onsubmit=SaveMessageToDb>
+                <input id="msg-input" type="text" placeholder="Type your message here" @bind="currentMessage" required/>
+                <button id="send-msg-btn" type="submit" class="btn btn-primary">Send Message</button>
+            </form>
 
-    
-    <form class="media-search" @onsubmit=SaveMessageToDb>
-        <input type="text" placeholder="Type your message here" @bind="currentMessage" required/>
-        <button type="submit" class="btn btn-primary">Send Message</button>
-    </form>
-
-    <div class="Contactlist">
-        <ContactList Callback="(string userId) => {_chatViewModel.correspondentUserId = userId; correspondentId = userId}"/> <!--Fixme Unsure if this works here -->
-    </div>
-    
-    <div>
-        Alle Inhalte aller Nachrichten:
-        @foreach (var message in _messages)
-        {
-            <div class = "singleMessage">
-                @message.Content
+            <div class="Contactlist">
+                <ContactList Callback="(string userId) => {_chatViewModel.correspondentUserId = userId; correspondentId = userId}"/> <!--Fixme Unsure if this works here -->
             </div>
-            
-            ; // TODO
-        }
 
+            <div>
+                Alle Inhalte aller Nachrichten:
+                @foreach (var message in _messages)
+                {
+                    <div class="singleMessage">
+                        @message.Content
+                    </div>
+
+                    ; // TODO
+                }
+            </div>
+        </div>
     </div>
 }
 
