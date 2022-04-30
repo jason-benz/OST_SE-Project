@@ -35,13 +35,13 @@ else
                 {
                     <div class="msg-line">
                     @if (_identityServiceInstance.UserId.Equals(message.Sender.UserId))
-                                        {
-                                            <div class="single-msg sent-msg"> @message.Content </div>
-                                        }
-                                        else
-                                        {
-                                            <div class="single-msg received-msg"> @message.Content </div>
-                                        }
+                    {
+                        <div class="single-msg sent-msg"> @message.Content </div>
+                    }
+                    else
+                    {
+                        <div class="single-msg received-msg"> @message.Content </div>
+                    }
                     </div>
                 }
             </div>
@@ -64,6 +64,7 @@ else
     void SaveMessageToDb()
     {
         _chatViewModel.InsertMessage(currentMessage);
+        currentMessage = "";
     }
 
     public void OpenChat(string userId)
