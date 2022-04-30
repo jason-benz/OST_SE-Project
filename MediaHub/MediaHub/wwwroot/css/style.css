@@ -140,23 +140,40 @@ a, .btn-link {
 
 .search-result-box {
     margin: auto;
-    max-width: 60rem;
+    max-width: 70rem;
     background: #F0F0F0;
     max-height: 70vh;
     overflow-y: auto;
     overflow-x: hidden;
+    border-radius: 8px;
 }
 
-.search-result-box th {
-        position: sticky;
-        top: 0;
-        background-color: #b4b4b4;
+.media-table{
+    border-color: lightgrey;
+}
+
+.media-table > thead *{
+    border-style: unset;
+}
+
+.media-table th {
+    position: sticky;
+    top: 0;
+    background-color: #b4b4b4;
+    box-shadow: inset 0 -2px 0 #000000;
 }
 
 .center-heading {
-        margin-top: 50px;
-        margin-bottom: 20px;
-        text-align: center;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.alternative-text {
+    margin-bottom: 0;
+    font-weight: bold;
+    text-align: center;
+    background: white;
 }
 
 .detaile-view-container {
@@ -181,11 +198,14 @@ a, .btn-link {
     justify-content: space-between;
 }
 
-    .title-and-add-button > button {
-        margin-top: 0;
-        height: fit-content;
-    }
+.title-and-add-button > button {
+    margin-top: 0;
+    height: fit-content;
+}
 
+.media-table > .table {
+    border-color: lightgrey;
+}
 
 .media-data-table .caption {
     width: 150px;
@@ -206,31 +226,58 @@ a, .btn-link {
     grid-area: details;
 }
 
+.userProfileOverview {
+    display: grid;
+    grid:
+        "title1 title1" 50px
+        "image title2" 35px
+        "image movies" 270px
+        "bibliography movies" 20vh
+        "genres movies" 40vh
+        / 1fr 1.5fr;
+    column-gap: 50px;
+    max-width: 100vw;
+    margin: auto;
+}
+
+.userProfileOverview > h1{
+    font-size: 2rem;
+    grid-area: title1;
+}
+
+.userProfileOverview > h2{
+    font-size: 1.5rem;
+    grid-area: title2;
+    margin-bottom: 0;
+}
+
+.userProfileOverview > img{
+    margin-top: 10px;
+    grid-area: image;
+}
+
+.userProfileOverview > p{
+    grid-area: bibliography;
+    text-align: justify;
+}
+
+.userProfileOverview > .addedMovies{
+    grid-area: movies;
+}
+
+.addedMovies {
+    overflow-y: auto;
+    background-color: #E5E5E5;
+    height: 100%;
+    border-radius: 8px;
+}
+
+.RatingStarWrapper {
+    white-space: nowrap;
+}
+
 @media (min-width: 855px) {
     #account, #registerForm {
         width: min(48vw, 500px);
     }
-}
-
-.userProfileOverview {
-    display: flex;
-    flex-direction: row;
-    height: 70vh;
-    width: 100%;
-}
-
-.userProfileColumn {
-    width: 50%;
-    height: 100%;
-}
-
-.addedMovies {
-    overflow-y: scroll;
-    background-color: #E5E5E5;
-    height: 100%;
-}
-
-
-.RatingStarWrapper {
-    white-space: nowrap;
 }

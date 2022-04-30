@@ -16,20 +16,19 @@
     <button type="submit" class="btn btn-primary">Search</button>
 </form>
 
-<div class="search-result-box">
+@if (mediaList != null)
+{
+    <div class="search-result-box">
     <MediaTable MoviesAndRatings="@mediaList" AlternativeText="Sorry, but there is no media found according to your search text."/>
-</div>
+    </div>
+}
+
 
 @code
 {
     private List<IMediaTableViewModel.MovieAndRating> mediaList;
 
     protected override async Task OnInitializedAsync()
-    {
-        
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstCall)
     {
         var result = await SessionStorage.GetAsync<string>("SearchString");
         if (result.Success)
