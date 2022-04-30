@@ -31,9 +31,9 @@ else
             </form>
             
             <div>
-                Alle Inhalte aller Nachrichten:
                 @foreach (var message in _messages)
                 {
+                    <div class="msg-line">
                     @if (_identityServiceInstance.UserId.Equals(message.Sender.UserId))
                                         {
                                             <div class="single-msg sent-msg"> @message.Content </div>
@@ -42,6 +42,7 @@ else
                                         {
                                             <div class="single-msg received-msg"> @message.Content </div>
                                         }
+                    </div>
                 }
             </div>
         </div>

@@ -45,8 +45,8 @@ public class ChatViewModel : IChatViewModel
     {
         if (_sender != null && _receiver != null)
         {
-            UserProfile senderProfile = _receiver;
-            UserProfile receiverProfile = _sender;
+            UserProfile senderProfile = _sender;
+            UserProfile receiverProfile = _receiver;
             DateTime timeSent = DateTime.Now;
             Message m = new Message();
             m.Content = content;
