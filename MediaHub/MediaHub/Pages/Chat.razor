@@ -15,14 +15,26 @@
 }
 else
 {
+    <h3>Contact List:</h3>
+
+    foreach (var contact in userProfilesOfContacts)
+    {
+        <div class="contactListElement" @onclick="@(() => OpenChat(@contact.UserId))">@contact.Username</div>
+    }
+
+    
     <form class="media-search" @onsubmit=SaveMessageToDb>
         <input type="text" placeholder="Type your message here" @bind="currentMessage" required/>
         <button type="submit" class="btn btn-primary">Send Message</button>
     </form>
 
+    <div class="Contactlist">
+        <ContactList Callback="(string userId) => {_chatViewModel.correspondentUserId = userId; correspondentId = userId}"/> <!--Fixme Unsure if this works here -->
+    </div>
+    
     <div>
         Alle Inhalte aller Nachrichten:
-        @foreach (var message in messages)
+        @foreach (var message in _messages)
         {
             <div class = "singleMessage">
                 @message.Content
@@ -37,18 +49,25 @@ else
 @code
 {
     private string currentMessage { get; set; }= "";
-    private List<Message> messages;
+    private List<Message> _messages = new List<Message>();
+    public List<MediaHub.Data.Model.UserProfile> userProfilesOfContacts { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        Console.WriteLine(_identityServiceInstance.UserId);
-        messages = _chatViewModel.GetAllMessages();
+        _chatViewModel.SetSenderById(_identityServiceInstance.UserId);
+        userProfilesOfContacts = _chatViewModel.GetAllContactUserProfiles();
     }
     
     void SaveMessageToDb()
     {
-        // FIXME Hardcoded receiver id
-        _chatViewModel.InsertMessage(_identityServiceInstance.UserId, "c581ffdf-24e2-49e5-a540-15e0e5f51cd2", currentMessage);
+        // FIXME Hardcoded receiver id "c581ffdf-24e2-49e5-a540-15e0e5f51cd2"
+        _chatViewModel.InsertMessage(currentMessage);
+    }
+
+    public void OpenChat(string userId)
+    {
+        _chatViewModel.SetReceiverById(userId);
+        _messages = _chatViewModel.GetAllMessagesForActiveChat();
     }
 }
 

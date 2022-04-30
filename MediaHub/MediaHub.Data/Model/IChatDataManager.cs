@@ -6,4 +6,6 @@ public interface IChatDataManager
 
     public void InsertMessage(Message message);
     // TODO
+
+    public List<Message> GetMessagesBetweenTwoUsers(string userId1, string userId2);
 }

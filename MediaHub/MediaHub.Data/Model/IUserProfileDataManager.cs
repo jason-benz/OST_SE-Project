@@ -9,5 +9,7 @@
         public void UpdateUserProfile(UserProfile userProfile);
 
         public bool IsUsernameAvailable(string username);
+
+        public List<UserProfile> GetAllUserProfiles();
     }
 }
