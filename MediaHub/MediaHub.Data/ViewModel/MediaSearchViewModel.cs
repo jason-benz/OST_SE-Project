@@ -20,7 +20,7 @@ public class MediaSearchViewModel : IMediaSearchViewModel
         {
             return await _api.Search(searchString);
         }
-        catch (Exception) {
+        catch (Exception) { //todo: dont use exceptions for expected behavior!
             return new List<IMovie>();
         }
     }
