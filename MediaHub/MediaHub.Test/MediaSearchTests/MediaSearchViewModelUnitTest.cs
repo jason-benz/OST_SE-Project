@@ -2,16 +2,17 @@ using MediaHub.Data.ViewModel;
 using System;
 using System.Collections.Generic;
 using MediaHub.Data.Model;
+using MediaHub.Test.MediaSearchTest;
 using Xunit;
 
-namespace MediaHub.Test.MediaSearchTest
+namespace MediaHub.Test.MediaSearchTests
 {
-    public class MediaSearchViewModelTest
+    public class MediaSearchViewModelTests
     {
         private readonly IMediaSearchViewModel _mediaSearchViewModel;
-        public MediaSearchViewModelTest()
+        public MediaSearchViewModelTests()
         {
-            _mediaSearchViewModel = new MediaSearchViewModelMock();
+            _mediaSearchViewModel = new MediaSearchViewModel(new MockMediaApi());
         }
         
         [Fact, Trait("Category", "Unit")]
