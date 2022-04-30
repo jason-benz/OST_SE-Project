@@ -11,6 +11,12 @@ namespace MediaHub.Data.Persistency
             return context.UserProfiles.Include(p => p.Ratings).SingleOrDefault(up => up.UserId == userId);
         }
 
+        public UserProfile? GetUserProfileByIdNoTracking(string userId)
+        {
+            using MediaHubDBContext context = new();
+            return context.UserProfiles.AsNoTracking().SingleOrDefault(up => up.UserId == userId);
+        }
+
         public List<UserProfile> GetAllUserProfiles()
         {
             using MediaHubDBContext context = new();

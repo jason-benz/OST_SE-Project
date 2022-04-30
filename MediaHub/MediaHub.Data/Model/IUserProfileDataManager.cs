@@ -4,6 +4,8 @@
     {
         public UserProfile? GetUserProfileById(string userId);
 
+        public UserProfile? GetUserProfileByIdNoTracking(string userId);
+
         public UserProfile? GetUserProfileByUsername(string username);
 
         public void UpdateUserProfile(UserProfile userProfile);
