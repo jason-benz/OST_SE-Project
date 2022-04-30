@@ -1,4 +1,5 @@
 ﻿using MediaHub.Data.Model;
+using MediaHub.Data.Persistency;
 
 namespace MediaHub.Data.ViewModel
 {
@@ -17,8 +18,9 @@ namespace MediaHub.Data.ViewModel
             {
                 return _userProfileDataManager.GetUserProfileById(userId);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                ILogService.Singleton.LogException("An unknown error occured while reading the userprofile from the database", ILogService.LogCategory.Identity, e);
                 return null;
             }
         }
@@ -29,8 +31,9 @@ namespace MediaHub.Data.ViewModel
             {
                 return _userProfileDataManager.GetUserProfileByUsername(username);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                ILogService.Singleton.LogException("An unknown error occured while reading the userprofile from the database", ILogService.LogCategory.Identity, e);
                 return null;
             }
             
@@ -42,9 +45,10 @@ namespace MediaHub.Data.ViewModel
             {
                 _userProfileDataManager.UpdateUserProfile(userProfile);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw new Exception("An unknown error occured");
+                ILogService.Singleton.LogException("An unknown Error occured, while updating the user profile", ILogService.LogCategory.Identity, e);
+                throw;
             }
         }
 
