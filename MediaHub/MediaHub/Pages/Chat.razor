@@ -20,7 +20,7 @@ else
             <h3>Contact List:</h3>
             @foreach (var contact in userProfilesOfContacts)
             {
-                <div class="contactListElement" @onclick="@(() => OpenChat(@contact.UserId))">@contact.Username</div>
+                <div class="contactlist-element" @onclick="@(() => OpenChat(@contact.UserId))">@contact.Username</div>
             }
         </div>
 
@@ -29,20 +29,19 @@ else
                 <input id="msg-input" type="text" placeholder="Type your message here" @bind="currentMessage" required/>
                 <button id="send-msg-btn" type="submit" class="btn btn-primary">Send Message</button>
             </form>
-
-            <div class="Contactlist">
-                <ContactList Callback="(string userId) => {_chatViewModel.correspondentUserId = userId; correspondentId = userId}"/> <!--Fixme Unsure if this works here -->
-            </div>
-
+            
             <div>
                 Alle Inhalte aller Nachrichten:
                 @foreach (var message in _messages)
                 {
-                    <div class="singleMessage">
-                        @message.Content
-                    </div>
-
-                    ; // TODO
+                    @if (_identityServiceInstance.UserId.Equals(message.Sender.UserId))
+                                        {
+                                            <div class="single-msg sent-msg"> @message.Content </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="single-msg received-msg"> @message.Content </div>
+                                        }
                 }
             </div>
         </div>
@@ -52,7 +51,7 @@ else
 @code
 {
     private string currentMessage { get; set; }= "";
-    private List<Message> _messages = new List<Message>();
+    private List<Message> _messages = new();
     public List<MediaHub.Data.Model.UserProfile> userProfilesOfContacts { get; set; }
 
     protected override async Task OnInitializedAsync()
@@ -63,7 +62,6 @@ else
     
     void SaveMessageToDb()
     {
-        // FIXME Hardcoded receiver id "c581ffdf-24e2-49e5-a540-15e0e5f51cd2"
         _chatViewModel.InsertMessage(currentMessage);
     }
 
