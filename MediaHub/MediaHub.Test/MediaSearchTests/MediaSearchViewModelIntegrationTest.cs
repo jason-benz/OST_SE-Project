@@ -4,7 +4,7 @@ using MediaHub.Data.Model;
 using MediaHub.Data.ViewModel;
 using Xunit;
 
-namespace MediaHub.Test.MediaSearchTests;
+namespace MediaHub.Test.MediaSearchTest;
 
 public class MediaSearchViewModelIntegrationTest
 {

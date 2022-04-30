@@ -5,12 +5,12 @@ using MediaHub.Data.Model;
 using MediaHub.Test.MediaSearchTest;
 using Xunit;
 
-namespace MediaHub.Test.MediaSearchTests
+namespace MediaHub.Test.MediaSearchTest
 {
-    public class MediaSearchViewModelTests
+    public class MediaSearchViewModelTest
     {
         private readonly IMediaSearchViewModel _mediaSearchViewModel;
-        public MediaSearchViewModelTests()
+        public MediaSearchViewModelTest()
         {
             _mediaSearchViewModel = new MediaSearchViewModel(new MockMediaApi());
         }

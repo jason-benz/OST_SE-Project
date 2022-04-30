@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using MediaHub.Data.Model;
 
-namespace MediaHub.Test.MediaSearchTests;
+namespace MediaHub.Test.MediaSearchTest;
 
 public static class MockMovie
 {
