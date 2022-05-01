@@ -26,9 +26,11 @@ builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuth
 builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 
 builder.Services.AddSingleton<WeatherForecastService>();
-builder.Services.AddSingleton<IdentityService>();
+builder.Services.AddScoped<IIdentityService>(_ => new IdentityService());
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 var profileManager = new UserProfileDataManager();
+IChatDataManager chatDataManager = new ChatDataManager();
+builder.Services.AddScoped<IChatViewModel>(_ => new ChatViewModel(chatDataManager, profileManager));
 builder.Services.AddSingleton<IUserProfileViewModel>(new UserProfileViewModel(profileManager));
 builder.Services.AddSingleton<IMediaSearchViewModel>(new MediaSearchViewModel(new TmdbApi()));
 builder.Services.AddSingleton<IRatingViewModel>(new RatingViewModel(profileManager));
