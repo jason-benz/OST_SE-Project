@@ -13,7 +13,8 @@ namespace MediaHub.Data.Migrations
                 columns: table => new
                 {
                     UserId1 = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UserId2 = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId2 = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    IgnoreSuggestion = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
