@@ -24,24 +24,25 @@ else
             }
         </div>
 
-        <div id="chat-messages-container">
-            <form @onsubmit=SaveMessageToDb>
-                <input id="msg-input" type="text" placeholder="Type your message here" @bind="currentMessage" required/>
-                <button id="send-msg-btn" type="submit" class="btn btn-primary">Send Message</button>
-            </form>
-            
-            <div>
+        <div id="chat-input-and-messages-container">
+            <div id="chat-input-container">
+                <form @onsubmit=SaveMessageToDb>
+                    <input id="msg-input" type="text" placeholder="Type your message here" @bind="currentMessage" required/>
+                    <button id="send-msg-btn" type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+            <div id="chat-messages-container">
                 @foreach (var message in _messages)
                 {
                     <div class="msg-line">
-                    @if (_identityServiceInstance.UserId.Equals(message.Sender.UserId))
-                    {
-                        <div class="single-msg sent-msg"> @message.Content </div>
-                    }
-                    else
-                    {
-                        <div class="single-msg received-msg"> @message.Content </div>
-                    }
+                        @if (_identityServiceInstance.UserId.Equals(message.Sender.UserId))
+                        {
+                            <div class="single-msg sent-msg"> @message.Content </div>
+                        }
+                        else
+                        {
+                            <div class="single-msg received-msg"> @message.Content </div>
+                        }
                     </div>
                 }
             </div>
