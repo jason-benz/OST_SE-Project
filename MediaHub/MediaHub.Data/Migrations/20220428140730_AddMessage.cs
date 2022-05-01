@@ -9,11 +9,6 @@ namespace MediaHub.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "MovieIdentifier",
-                table: "MediaRating",
-                newName: "MovieId");
-
             migrationBuilder.CreateTable(
                 name: "Message",
                 columns: table => new
