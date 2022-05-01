@@ -29,11 +29,9 @@ builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddSingleton<IdentityService>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 var profileManager = new UserProfileDataManager();
-var chatDataManager = new ChatDataManager();
 builder.Services.AddSingleton<IUserProfileViewModel>(new UserProfileViewModel(profileManager));
 builder.Services.AddSingleton<IMediaSearchViewModel>(new MediaSearchViewModel(new TmdbApi()));
 builder.Services.AddSingleton<IRatingViewModel>(new RatingViewModel(profileManager));
-builder.Services.AddSingleton<IChatViewModel>(new ChatViewModel(chatDataManager, profileManager));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
