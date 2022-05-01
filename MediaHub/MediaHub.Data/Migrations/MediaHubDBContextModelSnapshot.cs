@@ -82,6 +82,9 @@ namespace MediaHub.Data.Migrations
                     b.Property<string>("UserId2")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<bool>("IgnoreSuggestion")
+                        .HasColumnType("bit");
+
                     b.HasKey("UserId1", "UserId2");
 
                     b.ToTable("UserSuggestion");

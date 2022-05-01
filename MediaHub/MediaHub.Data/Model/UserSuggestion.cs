@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MediaHub.Data.Model
 {
@@ -10,11 +9,6 @@ namespace MediaHub.Data.Model
 
         public string UserId2 { get; set; }
 
-#pragma warning disable CS8618
-        /// <summary>
-        /// Empty ctor needed for EF
-        /// </summary>
-        protected UserSuggestion() { }
-#pragma warning restore CS8618
+        public bool IgnoreSuggestion { get; set; }
     }
 }

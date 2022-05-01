@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MediaHub.Data.Migrations
 {
     [DbContext(typeof(MediaHubDBContext))]
-    [Migration("20220430154412_UserSuggestion")]
+    [Migration("20220501202159_UserSuggestion")]
     partial class UserSuggestion
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -83,6 +83,9 @@ namespace MediaHub.Data.Migrations
 
                     b.Property<string>("UserId2")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IgnoreSuggestion")
+                        .HasColumnType("bit");
 
                     b.HasKey("UserId1", "UserId2");
 
