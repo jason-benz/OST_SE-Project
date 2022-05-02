@@ -23,7 +23,7 @@ namespace MediaHub.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("MediaHub.Data.Model.MediaRating", b =>
+            modelBuilder.Entity("MediaHub.Data.MediaModule.Model.MediaRating", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -34,7 +34,7 @@ namespace MediaHub.Data.Migrations
                     b.Property<bool>("IsAddedToProfile")
                         .HasColumnType("bit");
 
-                    b.Property<int>("MovieIdentifier")
+                    b.Property<int>("MovieId")
                         .HasColumnType("int");
 
                     b.Property<string>("ProfileId")
@@ -51,7 +51,7 @@ namespace MediaHub.Data.Migrations
                     b.ToTable("MediaRating");
                 });
 
-            modelBuilder.Entity("MediaHub.Data.Model.UserProfile", b =>
+            modelBuilder.Entity("MediaHub.Data.ProfileModule.Model.UserProfile", b =>
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("NVARCHAR(450)")
@@ -76,9 +76,9 @@ namespace MediaHub.Data.Migrations
                     b.ToTable("UserProfile");
                 });
 
-            modelBuilder.Entity("MediaHub.Data.Model.MediaRating", b =>
+            modelBuilder.Entity("MediaHub.Data.MediaModule.Model.MediaRating", b =>
                 {
-                    b.HasOne("MediaHub.Data.Model.UserProfile", "Profile")
+                    b.HasOne("MediaHub.Data.ProfileModule.Model.UserProfile", "Profile")
                         .WithMany("Ratings")
                         .HasForeignKey("ProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -87,7 +87,7 @@ namespace MediaHub.Data.Migrations
                     b.Navigation("Profile");
                 });
 
-            modelBuilder.Entity("MediaHub.Data.Model.UserProfile", b =>
+            modelBuilder.Entity("MediaHub.Data.ProfileModule.Model.UserProfile", b =>
                 {
                     b.Navigation("Ratings");
                 });

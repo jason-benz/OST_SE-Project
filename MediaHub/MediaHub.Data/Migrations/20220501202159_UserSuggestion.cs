@@ -23,14 +23,12 @@ namespace MediaHub.Data.Migrations
                         name: "FK_UserSuggestion_UserProfile_UserId1",
                         column: x => x.UserId1,
                         principalTable: "UserProfile",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_UserSuggestion_UserProfile_UserId2",
                         column: x => x.UserId2,
                         principalTable: "UserProfile",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
