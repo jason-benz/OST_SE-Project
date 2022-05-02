@@ -1,13 +1,13 @@
 @page "/mediaSearch"
 
 <PageTitle>Search Media</PageTitle>
-@using MediaHub.Services
 @using MediaHub.Data.Model
 @using MediaHub.Data.ViewModel
-@using Microsoft.AspNetCore.Routing.Matching
+@using MediaHub.View
 @using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
 @inject ProtectedSessionStorage SessionStorage
 @inject IMediaSearchViewModel MediaServiceInstance
+@inject IMediaTableViewModel _mediaTableViewModel;
 
 <h1 class="center-heading">Search for Media</h1>
 
@@ -18,42 +18,15 @@
 
 @if (mediaList != null)
 {
-    if (mediaList.Count != 0)
-    {
-        <div class="search-result-box">
-        <table class="table">
-            <thead>
-                <tr>
-                <th>Artwork</th>
-                <th>Title</th>
-                <th>Genres</th>
-                <th>Year</th>
-                <th>Rating</th>
-                </tr>
-            </thead>
-        <tbody>
-        @foreach (var media in mediaList)
-        {
-            <tr>
-                <td><NavLink href=@{"movieDetailView/"+@media.Id}><img width="100px" src="@media.PosterUrl"></NavLink></td>
-                <td>@media.Title</td>
-                <td>@string.Join(", ", media.Genres)</td>
-                <td>@media.ReleaseDate</td>
-                <td>@media.Rating</td>
-            </tr>
-        }
-        </tbody>
-        </table>
-        </div>
-    } else
-    {
-        <p class="center-heading">Sorry, but there is no media found according to your search text.</p>
-    }
+    <div class="search-result-box">
+    <MediaTable MoviesAndRatings="@mediaList" AlternativeText="Sorry, but there is no media found according to your search text."/>
+    </div>
 }
+
 
 @code
 {
-    private List<IMovie>? mediaList;
+    private List<IMediaTableViewModel.MovieAndRating> mediaList;
 
     protected override async Task OnInitializedAsync()
     {
@@ -71,7 +44,7 @@
     protected async Task SearchCall()
     {
         await SessionStorage.SetAsync("SearchString", searchString);
-        mediaList = await MediaServiceInstance.GetMoviesAsync(searchString);
+        mediaList = await _mediaTableViewModel.GetMoviesByNameAsync(searchString);
     }
 
     private string searchString { get; set; } = "";

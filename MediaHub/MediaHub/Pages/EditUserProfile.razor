@@ -9,7 +9,11 @@
 @inject IdentityService _identityServiceInstance
 @inject ILogService _logger
 
-<h3>Edit your profile</h3>
+<div class="profile-page-heading">
+    <NavLink href="userProfile" ><button class="btn btn-secondary oi oi-arrow-thick-left"/></NavLink>
+    <h1 class="page-heading">Edit your profile</h1>
+</div>
+
 
 @if (_identityServiceInstance.UserId == null || _userProfile == null)
 {
@@ -17,7 +21,7 @@
 }
 else
 {
-    <form>
+    <form class="edit-user-profile-form">
         <div class="form-control-file">
             <img src="@_userProfile.ProfilePicture" alt="No profile picture set..." />
             <br /><br />
@@ -28,18 +32,17 @@ else
             <input id="username" class="form-control" @bind-value="NewUsername" maxlength="50" required />
             @if (_showUsernameHint)
             {
-                <label>Username is already taken! Please choose another one.</label>
+                <label class="hint-message invalid">Username is already taken! Please choose another one.</label>
             }
         </div>
         <div class="form-group">
             <label for="bio">Biography (max. 255 characters)</label>
             <textarea id="bio" class="form-control" maxlength="255" @bind="_userProfile.Biography" @bind:event="oninput">@_userProfile.Biography</textarea>
         </div>
-        <br />
         <button type="button" @onclick="SaveChanges" class="btn btn-primary">Save changes</button>
         @if (_showSaveChangesHint)
         {
-            <label>Changes were saved successfully</label>
+            <label class="hint-message valid">Changes were saved successfully</label>
         }
     </form>
 }
