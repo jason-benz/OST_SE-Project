@@ -8,7 +8,7 @@ using Xunit;
 
 namespace MediaHub.Test.UserProfileTest
 {
-    public class UserProfileViewModelUnitTest
+    public class UserProfileViewModelUnitTest : IDisposable
     {
         private readonly IUserProfileViewModel _userProfileViewModel;
 
@@ -80,6 +80,11 @@ namespace MediaHub.Test.UserProfileTest
             var username = "some taken user";
             var isUsernameAvailable = _userProfileViewModel.IsUsernameAvailable(username);
             Assert.False(isUsernameAvailable);
+        }
+
+        public void Dispose()
+        {
+            ILogService.Singleton = null; //to not influence other tests
         }
     }
 }
