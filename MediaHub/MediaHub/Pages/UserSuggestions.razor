@@ -8,26 +8,26 @@
 @inject IdentityService _identityServiceInstance
 @inject NavigationManager _navManager
 
-<h3>UserSuggestions</h3>
+<h3>User Suggestions</h3>
 
+<div class="d-flex flex-row flex-wrap">
 @foreach (var suggestion in _suggestions)
 {
     { ChooseUserProfile(suggestion); }
 
-    <div class="row">
-        <div class="col-sm-3">
-            <div class="card">
-                <img class="card-img-top" src="@_userProfile.ProfilePicture" alt="Profile picture">
-                <div class="card-body">
-                    <h5 class="card-title">@_userProfile.Username</h5>
-                    <p class="card-text">@_userProfile.Biography</p>
-                    <a href="#" class="btn btn-primary">Add to contacts</a>
-                    <a onclick="@(() => IgnoreUserSuggestion(suggestion))" class="btn btn-close"></a>
-                </div>
+    <div class="p-2">
+        <div class="card">
+            <img class="card-img-top" src="@_userProfile.ProfilePicture" alt="Profile picture">
+            <div class="card-body">
+                <h5 class="card-title">@_userProfile.Username</h5>
+                <p class="card-text">@_userProfile.Biography.Substring(0, 50) ... (<NavLink href="@($"userProfile/{_userProfile.Username}")">read more</NavLink>)</p>
+                <a href="#" class="btn btn-primary">Add to contacts</a>
+                <a onclick="@(() => IgnoreUserSuggestion(suggestion))" class="btn btn-close"></a>
             </div>
         </div>
     </div>
 }
+</div>
 
 @code {
     private string _personalUserId;
