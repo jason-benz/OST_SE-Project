@@ -28,17 +28,16 @@ public class MockMediaApi : IMediaApi
 
         if (query == DateTime.Now.Year.ToString())
         {
-            movies.Add(new Movie(13)
-            {
-                Title = "MockMovie 2 " + DateTime.Now.Year.ToString(),
-                PosterUrl = "mockmovie.ch",
-                Genres = new List<string>() {"Mock", "NotReal"},
-                Rating = 10,
-                Overview = "Mocked movie story",
-                Runtime = "120",
-                ReleaseDate = "2022-04-04"
-            });
-            
+            movies.Add(new Movie(13) { 
+            Title = "MockMovie 2 " + DateTime.Now.Year.ToString(),
+            PosterUrl = "mockmovie.ch",
+            Genres = new List<string>() {"Mock", "NotReal"},
+            Rating = 10,
+            Overview = "Mocked movie story",
+            Runtime = "120",
+            ReleaseDate = "2022-04-04"
+        }
+        );
             return movies;
         }
         throw new Exception("No Movies found");

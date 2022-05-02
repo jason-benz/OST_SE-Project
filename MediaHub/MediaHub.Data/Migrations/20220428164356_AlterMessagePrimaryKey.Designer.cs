@@ -4,6 +4,7 @@ using MediaHub.Data.Persistency;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MediaHub.Data.Migrations
 {
     [DbContext(typeof(MediaHubDBContext))]
-    partial class MediaHubDBContextModelSnapshot : ModelSnapshot
+    [Migration("20220428164356_AlterMessagePrimaryKey")]
+    partial class AlterMessagePrimaryKey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,35 +112,17 @@ namespace MediaHub.Data.Migrations
                     b.ToTable("UserProfile");
                 });
 
-            modelBuilder.Entity("MediaHub.Data.Model.UserSuggestion", b =>
-                {
-                    b.Property<string>("UserId1")
-                        .HasColumnType("NVARCHAR(450)");
-
-                    b.Property<string>("UserId2")
-                        .HasColumnType("NVARCHAR(450)");
-
-                    b.Property<bool>("IgnoreSuggestion")
-                        .HasColumnType("bit");
-
-                    b.HasKey("UserId1", "UserId2");
-
-                    b.HasIndex("UserId2");
-
-                    b.ToTable("UserSuggestion");
-                });
-
             modelBuilder.Entity("MediaHub.Data.Model.MediaRating", b =>
                 {
                     b.HasOne("MediaHub.Data.Model.UserProfile", "Profile")
                         .WithMany("Ratings")
                         .HasForeignKey("ProfileId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Profile");
                 });
-            
+
             modelBuilder.Entity("MediaHub.Data.Model.Message", b =>
                 {
                     b.HasOne("MediaHub.Data.Model.UserProfile", "Receiver")
@@ -155,25 +139,6 @@ namespace MediaHub.Data.Migrations
                     b.Navigation("Receiver");
 
                     b.Navigation("Sender");
-                });
-
-            modelBuilder.Entity("MediaHub.Data.Model.UserSuggestion", b =>
-                {
-                    b.HasOne("MediaHub.Data.Model.UserProfile", "UserProfile1")
-                        .WithMany()
-                        .HasForeignKey("UserId1")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("MediaHub.Data.Model.UserProfile", "UserProfile2")
-                        .WithMany()
-                        .HasForeignKey("UserId2")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("UserProfile1");
-
-                    b.Navigation("UserProfile2");
                 });
 
             modelBuilder.Entity("MediaHub.Data.Model.UserProfile", b =>
