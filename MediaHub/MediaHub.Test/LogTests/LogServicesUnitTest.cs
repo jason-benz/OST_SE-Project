@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using MediaHub.Services;
-using MediaHub.Data.Persistency;
 using Serilog;
 using Serilog.Core;
 using Xunit;
+using MediaHub.Data.PersistencyLayer;
 
-namespace MediaHub.Test.UserProfileTest
+namespace MediaHub.Test.LogTests
 {
     [Collection("Sequential")]
     public class LogServicesUnitTest : IDisposable
@@ -15,7 +15,7 @@ namespace MediaHub.Test.UserProfileTest
         private ILogService _logService;
 
         private string _logFileName = "./log.txt";
-        private Logger _logConfig; 
+        private Logger _logConfig;
         public LogServicesUnitTest()
         {
             _logConfig = new LoggerConfiguration()
@@ -24,7 +24,7 @@ namespace MediaHub.Test.UserProfileTest
             _logService = new SerilogService(_logConfig);
         }
 
-        
+
 
         [Fact, Trait("Category", "Unit")]
         public void GetSingletonbeforeCreateThrows()
@@ -33,14 +33,14 @@ namespace MediaHub.Test.UserProfileTest
             var exception = Record.Exception(() => ILogService.Singleton);
             Assert.NotNull(exception);
         }
-        
+
         [Fact, Trait("Category", "Unit")]
         public void InformationLogTypeTest()
         {
             _logService.LogInformation("testinfo", ILogService.LogCategory.Chat);
             AssertLogType("[INF]");
         }
-        
+
         [Fact, Trait("Category", "Unit")]
         public void InformationLoggedModuleTest()
         {
@@ -54,7 +54,7 @@ namespace MediaHub.Test.UserProfileTest
             _logService.LogInformation("testinfo", ILogService.LogCategory.Chat);
             AssertLogMessage("testinfo");
         }
-        
+
         [Fact, Trait("Category", "Unit")]
         public void ErrorLogTypeTest()
         {
@@ -66,7 +66,7 @@ namespace MediaHub.Test.UserProfileTest
         public void ErrorExceptionMessageTest()
         {
             _logService.LogException("testinfo", ILogService.LogCategory.Chat, new Exception("testexception"));
-            Assert.Equal( "testexception", ReadExceptionMessage());
+            Assert.Equal("testexception", ReadExceptionMessage());
         }
 
         private void AssertLogType(string expected)
@@ -96,8 +96,8 @@ namespace MediaHub.Test.UserProfileTest
             int exceptionLineInLogFile = 1;
             return WriteSafeReadAllLines(_logFileName)[1].Split(" ")[1];
         }
-        
-        public string[] WriteSafeReadAllLines(String path)
+
+        public string[] WriteSafeReadAllLines(string path)
         {
             using (var csv = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             using (var sr = new StreamReader(csv))
@@ -111,11 +111,11 @@ namespace MediaHub.Test.UserProfileTest
                 return file.ToArray();
             }
         }
-        
+
         public void Dispose()
         {
             _logConfig.Dispose();
-            System.IO.File.Delete("./log.txt");
+            File.Delete("./log.txt");
         }
     }
 }

@@ -1,5 +1,6 @@
-﻿using MediaHub.Data.Model;
-using MediaHub.Data.Persistency;
+﻿using MediaHub.Data.PersistencyLayer;
+using MediaHub.Data.ProfileModule.Model;
+using MediaHub.Data.ProfileModule.Persistency;
 using System;
 using Xunit;
 

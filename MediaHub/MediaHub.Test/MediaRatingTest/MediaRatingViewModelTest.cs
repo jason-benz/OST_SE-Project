@@ -1,21 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using MediaHub.Data.Model;
-using MediaHub.Data.Persistency;
-using MediaHub.Data.ViewModel;
+using MediaHub.Data.MediaModule.Model;
+using MediaHub.Data.MediaModule.ViewModel;
 using MediaHub.Test.UserProfileTest;
-using Microsoft.EntityFrameworkCore;
 using Xunit;
-using Xunit.Sdk;
 
-namespace MediaHub.Test;
+namespace MediaHub.Test.MediaRatingTest;
 
 public class MediaRatingVieModelTest
 {
     private readonly UserProfileDataManagerMock _profileDataManager = new UserProfileDataManagerMock();
-    private readonly IRatingViewModel _ratingViewModel; 
+    private readonly IRatingViewModel _ratingViewModel;
     public MediaRatingVieModelTest()
     {
         _ratingViewModel = new RatingViewModel(_profileDataManager);
@@ -97,6 +93,6 @@ public class MediaRatingVieModelTest
             ReleaseDate = "",
             Overview = "",
             PosterUrl = ""
-        } );
+        });
     }
 }

@@ -1,13 +1,14 @@
 @page "/mediaSearch"
 
-<PageTitle>Search Media</PageTitle>
-@using MediaHub.Data.Model
-@using MediaHub.Data.ViewModel
+@using MediaHub.Data.MediaModule.ViewModel
 @using MediaHub.View
 @using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+
 @inject ProtectedSessionStorage SessionStorage
 @inject IMediaSearchViewModel MediaServiceInstance
 @inject IMediaTableViewModel _mediaTableViewModel;
+
+<PageTitle>Search Media</PageTitle>
 
 <h1 class="center-heading">Search for Media</h1>
 
@@ -22,7 +23,6 @@
     <MediaTable MoviesAndRatings="@mediaList" AlternativeText="Sorry, but there is no media found according to your search text."/>
     </div>
 }
-
 
 @code
 {

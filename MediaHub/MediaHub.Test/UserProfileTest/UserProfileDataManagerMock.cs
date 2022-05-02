@@ -1,4 +1,5 @@
-﻿using MediaHub.Data.Model;
+﻿using MediaHub.Data.MediaModule.Model;
+using MediaHub.Data.ProfileModule.Model;
 using System;
 using System.Collections.Generic;
 

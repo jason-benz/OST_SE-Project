@@ -1,8 +1,4 @@
-using System.Security.Authentication;
-using MediaHub.Data.Model;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Mvc.Diagnostics;
 
 namespace MediaHub.Services;
 
