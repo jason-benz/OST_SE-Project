@@ -1,8 +1,8 @@
-﻿using MediaHub.Data.Model;
-using MediaHub.Data.ViewModel;
-using System;
-using MediaHub.Data.Persistency;
-using Xunit;
+﻿using Xunit;
+using MediaHub.Data.ProfileModule.ViewModel;
+using MediaHub.Data.ProfileModule.Model;
+using MediaHub.Data.PersistencyLayer;
+using MediaHub.Test.LogTests;
 
 namespace MediaHub.Test.UserProfileTest
 {

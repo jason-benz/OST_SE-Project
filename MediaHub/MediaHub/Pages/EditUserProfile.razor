@@ -1,12 +1,12 @@
 ﻿@page "/editUserProfile"
 
+@using MediaHub.Data.PersistencyLayer
+@using MediaHub.Data.ProfileModule.ViewModel
 @using MediaHub.Services
-@using MediaHub.Data.ViewModel
 @using Microsoft.CodeAnalysis.CSharp.Syntax
-@using MediaHub.Data.Persistency
 
 @inject IUserProfileViewModel _userProfileViewModel
-@inject IdentityService _identityServiceInstance
+@inject IIdentityService _identityServiceInstance
 @inject ILogService _logger
 
 <div class="profile-page-heading">
@@ -48,7 +48,7 @@ else
 }
 
 @code {
-    private Data.Model.UserProfile _userProfile;
+    private Data.ProfileModule.Model.UserProfile _userProfile;
     private bool _showSaveChangesHint;
     private bool _showUsernameHint;
     

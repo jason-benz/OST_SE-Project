@@ -1,7 +1,7 @@
 using System;
-using MediaHub.Data.Persistency;
+using MediaHub.Data.PersistencyLayer;
 
-namespace MediaHub.Test.UserProfileTest;
+namespace MediaHub.Test.LogTests;
 
 public class LogServiceMock : ILogService
 {

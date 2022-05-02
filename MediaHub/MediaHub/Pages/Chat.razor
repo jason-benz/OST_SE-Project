@@ -1,8 +1,8 @@
 ﻿@page "/chat"
+
+@using MediaHub.Data.MessagingModule.Model
+@using MediaHub.Data.MessagingModule.ViewModel
 @using MediaHub.Services
-@using MediaHub.Data.Model
-@using MediaHub.Data.Persistency
-@using MediaHub.Data.ViewModel
 @using Microsoft.AspNetCore.Routing.Matching
 @using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
 @using SendGrid.Helpers.Mail.Model
@@ -55,7 +55,7 @@ else
 {
     private string currentMessage { get; set; }= "";
     private List<Message> _messages = new();
-    public List<MediaHub.Data.Model.UserProfile> userProfilesOfContacts { get; set; }
+    public List<Data.ProfileModule.Model.UserProfile> userProfilesOfContacts { get; set; }
 
     protected override async Task OnInitializedAsync()
     {

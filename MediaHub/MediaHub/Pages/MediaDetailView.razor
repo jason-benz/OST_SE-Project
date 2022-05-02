@@ -1,14 +1,14 @@
-﻿@namespace MediaHub.View
+﻿@page "/movieDetailView/{Id:int}"
 
-@page "/movieDetailView/{Id:int}"
-
-<PageTitle>Media Details</PageTitle>
+@using MediaHub.Data.MediaModule.Model
+@using MediaHub.Data.MediaModule.ViewModel
 @using MediaHub.Services
-@using MediaHub.Data.Model
-@using MediaHub.Data.ViewModel
+
 @inject IMediaSearchViewModel _mediaSearchViewModel 
 @inject IIdentityService _identityService
 @inject IRatingViewModel _ratingViewModel
+
+<PageTitle>Media Details</PageTitle>
 
 @if (_movie != null)
 {

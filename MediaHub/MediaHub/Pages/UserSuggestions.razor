@@ -1,7 +1,7 @@
 ﻿@page "/userSuggestions"
 
-@using MediaHub.Data.ViewModel
-@using MediaHub.Data.Model
+@using MediaHub.Data.UserSuggestionModule.Model
+@using MediaHub.Data.UserSuggestionModule.ViewModel
 @using MediaHub.Services
 
 @inject IUserSuggestionsViewModel _userSuggestionsViewModel
@@ -32,7 +32,7 @@
 @code {
     private string _personalUserId;
     private IEnumerable<UserSuggestion> _suggestions = new List<UserSuggestion>();
-    private Data.Model.UserProfile _userProfile;
+    private Data.ProfileModule.Model.UserProfile _userProfile;
 
     protected override void OnInitialized()
     {
