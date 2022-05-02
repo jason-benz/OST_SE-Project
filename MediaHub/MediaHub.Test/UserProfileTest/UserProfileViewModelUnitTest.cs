@@ -1,6 +1,9 @@
 ﻿using MediaHub.Data.Model;
 using MediaHub.Data.ViewModel;
 using System;
+using MediaHub.Data.Persistency;
+using MediaHub.Services;
+using Serilog.Core;
 using Xunit;
 
 namespace MediaHub.Test.UserProfileTest
@@ -11,6 +14,7 @@ namespace MediaHub.Test.UserProfileTest
 
         public UserProfileViewModelUnitTest()
         {
+            ILogService.Singleton = new LogServiceMock(); 
             _userProfileViewModel = new UserProfileViewModel(new UserProfileDataManagerMock());            
         }
 
