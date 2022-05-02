@@ -1,0 +1,66 @@
+@using MediaHub.Data.Model
+@using MediaHub.Data.ViewModel
+@namespace MediaHub.View
+
+@if (MoviesAndRatings != null && MoviesAndRatings.Count()!=0)
+{
+   <table class="table media-table">
+           <thead>
+               <tr>
+                   <th>Artwork</th>
+                   <th>Title</th>
+                   <th>Genres</th>
+                   <th>Rating</th>
+                   @if (ShowReleaseDate)
+                   {
+                       <th>Year</th>
+                   }
+                   @if (DisplayUserRatings)
+                   {
+                   <th>My Rating</th>
+                   }
+               </tr>
+           </thead>
+           <tbody>
+           @foreach (var movieAndRating in MoviesAndRatings)
+           {
+               <tr>
+                   <td><NavLink href=@{"movieDetailView/"+@movieAndRating.Movie.Id}><img width="100px" src="@movieAndRating.Movie.PosterUrl"></NavLink></td>
+                   <td><b>@movieAndRating.Movie.Title</b></td>
+                   <td>@string.Join(", ", movieAndRating.Movie.Genres)</td>
+                   <td>@movieAndRating.Movie.Rating</td>
+                   @if (ShowReleaseDate)
+                   {
+                       <td>@movieAndRating.Movie.ReleaseDate</td>
+                   }
+                   @if (DisplayUserRatings)
+                   {
+                       <td>
+                           <Rating StarSize="10px" ReadOnly="true" CurrentValue="(byte) movieAndRating.UserRating"/>
+                       </td>
+                   }
+               </tr>
+           }
+           </tbody>
+   </table>
+   }
+else
+{
+   <p class="alternative-text">@AlternativeText</p>
+}
+
+
+@code {
+
+    [Parameter]
+    public bool DisplayUserRatings { get; set; } = false;
+    [Parameter]
+    public bool ShowReleaseDate { get; set; } = true;
+
+    [Parameter] 
+    public IEnumerable<IMediaTableViewModel.MovieAndRating> MoviesAndRatings { get; set; }
+
+    [Parameter]
+    public string AlternativeText { get; set; } = "No media found.";
+
+}
