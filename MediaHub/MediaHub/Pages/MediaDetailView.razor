@@ -24,6 +24,7 @@
         }
     </div>
     <div class="Rating">
+        <h3>My Rating</h3>
         <Rating Callback="(byte value) => _ratingViewModel.Rating = value" CurrentValue="_ratingViewModel.Rating"/>
     </div>
     <img alt="Poster" width="100px" src="@_movie.PosterUrl">
@@ -57,7 +58,7 @@
     [Parameter]
     public int Id { get; set; }
 
-    private IMovie? _movie;
+    private Movie? _movie;
 
     protected override async Task OnInitializedAsync()
     {

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
@@ -30,13 +30,16 @@
       <ProjectReference Include="..\MediaHub.Data\MediaHub.Data.csproj" />
       <ProjectReference Include="..\MediaHub\MediaHub.csproj" />
     </ItemGroup>
-
     <ItemGroup>
       <Content Include="appsettings.json">
         <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+        <CopyToPublishDirectory>Never</CopyToPublishDirectory>
       </Content>
+    </ItemGroup>
+	
+    <ItemGroup>
+      <ProjectReference Include="..\MediaHub.Data\MediaHub.Data.csproj" />
     </ItemGroup>
 
 </Project>

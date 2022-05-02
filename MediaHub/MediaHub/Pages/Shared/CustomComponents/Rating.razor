@@ -1,25 +1,26 @@
-@using Microsoft.VisualBasic.CompilerServices
 @namespace MediaHub.View
 
-<h3>Rating</h3>
+<div class="RatingStarWrapper">
 @{
  for (byte i = RatingMinimum; i <= RatingMaximum; i++)
  {
      byte j = i;
      @if (j <= CurrentValue)
      {
-         <img width="30px"src="star-yellow.png" @onclick="() => OnChangeRating(j)"/>
+         <img width="@StarSize" src="star-yellow.png" @onclick="() => OnChangeRating(j)"/>
      }
      else
      {
-         <img width="30px" src="star-black.png" @onclick="() => OnChangeRating(j)"/>
+         <img width="@StarSize" src="star-black.png" @onclick="() => OnChangeRating(j)"/>
      }
  }   
 }
-
+</div>
 
 @code {
 
+    [Parameter]
+    public string StarSize { get; set; } = "30px";
     [Parameter]
     public byte RatingMinimum { get; set; } = 1;
     [Parameter]
@@ -28,11 +29,17 @@
     public byte CurrentValue { get; set; } = 1;
 
     [Parameter]
+    public bool ReadOnly { get; set; } = false;
+    
+    [Parameter]
     public Action<byte> Callback { get; set; } = (byte i) => { };
-
+    
     private void OnChangeRating(byte value)
     {
-        CurrentValue = value;
+        if (!ReadOnly)
+        {
+            CurrentValue = value;
+        }
         Callback(value);
     }
 }

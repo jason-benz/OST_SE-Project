@@ -9,7 +9,7 @@ public class MediaSearchViewModel : IMediaSearchViewModel
     {
         _api = api;
     }
-    public async Task<List<IMovie>> GetMoviesAsync(string searchString)
+    public async Task<List<Movie>> GetMoviesAsync(string searchString)
     {
         if(searchString == String.Empty)
         {
@@ -20,12 +20,12 @@ public class MediaSearchViewModel : IMediaSearchViewModel
         {
             return await _api.Search(searchString);
         }
-        catch (Exception) { //todo: dont use exceptions for expected behavior!
-            return new List<IMovie>();
+        catch (Exception) {
+            return new List<Movie>();
         }
     }
 
-    public async Task<IMovie> GetMovieAsync(int id)
+    public async Task<Movie> GetMovieAsync(int id)
     {
         return await _api.GetMovieById(id);
     }
