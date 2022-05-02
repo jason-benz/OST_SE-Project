@@ -11,7 +11,7 @@ namespace MediaHub.Test.MediaSearchTest
         private readonly IMediaSearchViewModel _mediaSearchViewModel;
         public MediaSearchViewModelTest()
         {
-            _mediaSearchViewModel = new MediaSearchViewModelMock();
+            _mediaSearchViewModel = new MediaSearchViewModel(new MockMediaApi());
         }
         
         [Fact, Trait("Category", "Unit")]
@@ -24,7 +24,7 @@ namespace MediaHub.Test.MediaSearchTest
         [Fact, Trait("Category", "Unit")]
         public void GetMovieByIdException()
         {
-            Assert.ThrowsAsync<System.Exception>(async() =>
+            Assert.ThrowsAsync<Exception>(async() =>
             {
                 await _mediaSearchViewModel.GetMovieAsync(13);
             });
