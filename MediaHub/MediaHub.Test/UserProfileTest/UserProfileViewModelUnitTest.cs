@@ -1,16 +1,19 @@
 ﻿using MediaHub.Data.Model;
 using MediaHub.Data.ViewModel;
 using System;
+using MediaHub.Data.Persistency;
 using Xunit;
 
 namespace MediaHub.Test.UserProfileTest
 {
+    [Collection("Sequential")]
     public class UserProfileViewModelUnitTest
     {
         private readonly IUserProfileViewModel _userProfileViewModel;
 
         public UserProfileViewModelUnitTest()
         {
+            ILogService.Singleton = new LogServiceMock();
             _userProfileViewModel = new UserProfileViewModel(new UserProfileDataManagerMock());            
         }
 

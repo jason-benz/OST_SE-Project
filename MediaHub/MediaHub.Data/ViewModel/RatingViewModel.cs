@@ -48,7 +48,7 @@ public class RatingViewModel : IRatingViewModel
 
     private void LoadRatings()
     {
-        if (_profile?.Ratings.Count == 0)
+        if(!(_profile?.Ratings.Where(r => r.MovieId == _movie.Id)).Any())
             MakeNewRatingForProfile();
         else
         {

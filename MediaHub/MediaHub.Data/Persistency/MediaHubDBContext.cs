@@ -10,6 +10,8 @@ public class MediaHubDBContext : DbContext
     public DbSet<UserProfile> UserProfiles { get; set; }
     public DbSet<Message> Messages { get; set; }
     public DbSet<MediaRating> Ratings { get; set; }
+    public DbSet<UserSuggestion> UserSuggestions { get; set; }
+
     public MediaHubDBContext()
     {
     }
@@ -25,7 +27,6 @@ public class MediaHubDBContext : DbContext
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", false, true)
-
                 .Build();
             
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("DataConnection"))
@@ -36,8 +37,8 @@ public class MediaHubDBContext : DbContext
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // FIXME | Receiver cannot be deleted until sender is deleted 
        modelBuilder.Entity<Message>().HasOne(e => e.Receiver).WithMany().IsRequired(false).OnDelete(DeleteBehavior.Restrict);
        modelBuilder.Entity<Message>().HasOne(e => e.Sender).WithMany().OnDelete(DeleteBehavior.Cascade);
+       modelBuilder.Entity<UserSuggestion>().HasKey(s => new { s.UserId1, s.UserId2 });
     }
 }

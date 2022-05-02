@@ -1,0 +1,60 @@
+﻿@page "/userSuggestions"
+
+@using MediaHub.Data.ViewModel
+@using MediaHub.Data.Model
+@using MediaHub.Services
+
+@inject IUserSuggestionsViewModel _userSuggestionsViewModel
+@inject IIdentityService _identityServiceInstance
+@inject NavigationManager _navManager
+
+<h3>User Suggestions</h3>
+
+<div class="d-flex flex-row flex-wrap">
+@foreach (var suggestion in _suggestions)
+{
+    { ChooseUserProfile(suggestion); }
+
+    <div class="p-2">
+        <div class="card">
+            <img class="card-img-top" src="@_userProfile.ProfilePicture" alt="Profile picture">
+            <div class="card-body">
+                <h5 class="card-title">@_userProfile.Username</h5>
+                <p class="card-text">@_userProfile.Biography.Substring(0, 50) ... (<NavLink href="@($"userProfile/{_userProfile.Username}")">read more</NavLink>)</p>
+                <a href="#" class="btn btn-primary">Add to contacts</a>
+                <a onclick="@(() => IgnoreUserSuggestion(suggestion))" class="btn btn-close"></a>
+            </div>
+        </div>
+    </div>
+}
+</div>
+
+@code {
+    private string _personalUserId;
+    private IEnumerable<UserSuggestion> _suggestions = new List<UserSuggestion>();
+    private Data.Model.UserProfile _userProfile;
+
+    protected override void OnInitialized()
+    {
+        _personalUserId = _identityServiceInstance.UserId;
+        _suggestions = _userSuggestionsViewModel.GetUserSuggestions(_personalUserId, false);
+    }
+
+    private void ChooseUserProfile(UserSuggestion suggestion)
+    {
+        if (suggestion.UserId1 == _personalUserId)
+        {
+            _userProfile = suggestion.UserProfile2;
+        }
+        else
+        {
+            _userProfile = suggestion.UserProfile1;
+        }
+    }
+
+    private void IgnoreUserSuggestion(UserSuggestion suggestion)
+    {
+        _userSuggestionsViewModel.IgnoreUserSuggestion(suggestion);
+        _navManager.NavigateTo("/userSuggestions", forceLoad: true);
+    }
+}

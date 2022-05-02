@@ -88,6 +88,11 @@ a, .btn-link {
     max-width: 1440px;
 }
 
+.page-heading {
+    font-size: 2rem;
+    margin-bottom: 0;
+}
+
 .shadow-box {
     background: #F0F0F0;
     box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.15);
@@ -140,23 +145,41 @@ a, .btn-link {
 
 .search-result-box {
     margin: auto;
-    max-width: 60rem;
-    background: #F0F0F0;
+    max-width: 70rem;
+    background-color: rgb(0, 0, 150, 0.1);
     max-height: 70vh;
     overflow-y: auto;
     overflow-x: hidden;
+    border-radius: 8px;
 }
 
-.search-result-box th {
-        position: sticky;
-        top: 0;
-        background-color: #b4b4b4;
+.media-table{
+    border-color: grey;
+}
+
+.media-table > thead *{
+    border-style: unset;
+}
+
+.media-table th {
+    position: sticky;
+    top: 0;
+    color: white;
+    background-color: rgb(0, 0, 100);
+    box-shadow: inset 0 -2px 0 #000000;
 }
 
 .center-heading {
-        margin-top: 50px;
-        margin-bottom: 20px;
-        text-align: center;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.alternative-text {
+    margin-bottom: 0;
+    font-weight: bold;
+    text-align: center;
+    background: white;
 }
 
 .detaile-view-container {
@@ -181,11 +204,10 @@ a, .btn-link {
     justify-content: space-between;
 }
 
-    .title-and-add-button > button {
-        margin-top: 0;
-        height: fit-content;
-    }
-
+.title-and-add-button > button {
+    margin-top: 0;
+    height: fit-content;
+}
 
 .media-data-table .caption {
     width: 150px;
@@ -199,7 +221,6 @@ a, .btn-link {
 .detaile-view-container > img {
     grid-area: image;
     width: 200px;
-    justify-self: center;
 }
 
 .detaile-view-container > .media-data-table {
@@ -258,8 +279,108 @@ a, .btn-link {
     border-radius: 0.3em;
 }
 
+.detaile-view-container .Rating{
+    margin-top: 30px;
+}
+
+.userProfileOverview {
+    display: grid;
+    grid:
+        "title1 title1" auto
+        "image title2" 35px
+        "image movies" 280px
+        "bibliography movies" 20vh
+        "genres movies" 40vh
+        / 1fr 1.5fr;
+    column-gap: 50px;
+    max-width: 100vw;
+    margin: auto;
+}
+
+.profile-page-heading{
+    grid-area: title1;
+    display: flex;
+    flex-direction: row;
+    column-gap: 30px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.bibliography > h3{
+    font-size: 1.5rem;
+}
+
+.userProfileOverview > h2{
+    font-size: 1.5rem;
+    grid-area: title2;
+    margin-bottom: 0;
+}
+
+.userProfileOverview > img{
+    margin-top: 10px;
+    grid-area: image;
+}
+
+.userProfileOverview > .bibliography {
+    grid-area: bibliography;
+    text-align: justify;
+}
+
+.userProfileOverview > .addedMovies{
+    grid-area: movies;
+}
+
+.addedMovies {
+    overflow-y: auto;
+    background-color: rgb(0, 0, 150, 0.1);
+    height: 100%;
+    border-radius: 8px;
+}
+
+.addedMovies > .alternative-text{
+    margin-top: 20px;
+    background: transparent;
+}
+
+.edit-user-profile-form {
+    margin-top: 20px;
+}
+
+.edit-user-profile-form > * {
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.edit-user-profile-form .hint-message{
+    margin-left: 50px;
+}
+
+.hint-message.valid {
+    color: green;
+}
+
+.hint-message.invalid {
+    color: red;
+}
+
+.RatingStarWrapper {
+    white-space: nowrap;
+}
+
 @media (min-width: 855px) {
     #account, #registerForm {
         width: min(48vw, 500px);
     }
+}
+
+.card {
+    max-width: 300px;
+}
+
+img.card-img-top {
+    width: 100%;
+    height: 10vw;
+    max-width: 300px;
+    max-height: 300px;
+    object-fit: cover;
 }

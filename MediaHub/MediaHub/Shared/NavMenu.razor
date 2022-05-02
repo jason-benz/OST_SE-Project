@@ -1,5 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@using MediaHub.Services
+@using MediaHub.Data.Model
 @inject ProtectedSessionStorage SessionStorage
+@inject IIdentityService _identityServiceInstance
 
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
@@ -13,20 +16,25 @@
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <nav class="flex-column">
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All" @onclick="DeleteSessionStorageSearchString">
+            <NavLink class="nav-link" href="userProfile" Match="NavLinkMatch.All" @onclick="DeleteSessionStorageSearchString">
                 <span class="oi oi-home" aria-hidden="true"></span> Home
             </NavLink>
         </div>
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="mediaSearch" @onclick="DeleteSessionStorageSearchString">
+            <NavLink class="nav-link" href="mediaSearch" Match="NavLinkMatch.All" @onclick="DeleteSessionStorageSearchString">
                 <span class="oi oi-magnifying-glass" aria-hidden="true"></span> Search
             </NavLink>
         </div>
         <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="chat" @onclick="DeleteSessionStorageSearchString">
-                        <span class="oi" aria-hidden="true"></span> Chat
-                    </NavLink>
-                </div>
+            <NavLink class="nav-link" href="userSuggestions" @onclick="DeleteSessionStorageSearchString">
+                <span class="oi oi-fullscreen-exit" aria-hidden="true"></span> User Suggestions
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="chat" @onclick="DeleteSessionStorageSearchString">
+                <span class="oi oi-chat" aria-hidden="true"></span> Chat
+            </NavLink>
+            </div>
     </nav>
 </div>
 
