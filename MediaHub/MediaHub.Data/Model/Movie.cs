@@ -1,27 +1,20 @@
 ﻿namespace MediaHub.Data.Model;
 
-public class Movie : IMovie
+public class Movie 
 {
-    public Movie(int id, string title, string posterUrl, List<string> genres, int rating, string overview, string runtime, string releaseDate)
+    public Movie(int id)
     {
         Id = id;
-        Title = title;
-        PosterUrl = posterUrl;
-        Genres = genres;
-        Rating = rating;
-        Overview = overview;
-        Runtime = runtime;
-        ReleaseDate = releaseDate;
     }
 
-    public int Id { get; }
-    public string Title { get; }
-    public string PosterUrl { get; }
-    public List<string> Genres { get; }
-    public int Rating { get; }
-    public string Overview { get; }
-    public string Runtime { get; }
-    public string ReleaseDate { get; }
+    public int Id { get; set; }
+    public string? Title { get;  set; }
+    public string? PosterUrl { get; set; }
+    public List<string>? Genres { get; set; }
+    public int? Rating { get; set; }
+    public string? Overview { get; set; }
+    public string? Runtime { get; set; }
+    public string? ReleaseDate { get; set; }
 
     public override bool Equals(object? obj)
     {
@@ -32,13 +25,20 @@ public class Movie : IMovie
 
         Movie other = (Movie)obj;
         return (Id == other.Id)
-               && (Title == other.Title)
-               && (PosterUrl == other.PosterUrl)
-               && (Genres.All(other.Genres.Contains))
-               && (Rating == other.Rating)
-               && (Overview == other.Overview)
-               && (Runtime == other.Runtime)
-               && (ReleaseDate == other.ReleaseDate);
+               && (String.Equals(Title,other.Title))
+               && (String.Equals(PosterUrl, other.PosterUrl))
+               && (compareGenres(Genres, other.Genres)) //Genres.All(other.Genres.Contains))
+               && (String.Equals(Rating, other.Rating))
+               && (String.Equals(Overview, other.Overview))
+               && (String.Equals(Runtime, other.Runtime))
+               && (String.Equals(ReleaseDate, other.ReleaseDate));
+    }
+
+    private bool compareGenres(List<string> genres1, List<string> genres2)
+    {
+        var firstNotSecond = genres1.Except(genres2).ToList();
+        var secondNotFirst = genres2.Except(genres1).ToList();
+        return !firstNotSecond.Any() && !secondNotFirst.Any();
     }
 
     public override int GetHashCode() => HashCode.Combine(Id, Title, Overview);

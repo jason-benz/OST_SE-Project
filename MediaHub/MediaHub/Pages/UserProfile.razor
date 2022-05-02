@@ -1,10 +1,15 @@
-﻿@page "/userProfile/{Username}"
+﻿@page "/userProfile/{Username?}"
 
 @using MediaHub.Services
+@using MediaHub.View
 @using MediaHub.Data.ViewModel
+@using MediaHub.Data.Model
 
 @inject IUserProfileViewModel _userProfileServiceInstance
 @inject IdentityService _identityServiceInstance
+@inject IMediaSearchViewModel _mediaSearchViewModel
+@inject IMediaTableViewModel _mediaTableViewModel
+@inject NavigationManager _navigationManager
 
 @if (_userProfile == null)
 {
@@ -13,21 +18,51 @@
 }
 else
 {
-    <h3>@_userProfile.Username's Profile</h3>
-    <img src="@_userProfile.ProfilePicture" alt="No profile picture set..."/>
-    <p>@_userProfile.Biography</p>
+    <div class="userProfileOverview">
+        <div class="profile-page-heading">
+            @if(Username == null)
+            {
+                <NavLink href="editUserProfile" ><button class="btn btn-secondary oi oi-pencil"/></NavLink>
+            }
+            <h1 class="page-heading">@_userProfile.Username's profile</h1>
+        </div>
+        <img src="@_userProfile.ProfilePicture" alt="No profile picture set..."/>
+        <div class="bibliography">
+            <h3>Bibliography</h3>
+            <p>@_userProfile.Biography</p>
+        </div>
+        <h2>Media added to profile:</h2>
+        <div class="addedMovies">
+            <MediaTable DisplayUserRatings="true" ShowReleaseDate="false" MoviesAndRatings="_moviesAndRatings" AlternativeText="There is currently no media added to this profile"/>
+        </div>  
+    </div>
+    
+    
 }
 
 
 @code {
-    private Data.Model.UserProfile _userProfile;
-    
+    private Data.Model.UserProfile? _userProfile;
+    private List<Movie> _media = new List<Movie>();
+    private IEnumerable<MediaRating> _userRatings;
+    private IEnumerable<IMediaTableViewModel.MovieAndRating>? _moviesAndRatings;
+
     [Parameter]
-    public string Username { get; set; }
+    public string? Username { get; set; }
 
     protected override void OnInitialized()
     {
-        string userId = _identityServiceInstance.UserId;
-        _userProfile = _userProfileServiceInstance.GetUserProfileByUsername(Username);
+        string userId;
+        if(Username == null)
+        {
+            userId = _identityServiceInstance.UserId;
+            _userProfile = _userProfileServiceInstance.GetUserProfileById(userId);
+        }
+        else
+        {
+            _userProfile = _userProfileServiceInstance.GetUserProfileByUsername(Username);
+            userId = _userProfile==null?null:_userProfile.UserId;
+        }
+        _moviesAndRatings = _mediaTableViewModel.GetMoviesOfUserProfileByUserIdAsync(userId);
     }
 }
