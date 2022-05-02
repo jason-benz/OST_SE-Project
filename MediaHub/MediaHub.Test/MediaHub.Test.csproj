@@ -38,8 +38,5 @@
       </Content>
     </ItemGroup>
 	
-    <ItemGroup>
-      <ProjectReference Include="..\MediaHub.Data\MediaHub.Data.csproj" />
-    </ItemGroup>
 
 </Project>
