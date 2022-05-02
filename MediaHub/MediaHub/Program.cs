@@ -30,6 +30,8 @@ builder.Services.AddSingleton<IdentityService>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 var profileManager = new UserProfileDataManager();
 builder.Services.AddSingleton<IUserProfileViewModel>(new UserProfileViewModel(profileManager));
+var suggestionManager = new UserSuggestionDataManager();
+builder.Services.AddSingleton<IUserSuggestionsViewModel>(new UserSuggestionsViewModel(suggestionManager));
 builder.Services.AddSingleton<IMediaSearchViewModel>(new MediaSearchViewModel(new TmdbApi()));
 builder.Services.AddSingleton<IRatingViewModel>(new RatingViewModel(profileManager));
 var app = builder.Build();
