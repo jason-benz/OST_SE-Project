@@ -3,14 +3,22 @@ using MediaHub.Data;
 using MediaHub.Data.Persistency;
 using MediaHub.Data.ViewModel;
 using MediaHub.Data.Model;
-using MediaHub.Pages;
 using MediaHub.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Logging
+
+var logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .CreateLogger();
+ILogService.Singleton = new SerilogService(logger);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -25,15 +33,16 @@ builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuth
 
 builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 
-builder.Services.AddSingleton<IdentityService>();
+builder.Services.AddScoped<IIdentityService>(_ => new IdentityService());
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 var profileManager = new UserProfileDataManager();
-builder.Services.AddSingleton<IUserProfileViewModel>(new UserProfileViewModel(profileManager));
 var mediaApi = new TmdbApi();
-builder.Services.AddSingleton<IMediaSearchViewModel>(new MediaSearchViewModel(mediaApi));
+builder.Services.AddScoped<IUserProfileViewModel>(_ => new UserProfileViewModel(profileManager));
 builder.Services.AddScoped<IUserSuggestionsViewModel>(_ => new UserSuggestionsViewModel(new UserSuggestionDataManager()));
-builder.Services.AddSingleton<IRatingViewModel>(new RatingViewModel(profileManager));
-builder.Services.AddSingleton<IMediaTableViewModel>(new MediaTableViewModel(mediaApi, profileManager));
+builder.Services.AddScoped<IMediaSearchViewModel>(_ => new MediaSearchViewModel(mediaApi));
+builder.Services.AddSingleton(ILogService.Singleton);
+builder.Services.AddScoped<IRatingViewModel>(_ => new RatingViewModel(profileManager));
+builder.Services.AddScoped<IMediaTableViewModel>(_ => new MediaTableViewModel(mediaApi, profileManager));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
