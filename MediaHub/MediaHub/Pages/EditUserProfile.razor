@@ -3,9 +3,11 @@
 @using MediaHub.Services
 @using MediaHub.Data.ViewModel
 @using Microsoft.CodeAnalysis.CSharp.Syntax
+@using MediaHub.Data.Persistency
 
 @inject IUserProfileViewModel _userProfileViewModel
 @inject IdentityService _identityServiceInstance
+@inject ILogService _logger
 
 <div class="profile-page-heading">
     <NavLink href="userProfile" ><button class="btn btn-secondary oi oi-arrow-thick-left"/></NavLink>
