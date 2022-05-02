@@ -1,4 +1,4 @@
-﻿namespace MediaHub.Data.Model
+﻿namespace MediaHub.Data.ProfileModule.Model
 {
     public interface IUserProfileDataManager
     {

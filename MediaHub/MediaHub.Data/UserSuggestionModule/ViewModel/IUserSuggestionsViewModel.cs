@@ -1,6 +1,6 @@
-﻿using MediaHub.Data.Model;
+﻿using MediaHub.Data.UserSuggestionModule.Model;
 
-namespace MediaHub.Data.ViewModel
+namespace MediaHub.Data.UserSuggestionModule.ViewModel
 {
     public interface IUserSuggestionsViewModel
     {

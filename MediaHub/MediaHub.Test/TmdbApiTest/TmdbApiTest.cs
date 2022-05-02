@@ -1,16 +1,17 @@
-﻿using MediaHub.Data.Model;
+﻿using MediaHub.Data.MediaModule.Persistency;
 using Xunit;
-namespace MediaHub.Test;
+
+namespace MediaHub.Test.TmdbApiTest;
 
 public class TmdbApiTest
 {
     private readonly TmdbApi tmdb;
-    
+
     public TmdbApiTest()
     {
         tmdb = new TmdbApi();
     }
-    
+
     /* Note to devs:
       Insert a breakpoint in the tests and check whether values seem to be correct, before pushing code.
       Cannot be done automatically as Search is non-deterministic. */

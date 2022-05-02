@@ -1,13 +1,10 @@
-﻿using System.Web;
-using MediaHub.Data.Helpers;
-using MediaHub.Data.Model;
+﻿using MediaHub.Data.MediaModule.Helpers;
+using MediaHub.Data.MediaModule.Model;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace MediaHub.Data.Model;
+namespace MediaHub.Data.MediaModule.Persistency;
 
 public class TmdbApi : IMediaApi
 {
@@ -16,7 +13,7 @@ public class TmdbApi : IMediaApi
     private readonly string _apiKeyV3;
     private readonly TmdbJsonParser _jsonParser;
     private readonly Task<Dictionary<int, string>> _genreTask;
-    
+
     public TmdbApi()
     {
         IConfigurationRoot configuration = new ConfigurationBuilder()
@@ -25,14 +22,14 @@ public class TmdbApi : IMediaApi
         _apiKeyV3 = configuration.GetConnectionString("TmdbApiKey") ?? throw new InvalidOperationException();
         _baseUrl = configuration.GetConnectionString("TmdbBaseUrl") ?? throw new InvalidOperationException();
         _basePosterPath = configuration.GetConnectionString("TmdbBasePosterPath") ?? throw new InvalidOperationException();
-        
+
         _genreTask = GetAllGenres();
         _jsonParser = new TmdbJsonParser(_basePosterPath);
     }
 
     public async Task<List<Movie>> Search(string query)
     {
-        var urlParams = new Dictionary<string, string>() {{"query", query}};
+        var urlParams = new Dictionary<string, string>() { { "query", query } };
         var json = await GetResponseFromApi("/search/movie", urlParams);
         var genres = await _genreTask;
         return _jsonParser.ParseSearchEndpointJsonToMovieResults(json, genres);
@@ -61,7 +58,7 @@ public class TmdbApi : IMediaApi
     private static async Task<string> ExecuteGetRequest(Uri requestUrl)
     {
         var client = new HttpClient();
-        var response =  client.GetAsync(requestUrl).Result;
+        var response = client.GetAsync(requestUrl).Result;
         return await response.Content.ReadAsStringAsync();
     }
 

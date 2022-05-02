@@ -1,9 +1,9 @@
-﻿namespace MediaHub.Data.Model
+﻿namespace MediaHub.Data.UserSuggestionModule.Model
 {
     public class UserSuggestionEngine : IUserSuggestionEngine
     {
         private readonly IUserSuggestionDataManager _userSuggestionDataManager;
-        
+
         public UserSuggestionEngine(IUserSuggestionDataManager userSuggestionDataManager)
         {
             _userSuggestionDataManager = userSuggestionDataManager;

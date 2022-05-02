@@ -1,7 +1,7 @@
-﻿using MediaHub.Data.Model;
-using MediaHub.Data.Persistency;
+﻿using MediaHub.Data.PersistencyLayer;
+using MediaHub.Data.ProfileModule.Model;
 
-namespace MediaHub.Data.ViewModel
+namespace MediaHub.Data.ProfileModule.ViewModel
 {
     public class UserProfileViewModel : IUserProfileViewModel
     {
@@ -36,7 +36,7 @@ namespace MediaHub.Data.ViewModel
                 ILogService.Singleton.LogException("An unknown error occured while reading the userprofile from the database", ILogService.LogCategory.Identity, e);
                 return null;
             }
-            
+
         }
 
         public void UpdateUserProfile(UserProfile userProfile)

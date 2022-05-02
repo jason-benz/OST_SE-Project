@@ -1,7 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MediaHub.Data.MediaModule.Model;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MediaHub.Data.Model
+namespace MediaHub.Data.ProfileModule.Model
 {
     [Table("UserProfile")]
     public class UserProfile
@@ -40,17 +41,17 @@ namespace MediaHub.Data.Model
         /// </summary>
         public override bool Equals(object? obj)
         {
-            if ((obj == null) || !this.GetType().Equals(obj.GetType()))
+            if (obj == null || !GetType().Equals(obj.GetType()))
             {
                 return false;
             }
             else
             {
                 UserProfile up = (UserProfile)obj;
-                return (UserId == up.UserId) 
-                    && (Username == up.Username)
-                    && (Biography == up.Biography)
-                    && (ProfilePicture == up.ProfilePicture);
+                return UserId == up.UserId
+                    && Username == up.Username
+                    && Biography == up.Biography
+                    && ProfilePicture == up.ProfilePicture;
             }
         }
 

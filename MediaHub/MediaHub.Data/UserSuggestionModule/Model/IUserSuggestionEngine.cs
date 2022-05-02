@@ -1,4 +1,4 @@
-﻿namespace MediaHub.Data.Model
+﻿namespace MediaHub.Data.UserSuggestionModule.Model
 {
     public interface IUserSuggestionEngine
     {

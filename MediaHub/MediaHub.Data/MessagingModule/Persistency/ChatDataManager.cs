@@ -1,7 +1,8 @@
-﻿using MediaHub.Data.Model;
+﻿using MediaHub.Data.MessagingModule.Model;
+using MediaHub.Data.PersistencyLayer;
 using Microsoft.EntityFrameworkCore;
 
-namespace MediaHub.Data.Persistency;
+namespace MediaHub.Data.MessagingModule.Persistency;
 
 public class ChatDataManager : IChatDataManager
 {
@@ -9,8 +10,8 @@ public class ChatDataManager : IChatDataManager
     {
         using MediaHubDBContext context = new();
         return context.Messages.Include(m => m.Sender).Include(m => m.Receiver).Where(m =>
-            (m.Receiver.UserId.Equals(userId1) && m.Sender.UserId.Equals(userId2)) ||
-            (m.Receiver.UserId.Equals(userId2) && m.Sender.UserId.Equals(userId1))).OrderBy(m => m.TimeSent).ToList();
+            m.Receiver.UserId.Equals(userId1) && m.Sender.UserId.Equals(userId2) ||
+            m.Receiver.UserId.Equals(userId2) && m.Sender.UserId.Equals(userId1)).OrderBy(m => m.TimeSent).ToList();
     }
 
     public void InsertMessage(Message m)
@@ -21,8 +22,8 @@ public class ChatDataManager : IChatDataManager
         {
             context.Entry(m.Receiver).State = EntityState.Unchanged;
         }
-        
-        context.Add(m); 
+
+        context.Add(m);
         context.SaveChanges();
     }
 }

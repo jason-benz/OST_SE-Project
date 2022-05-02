@@ -1,12 +1,13 @@
+using MediaHub.Data.ProfileModule.Model;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MediaHub.Data.Model;
+namespace MediaHub.Data.MediaModule.Model;
 
 [Table("MediaRating")]
 public class MediaRating
 {
-    [Key] 
+    [Key]
     public int Id { get; set; }
     public int MovieId { get; set; }
     public string ProfileId { get; set; }

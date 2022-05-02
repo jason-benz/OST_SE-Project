@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using MediaHub.Data.Persistency;
-using MediaHub.Data.Model;
+using MediaHub.Data.PersistencyLayer;
+using MediaHub.Data.ProfileModule.Model;
 
 namespace MediaHub.Areas.Identity.Pages.Account
 {

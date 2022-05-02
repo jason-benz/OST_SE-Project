@@ -1,9 +1,12 @@
-using MediaHub.Data.Model;
+using MediaHub.Data.MediaModule.Model;
+using MediaHub.Data.MessagingModule.Model;
+using MediaHub.Data.ProfileModule.Model;
+using MediaHub.Data.UserSuggestionModule.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace MediaHub.Data.Persistency;
+namespace MediaHub.Data.PersistencyLayer;
 
 public class MediaHubDBContext : DbContext
 {
@@ -28,17 +31,17 @@ public class MediaHubDBContext : DbContext
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", false, true)
                 .Build();
-            
+
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("DataConnection"))
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging();
         }
     }
-    
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-       modelBuilder.Entity<Message>().HasOne(e => e.Receiver).WithMany().IsRequired(false).OnDelete(DeleteBehavior.Restrict);
-       modelBuilder.Entity<Message>().HasOne(e => e.Sender).WithMany().OnDelete(DeleteBehavior.Cascade);
-       modelBuilder.Entity<UserSuggestion>().HasKey(s => new { s.UserId1, s.UserId2 });
+        modelBuilder.Entity<Message>().HasOne(e => e.Receiver).WithMany().IsRequired(false).OnDelete(DeleteBehavior.Restrict);
+        modelBuilder.Entity<Message>().HasOne(e => e.Sender).WithMany().OnDelete(DeleteBehavior.Cascade);
+        modelBuilder.Entity<UserSuggestion>().HasKey(s => new { s.UserId1, s.UserId2 });
     }
 }
