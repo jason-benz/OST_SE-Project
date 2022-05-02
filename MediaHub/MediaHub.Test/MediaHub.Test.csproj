@@ -14,6 +14,8 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+        <PackageReference Include="Serilog" Version="2.10.0" />
+        <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
         <PackageReference Include="xunit" Version="2.4.1" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -24,7 +26,10 @@
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
     </ItemGroup>
-	
+<ItemGroup>
+      <ProjectReference Include="..\MediaHub.Data\MediaHub.Data.csproj" />
+      <ProjectReference Include="..\MediaHub\MediaHub.csproj" />
+    </ItemGroup>
     <ItemGroup>
       <Content Include="appsettings.json">
         <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
@@ -33,8 +38,5 @@
       </Content>
     </ItemGroup>
 	
-    <ItemGroup>
-      <ProjectReference Include="..\MediaHub.Data\MediaHub.Data.csproj" />
-    </ItemGroup>
 
 </Project>
