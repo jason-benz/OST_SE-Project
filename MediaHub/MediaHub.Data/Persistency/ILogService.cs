@@ -8,7 +8,7 @@ public interface ILogService
         Chat, Media, Identity
     }
 
-    private static ILogService _singleton;
+    private static ILogService _singleton = null;
     public static ILogService Singleton
     {
         get
