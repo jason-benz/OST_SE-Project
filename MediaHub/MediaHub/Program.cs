@@ -3,14 +3,22 @@ using MediaHub.Data;
 using MediaHub.Data.Persistency;
 using MediaHub.Data.ViewModel;
 using MediaHub.Data.Model;
-using MediaHub.Pages;
 using MediaHub.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Logging
+
+var logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .CreateLogger();
+ILogService.Singleton = new SerilogService(logger);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -22,18 +30,20 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor().AddCircuitOptions(options => { options.DetailedErrors = true; }); // TODO Remove circuit options
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
-
 builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
-
-builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddScoped<IIdentityService>(_ => new IdentityService());
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 var profileManager = new UserProfileDataManager();
 IChatDataManager chatDataManager = new ChatDataManager();
+var mediaApi = new TmdbApi();
+builder.Services.AddScoped<IUserProfileViewModel>(_ => new UserProfileViewModel(profileManager));
+builder.Services.AddScoped<IUserSuggestionsViewModel>(_ => new UserSuggestionsViewModel(new UserSuggestionDataManager()));
+builder.Services.AddScoped<IMediaSearchViewModel>(_ => new MediaSearchViewModel(mediaApi));
+builder.Services.AddSingleton(ILogService.Singleton);
+builder.Services.AddScoped<IRatingViewModel>(_ => new RatingViewModel(profileManager));
+builder.Services.AddScoped<IMediaTableViewModel>(_ => new MediaTableViewModel(mediaApi, profileManager));
 builder.Services.AddScoped<IChatViewModel>(_ => new ChatViewModel(chatDataManager, profileManager));
-builder.Services.AddSingleton<IUserProfileViewModel>(new UserProfileViewModel(profileManager));
-builder.Services.AddSingleton<IMediaSearchViewModel>(new MediaSearchViewModel(new TmdbApi()));
-builder.Services.AddSingleton<IRatingViewModel>(new RatingViewModel(profileManager));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
