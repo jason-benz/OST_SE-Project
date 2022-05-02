@@ -1,0 +1,78 @@
+﻿@page "/chat"
+@using MediaHub.Services
+@using MediaHub.Data.Model
+@using MediaHub.Data.Persistency
+@using MediaHub.Data.ViewModel
+@using Microsoft.AspNetCore.Routing.Matching
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@using SendGrid.Helpers.Mail.Model
+
+@inject IIdentityService _identityServiceInstance
+@inject IChatViewModel _chatViewModel
+
+@if (_identityServiceInstance.UserId == null)
+{
+    <p>There is a problem with your profile. Please contact support.</p>
+}
+else
+{
+    <div id="chat-container">
+        <div id="contactlist-container">
+            <h3>Contact List:</h3>
+            @foreach (var contact in userProfilesOfContacts)
+            {
+                <div class="contactlist-element" @onclick="@(() => OpenChat(@contact.UserId))">@contact.Username</div>
+            }
+        </div>
+
+        <div id="chat-input-and-messages-container">
+            <div id="chat-input-container">
+                <form @onsubmit=SaveMessageToDb>
+                    <input id="msg-input" type="text" placeholder="Type your message here" @bind="currentMessage" required/>
+                    <button id="send-msg-btn" type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+            <div id="chat-messages-container">
+                @foreach (var message in _messages)
+                {
+                    <div class="msg-line">
+                        @if (_identityServiceInstance.UserId.Equals(message.Sender.UserId))
+                        {
+                            <div class="single-msg sent-msg"> @message.Content </div>
+                        }
+                        else
+                        {
+                            <div class="single-msg received-msg"> @message.Content </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+@code
+{
+    private string currentMessage { get; set; }= "";
+    private List<Message> _messages = new();
+    public List<MediaHub.Data.Model.UserProfile> userProfilesOfContacts { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _chatViewModel.SetSenderById(_identityServiceInstance.UserId);
+        userProfilesOfContacts = _chatViewModel.GetAllContactUserProfiles();
+    }
+    
+    void SaveMessageToDb()
+    {
+        _chatViewModel.InsertMessage(currentMessage);
+        currentMessage = "";
+    }
+
+    public void OpenChat(string userId)
+    {
+        _chatViewModel.SetReceiverById(userId);
+        _messages = _chatViewModel.GetAllMessagesForActiveChat();
+    }
+}
+

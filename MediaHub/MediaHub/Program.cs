@@ -28,14 +28,13 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages();
-builder.Services.AddServerSideBlazor();
+builder.Services.AddServerSideBlazor().AddCircuitOptions(options => { options.DetailedErrors = true; }); // TODO Remove circuit options
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
-
 builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
-
 builder.Services.AddScoped<IIdentityService>(_ => new IdentityService());
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 var profileManager = new UserProfileDataManager();
+IChatDataManager chatDataManager = new ChatDataManager();
 var mediaApi = new TmdbApi();
 builder.Services.AddScoped<IUserProfileViewModel>(_ => new UserProfileViewModel(profileManager));
 builder.Services.AddScoped<IUserSuggestionsViewModel>(_ => new UserSuggestionsViewModel(new UserSuggestionDataManager()));
@@ -43,6 +42,8 @@ builder.Services.AddScoped<IMediaSearchViewModel>(_ => new MediaSearchViewModel(
 builder.Services.AddSingleton(ILogService.Singleton);
 builder.Services.AddScoped<IRatingViewModel>(_ => new RatingViewModel(profileManager));
 builder.Services.AddScoped<IMediaTableViewModel>(_ => new MediaTableViewModel(mediaApi, profileManager));
+builder.Services.AddScoped<IChatViewModel>(_ => new ChatViewModel(chatDataManager, profileManager));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

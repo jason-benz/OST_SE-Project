@@ -116,7 +116,10 @@ namespace MediaHub.Areas.Identity.Pages.Account.Manage
         private void DeleteUserProfile(string userId)
         {
             using MediaHubDBContext context = new();
-
+            
+            var messages = context.Messages.Where(m => m.Receiver.UserId.Equals(userId) || m.Sender.UserId.Equals(userId));
+            context.Messages.RemoveRange(messages);
+            
             var userProfileToDelete = new UserProfile(userId);
             context.UserProfiles.Remove(userProfileToDelete);
             context.SaveChanges();

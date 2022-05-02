@@ -34,6 +34,11 @@ namespace MediaHub.Test.UserProfileTest
             }
         }
 
+        public UserProfile? GetUserProfileByIdNoTracking(string userId)
+        {
+            throw new NotImplementedException();
+        }
+
         public UserProfile? GetUserProfileByUsername(string username)
         {
             switch (username)
@@ -60,6 +65,11 @@ namespace MediaHub.Test.UserProfileTest
             }
 
             return false;
+        }
+
+        public List<UserProfile> GetAllUserProfiles()
+        {
+            throw new NotImplementedException();
         }
 
         public void UpdateUserProfile(UserProfile userProfile)
