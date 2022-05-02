@@ -28,7 +28,7 @@
 
         private IEnumerable<string> GetSuggestedUserIds(string userId)
         {
-            var users = _userSuggestionDataManager.GetSuggestedUsers(userId);
+            var users = _userSuggestionDataManager.GetSuggestedUsersLazyLoading(userId);
             return users.Select(a => a.UserId1).Distinct().Union(users.Select(a => a.UserId2).Distinct());
         }
 
