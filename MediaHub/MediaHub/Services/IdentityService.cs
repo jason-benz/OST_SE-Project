@@ -8,7 +8,7 @@ namespace MediaHub.Services;
 
 public class IdentityService : IIdentityService
 {
-    public AuthenticationState AuthenticationState { private get; set; }
+    public AuthenticationState AuthenticationState { get; set; }
     
     public string? LoginName
     {

@@ -27,7 +27,7 @@ namespace MediaHub.Data.Migrations
                         column: x => x.ProfileId,
                         principalTable: "UserProfile",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(
