@@ -3,6 +3,7 @@ using MediaHub.Data.Persistency;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MediaHub.Data.Migrations
 {
     [DbContext(typeof(MediaHubDBContext))]
-    partial class MediaHubDBContextModelSnapshot : ModelSnapshot
+    [Migration("20220501225930_UserSuggestion")]
+    partial class UserSuggestion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -97,7 +99,7 @@ namespace MediaHub.Data.Migrations
                     b.HasOne("MediaHub.Data.Model.UserProfile", "Profile")
                         .WithMany("Ratings")
                         .HasForeignKey("ProfileId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Profile");
@@ -108,13 +110,13 @@ namespace MediaHub.Data.Migrations
                     b.HasOne("MediaHub.Data.Model.UserProfile", "UserProfile1")
                         .WithMany()
                         .HasForeignKey("UserId1")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("MediaHub.Data.Model.UserProfile", "UserProfile2")
                         .WithMany()
                         .HasForeignKey("UserId2")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("UserProfile1");
