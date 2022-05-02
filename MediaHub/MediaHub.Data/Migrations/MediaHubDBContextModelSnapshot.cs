@@ -77,15 +77,17 @@ namespace MediaHub.Data.Migrations
             modelBuilder.Entity("MediaHub.Data.Model.UserSuggestion", b =>
                 {
                     b.Property<string>("UserId1")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("NVARCHAR(450)");
 
                     b.Property<string>("UserId2")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("NVARCHAR(450)");
 
                     b.Property<bool>("IgnoreSuggestion")
                         .HasColumnType("bit");
 
                     b.HasKey("UserId1", "UserId2");
+
+                    b.HasIndex("UserId2");
 
                     b.ToTable("UserSuggestion");
                 });
@@ -99,6 +101,25 @@ namespace MediaHub.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Profile");
+                });
+
+            modelBuilder.Entity("MediaHub.Data.Model.UserSuggestion", b =>
+                {
+                    b.HasOne("MediaHub.Data.Model.UserProfile", "UserProfile1")
+                        .WithMany()
+                        .HasForeignKey("UserId1")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("MediaHub.Data.Model.UserProfile", "UserProfile2")
+                        .WithMany()
+                        .HasForeignKey("UserId2")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("UserProfile1");
+
+                    b.Navigation("UserProfile2");
                 });
 
             modelBuilder.Entity("MediaHub.Data.Model.UserProfile", b =>
