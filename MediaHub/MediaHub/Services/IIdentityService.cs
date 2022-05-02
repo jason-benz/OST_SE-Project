@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Components.Authorization;
 
-namespace MediaHub.Data.Model;
+namespace MediaHub.Services;
 
 public interface IIdentityService
 {

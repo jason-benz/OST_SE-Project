@@ -2,15 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System;
 using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
-using MediaHub.Data.Model;
-using MediaHub.Data.Persistency;
+using MediaHub.Data.PersistencyLayer;
+using MediaHub.Data.ProfileModule.Model;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
 
 namespace MediaHub.Areas.Identity.Pages.Account.Manage
 {

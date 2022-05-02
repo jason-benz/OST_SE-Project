@@ -1,14 +1,21 @@
 using MediaHub.Areas.Identity;
 using MediaHub.Data;
-using MediaHub.Data.Persistency;
-using MediaHub.Data.ViewModel;
-using MediaHub.Data.Model;
 using MediaHub.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using MediaHub.Data.MediaModule.ViewModel;
+using MediaHub.Data.MessagingModule.Model;
+using MediaHub.Data.UserSuggestionModule.ViewModel;
+using MediaHub.Data.ProfileModule.ViewModel;
+using MediaHub.Data.PersistencyLayer;
+using MediaHub.Data.MessagingModule.ViewModel;
+using MediaHub.Data.ProfileModule.Persistency;
+using MediaHub.Data.MessagingModule.Persistency;
+using MediaHub.Data.MediaModule.Persistency;
+using MediaHub.Data.UserSuggestionModule.Persistency;
 
 var builder = WebApplication.CreateBuilder(args);
 

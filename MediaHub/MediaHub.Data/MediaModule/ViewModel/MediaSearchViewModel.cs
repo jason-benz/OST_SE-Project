@@ -1,6 +1,6 @@
-using MediaHub.Data.Model;
+using MediaHub.Data.MediaModule.Model;
 
-namespace MediaHub.Data.ViewModel;
+namespace MediaHub.Data.MediaModule.ViewModel;
 
 public class MediaSearchViewModel : IMediaSearchViewModel
 {
@@ -11,7 +11,7 @@ public class MediaSearchViewModel : IMediaSearchViewModel
     }
     public async Task<List<Movie>> GetMoviesAsync(string searchString)
     {
-        if(searchString == String.Empty)
+        if (searchString == string.Empty)
         {
             searchString = DateTime.Now.Year.ToString();
         }
@@ -20,7 +20,8 @@ public class MediaSearchViewModel : IMediaSearchViewModel
         {
             return await _api.Search(searchString);
         }
-        catch (Exception) {
+        catch (Exception)
+        {
             return new List<Movie>();
         }
     }

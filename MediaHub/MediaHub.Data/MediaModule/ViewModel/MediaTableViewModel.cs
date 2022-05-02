@@ -1,6 +1,7 @@
-using MediaHub.Data.Model;
+using MediaHub.Data.MediaModule.Model;
+using MediaHub.Data.ProfileModule.Model;
 
-namespace MediaHub.Data.ViewModel;
+namespace MediaHub.Data.MediaModule.ViewModel;
 
 public class MediaTableViewModel : IMediaTableViewModel
 {
@@ -14,11 +15,11 @@ public class MediaTableViewModel : IMediaTableViewModel
     }
     public async Task<List<IMediaTableViewModel.MovieAndRating>> GetMoviesByNameAsync(string namePattern)
     {
-        if(namePattern == String.Empty)
+        if (namePattern == string.Empty)
         {
             namePattern = DateTime.Now.Year.ToString();
         }
-        
+
         try
         {
             var mediaList = await _api.Search(namePattern);
@@ -33,7 +34,8 @@ public class MediaTableViewModel : IMediaTableViewModel
             }
             return moviesAndRatings;
         }
-        catch (Exception) {
+        catch (Exception)
+        {
             return new List<IMediaTableViewModel.MovieAndRating>();
         }
     }
@@ -47,7 +49,7 @@ public class MediaTableViewModel : IMediaTableViewModel
         foreach (var rating in userRatings)
         {
             yield return new IMediaTableViewModel.MovieAndRating()
-                {Movie = _api.GetMovieById(rating.MovieId).Result, UserRating = rating.Rating};
+            { Movie = _api.GetMovieById(rating.MovieId).Result, UserRating = rating.Rating };
         }
     }
 }

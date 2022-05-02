@@ -1,6 +1,7 @@
-using MediaHub.Data.Model;
+using MediaHub.Data.MediaModule.Model;
+using MediaHub.Data.ProfileModule.Model;
 
-namespace MediaHub.Data.ViewModel;
+namespace MediaHub.Data.MediaModule.ViewModel;
 
 public class RatingViewModel : IRatingViewModel
 {
@@ -14,7 +15,7 @@ public class RatingViewModel : IRatingViewModel
     {
         _profileDataManager = profileDataManager;
     }
-    
+
     public void Load(string userId, Movie movie)
     {
         _movie = movie;
@@ -26,7 +27,7 @@ public class RatingViewModel : IRatingViewModel
     {
         get => _rating!.IsAddedToProfile;
         private set => _rating!.IsAddedToProfile = value;
-    } 
+    }
 
     public void ToggleIsAddedToProfile()
     {
@@ -48,15 +49,15 @@ public class RatingViewModel : IRatingViewModel
 
     private void LoadRatings()
     {
-        if(!(_profile?.Ratings.Where(r => r.MovieId == _movie.Id)).Any())
+        if (!(_profile?.Ratings.Where(r => r.MovieId == _movie.Id)).Any())
             MakeNewRatingForProfile();
         else
         {
             _rating = _profile?.Ratings
                            .Where(r => r.MovieId == _movie?.Id)
-                           .FirstOrDefault(new MediaRating()); 
+                           .FirstOrDefault(new MediaRating());
         }
-           
+
     }
 
     private void MakeNewRatingForProfile()

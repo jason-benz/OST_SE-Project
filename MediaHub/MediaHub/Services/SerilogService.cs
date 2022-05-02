@@ -1,4 +1,4 @@
-using MediaHub.Data.Persistency;
+using MediaHub.Data.PersistencyLayer;
 using Serilog.Core;
 
 namespace MediaHub.Services;

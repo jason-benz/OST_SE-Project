@@ -1,9 +1,9 @@
-﻿namespace MediaHub.Data.Model
+﻿namespace MediaHub.Data.UserSuggestionModule.Model
 {
     public interface IUserSuggestionDataManager
     {
         IEnumerable<UserSuggestion> GetSuggestedUsersLazyLoading(string userId, bool loadIgnoredSuggestions = true);
-        
+
         IEnumerable<UserSuggestion> GetSuggestedUsers(string userId, bool loadIgnoredSuggestions = true);
 
         IEnumerable<int> GetLikedMovieIdsByUserId(string userId);

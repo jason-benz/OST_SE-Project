@@ -1,7 +1,7 @@
-﻿using MediaHub.Data.Model;
-using MediaHub.Data.Persistency;
+﻿using MediaHub.Data.MessagingModule.Model;
+using MediaHub.Data.ProfileModule.Model;
 
-namespace MediaHub.Data.ViewModel;
+namespace MediaHub.Data.MessagingModule.ViewModel;
 
 public class ChatViewModel : IChatViewModel
 {
@@ -9,7 +9,7 @@ public class ChatViewModel : IChatViewModel
     private IUserProfileDataManager _userProfileDataManager { get; set; }
     private UserProfile? _sender { get; set; }
     private UserProfile? _receiver { get; set; }
-    
+
     public ChatViewModel(IChatDataManager chatDataManager, IUserProfileDataManager userProfileDataManager)
     {
         _chatDataManager = chatDataManager;

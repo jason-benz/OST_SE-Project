@@ -1,6 +1,6 @@
-using MediaHub.Data.Model;
+using MediaHub.Data.MediaModule.Model;
 
-namespace MediaHub.Data.ViewModel;
+namespace MediaHub.Data.MediaModule.ViewModel;
 
 public interface IMediaTableViewModel
 {

@@ -1,7 +1,8 @@
-﻿using MediaHub.Data.Model;
+﻿using MediaHub.Data.PersistencyLayer;
+using MediaHub.Data.UserSuggestionModule.Model;
 using Microsoft.EntityFrameworkCore;
 
-namespace MediaHub.Data.Persistency
+namespace MediaHub.Data.UserSuggestionModule.Persistency
 {
     public class UserSuggestionDataManager : IUserSuggestionDataManager
     {
@@ -12,8 +13,8 @@ namespace MediaHub.Data.Persistency
         {
             using MediaHubDBContext context = new();
             return context.UserSuggestions
-                .Where(s => 
-                    s.IgnoreSuggestion == loadIgnoredSuggestions && 
+                .Where(s =>
+                    s.IgnoreSuggestion == loadIgnoredSuggestions &&
                     (s.UserId1 == userId || s.UserId2 == userId))
                 .ToList();
         }
@@ -56,7 +57,7 @@ namespace MediaHub.Data.Persistency
         public void AddUserSuggestion(UserSuggestion userSuggestion)
         {
             using MediaHubDBContext context = new();
-            context.Add<UserSuggestion>(userSuggestion);
+            context.Add(userSuggestion);
             context.SaveChanges();
         }
 

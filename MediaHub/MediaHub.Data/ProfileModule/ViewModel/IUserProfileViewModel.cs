@@ -1,6 +1,6 @@
-﻿using MediaHub.Data.Model;
+﻿using MediaHub.Data.ProfileModule.Model;
 
-namespace MediaHub.Data.ViewModel
+namespace MediaHub.Data.ProfileModule.ViewModel
 {
     public interface IUserProfileViewModel
     {

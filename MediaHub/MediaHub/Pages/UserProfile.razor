@@ -1,9 +1,10 @@
 ﻿@page "/userProfile/{Username?}"
 
+@using MediaHub.Data.MediaModule.Model
+@using MediaHub.Data.MediaModule.ViewModel
+@using MediaHub.Data.ProfileModule.ViewModel
 @using MediaHub.Services
 @using MediaHub.View
-@using MediaHub.Data.ViewModel
-@using MediaHub.Data.Model
 
 @inject IUserProfileViewModel _userProfileServiceInstance
 @inject IIdentityService _identityServiceInstance
@@ -36,13 +37,10 @@ else
             <MediaTable DisplayUserRatings="true" ShowReleaseDate="false" MoviesAndRatings="_moviesAndRatings" AlternativeText="There is currently no media added to this profile"/>
         </div>  
     </div>
-    
-    
 }
 
-
 @code {
-    private Data.Model.UserProfile? _userProfile;
+    private Data.ProfileModule.Model.UserProfile? _userProfile;
     private List<Movie> _media = new List<Movie>();
     private IEnumerable<MediaRating> _userRatings;
     private IEnumerable<IMediaTableViewModel.MovieAndRating>? _moviesAndRatings;

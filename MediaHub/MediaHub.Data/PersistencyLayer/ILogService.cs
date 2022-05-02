@@ -1,5 +1,4 @@
-
-namespace MediaHub.Data.Persistency;
+namespace MediaHub.Data.PersistencyLayer;
 
 public interface ILogService
 {

@@ -1,4 +1,4 @@
-﻿namespace MediaHub.Data.Model;
+﻿namespace MediaHub.Data.MediaModule.Model;
 
 public interface IMediaApi
 {

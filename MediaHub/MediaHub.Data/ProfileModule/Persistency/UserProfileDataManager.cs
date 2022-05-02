@@ -1,7 +1,8 @@
-﻿using MediaHub.Data.Model;
+﻿using MediaHub.Data.PersistencyLayer;
+using MediaHub.Data.ProfileModule.Model;
 using Microsoft.EntityFrameworkCore;
 
-namespace MediaHub.Data.Persistency
+namespace MediaHub.Data.ProfileModule.Persistency
 {
     public class UserProfileDataManager : IUserProfileDataManager
     {

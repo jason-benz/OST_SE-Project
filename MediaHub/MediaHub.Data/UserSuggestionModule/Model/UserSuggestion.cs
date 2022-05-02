@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using MediaHub.Data.ProfileModule.Model;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MediaHub.Data.Model
+namespace MediaHub.Data.UserSuggestionModule.Model
 {
     [Table("UserSuggestion")]
     public class UserSuggestion
