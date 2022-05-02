@@ -114,6 +114,7 @@ namespace MediaHub.Test.UserProfileTest
         
         public void Dispose()
         {
+            _logConfig.Dispose();
             System.IO.File.Delete("./log.txt");
         }
     }
