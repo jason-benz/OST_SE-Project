@@ -29,9 +29,11 @@ builder.Services.AddSingleton<IdentityService>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 var profileManager = new UserProfileDataManager();
 builder.Services.AddSingleton<IUserProfileViewModel>(new UserProfileViewModel(profileManager));
+var mediaApi = new TmdbApi();
+builder.Services.AddSingleton<IMediaSearchViewModel>(new MediaSearchViewModel(mediaApi));
 builder.Services.AddScoped<IUserSuggestionsViewModel>(_ => new UserSuggestionsViewModel(new UserSuggestionDataManager()));
-builder.Services.AddSingleton<IMediaSearchViewModel>(new MediaSearchViewModel(new TmdbApi()));
 builder.Services.AddSingleton<IRatingViewModel>(new RatingViewModel(profileManager));
+builder.Services.AddSingleton<IMediaTableViewModel>(new MediaTableViewModel(mediaApi, profileManager));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
