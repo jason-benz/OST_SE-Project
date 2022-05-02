@@ -11,8 +11,8 @@ build-job:       # This job runs in the build stage, which runs first.
     - 'echo | dotnet --version'
   script:
     - echo "Removing duplicate appsettings.json"
-    - rm MediaHub/MediaHub.Data/appsettings.json
-    - rm MediaHub/MediaHub.Test/appsettings.json
+    - rm ./MediaHub/MediaHub.Data/appsettings.json
+    - rm ./MediaHub/MediaHub.Test/appsettings.json
     - echo "Building the application"
     - dotnet build MediaHub/MediaHub.sln
     - echo "Preparing Project"
