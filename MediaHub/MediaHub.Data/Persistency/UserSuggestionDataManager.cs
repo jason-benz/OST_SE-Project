@@ -1,4 +1,5 @@
 ﻿using MediaHub.Data.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace MediaHub.Data.Persistency
 {
@@ -7,10 +8,26 @@ namespace MediaHub.Data.Persistency
         private const byte MinimalRating = 7;
         private const int AmountOfRequiredMatches = 2;
 
-        public IEnumerable<UserSuggestion> GetSuggestedUsers(string userId)
+        public IEnumerable<UserSuggestion> GetSuggestedUsersLazyLoading(string userId, bool loadIgnoredSuggestions = true)
         {
             using MediaHubDBContext context = new();
-            return context.UserSuggestions.Where(s => s.UserId1 == userId || s.UserId2 == userId).ToList();
+            return context.UserSuggestions
+                .Where(s => 
+                    s.IgnoreSuggestion == loadIgnoredSuggestions && 
+                    (s.UserId1 == userId || s.UserId2 == userId))
+                .ToList();
+        }
+
+        public IEnumerable<UserSuggestion> GetSuggestedUsers(string userId, bool loadIgnoredSuggestions = true)
+        {
+            using MediaHubDBContext context = new();
+            return context.UserSuggestions
+                .Include(s => s.UserProfile1)
+                .Include(s => s.UserProfile2)
+                .Where(s =>
+                    s.IgnoreSuggestion == loadIgnoredSuggestions &&
+                    (s.UserId1 == userId || s.UserId2 == userId))
+                .ToList();
         }
 
         public IEnumerable<int> GetLikedMovieIdsByUserId(string userId)
@@ -40,6 +57,13 @@ namespace MediaHub.Data.Persistency
         {
             using MediaHubDBContext context = new();
             context.Add<UserSuggestion>(userSuggestion);
+            context.SaveChanges();
+        }
+
+        public void UpdateUserSuggestion(UserSuggestion userSuggestion)
+        {
+            using MediaHubDBContext context = new();
+            context.Update(userSuggestion);
             context.SaveChanges();
         }
     }
