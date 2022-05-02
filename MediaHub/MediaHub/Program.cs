@@ -33,13 +33,13 @@ builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuth
 
 builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 
-builder.Services.AddSingleton<IdentityService>();
+builder.Services.AddScoped<IIdentityService>(_ => new IdentityService());
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 var profileManager = new UserProfileDataManager();
-builder.Services.AddSingleton<IUserProfileViewModel>(new UserProfileViewModel(profileManager));
-builder.Services.AddSingleton<IMediaSearchViewModel>(new MediaSearchViewModel(new TmdbApi()));
+builder.Services.AddScoped<IUserProfileViewModel>(_ => new UserProfileViewModel(profileManager));
+builder.Services.AddScoped<IMediaSearchViewModel>(_ => new MediaSearchViewModel(new TmdbApi()));
 builder.Services.AddSingleton(ILogService.Singleton);
-builder.Services.AddSingleton<IRatingViewModel>(new RatingViewModel(profileManager));
+builder.Services.AddScoped<IRatingViewModel>(_ => new RatingViewModel(profileManager));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

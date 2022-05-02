@@ -81,7 +81,7 @@ namespace MediaHub.Data.Migrations
                     b.HasOne("MediaHub.Data.Model.UserProfile", "Profile")
                         .WithMany("Ratings")
                         .HasForeignKey("ProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Profile");
