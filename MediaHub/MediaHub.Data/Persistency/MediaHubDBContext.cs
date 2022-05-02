@@ -9,6 +9,8 @@ public class MediaHubDBContext : DbContext
 {
     public DbSet<UserProfile> UserProfiles { get; set; }
     public DbSet<MediaRating> Ratings { get; set; }
+    public DbSet<UserSuggestion> UserSuggestions { get; set; }
+
     public MediaHubDBContext()
     {
     }
@@ -34,5 +36,6 @@ public class MediaHubDBContext : DbContext
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<UserSuggestion>().HasKey(s => new { s.UserId1, s.UserId2 });
     }
 }
