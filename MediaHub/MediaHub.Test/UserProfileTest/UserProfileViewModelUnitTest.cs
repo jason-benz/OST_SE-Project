@@ -6,6 +6,7 @@ using Xunit;
 
 namespace MediaHub.Test.UserProfileTest
 {
+    [Collection("Sequential")]
     public class UserProfileViewModelUnitTest
     {
         private readonly IUserProfileViewModel _userProfileViewModel;
