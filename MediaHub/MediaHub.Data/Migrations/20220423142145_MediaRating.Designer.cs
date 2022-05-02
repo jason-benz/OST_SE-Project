@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MediaHub.Data.Migrations
 {
     [DbContext(typeof(MediaHubDBContext))]
-    [Migration("20220430153759_MediaRating")]
+    [Migration("20220423142145_MediaRating")]
     partial class MediaRating
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,7 +34,7 @@ namespace MediaHub.Data.Migrations
                     b.Property<bool>("IsAddedToProfile")
                         .HasColumnType("bit");
 
-                    b.Property<int>("MovieId")
+                    b.Property<int>("MovieIdentifier")
                         .HasColumnType("int");
 
                     b.Property<string>("ProfileId")
