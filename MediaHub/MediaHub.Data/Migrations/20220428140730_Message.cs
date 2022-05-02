@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace MediaHub.Data.Migrations
 {
-    public partial class AddMessage : Migration
+    public partial class Message : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,6 +14,8 @@ namespace MediaHub.Data.Migrations
                 columns: table => new
                 {
                     TimeSent = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    MessageId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     SenderUserId = table.Column<string>(type: "NVARCHAR(450)", nullable: false),
                     ReceiverUserId = table.Column<string>(type: "NVARCHAR(450)", nullable: true),
                     TimeReceived = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -20,7 +23,7 @@ namespace MediaHub.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Message", x => x.TimeSent);
+                    table.PrimaryKey("PK_Message", x => x.MessageId);
                     table.ForeignKey(
                         name: "FK_Message_UserProfile_ReceiverUserId",
                         column: x => x.ReceiverUserId,
@@ -50,11 +53,6 @@ namespace MediaHub.Data.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Message");
-
-            migrationBuilder.RenameColumn(
-                name: "MovieId",
-                table: "MediaRating",
-                newName: "MovieIdentifier");
         }
     }
 }
