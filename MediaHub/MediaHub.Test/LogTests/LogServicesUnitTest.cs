@@ -26,6 +26,7 @@ namespace MediaHub.Test.UserProfileTest
         [Fact, Trait("Category", "Unit")]
         public void GetSingletonbeforeCreateThrows()
         {
+            ILogService.Singleton = null; //other tests might interfere, so this resets Singleton to its default value
             var exception = Record.Exception(() => ILogService.Singleton);
             Assert.NotNull(exception);
         }

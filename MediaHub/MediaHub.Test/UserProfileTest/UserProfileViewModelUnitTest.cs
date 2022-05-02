@@ -2,19 +2,17 @@
 using MediaHub.Data.ViewModel;
 using System;
 using MediaHub.Data.Persistency;
-using MediaHub.Services;
-using Serilog.Core;
 using Xunit;
 
 namespace MediaHub.Test.UserProfileTest
 {
-    public class UserProfileViewModelUnitTest : IDisposable
+    public class UserProfileViewModelUnitTest
     {
         private readonly IUserProfileViewModel _userProfileViewModel;
 
         public UserProfileViewModelUnitTest()
         {
-            ILogService.Singleton = new LogServiceMock(); 
+            ILogService.Singleton = new LogServiceMock();
             _userProfileViewModel = new UserProfileViewModel(new UserProfileDataManagerMock());            
         }
 
@@ -80,11 +78,6 @@ namespace MediaHub.Test.UserProfileTest
             var username = "some taken user";
             var isUsernameAvailable = _userProfileViewModel.IsUsernameAvailable(username);
             Assert.False(isUsernameAvailable);
-        }
-
-        public void Dispose()
-        {
-            ILogService.Singleton = null; //to not influence other tests
         }
     }
 }
