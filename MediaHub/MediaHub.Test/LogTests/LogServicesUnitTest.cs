@@ -7,6 +7,7 @@ using Xunit;
 
 namespace MediaHub.Test.UserProfileTest
 {
+    [Collection("Sequential")]
     public class LogServicesUnitTest : IDisposable
     {
         private ILogService _logService;
