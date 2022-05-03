@@ -36,7 +36,7 @@ update_running_container () {
     dotnet-ef database update --connection 'Server=localhost;Database=mediahub;User=SA;Password=SA1234567!s;'
     cd ${CODEFOLDER}/MediaHub/MediaHub.Data
     dotnet-ef database update --connection 'Server=localhost;Database=mediahub_data;User=SA;Password=SA1234567!s;'
-
+}
 checkout_repository
 build_container
 update_running_container
