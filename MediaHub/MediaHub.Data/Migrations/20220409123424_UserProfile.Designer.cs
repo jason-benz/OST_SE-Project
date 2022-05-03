@@ -23,7 +23,7 @@ namespace MediaHub.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("MediaHub.Data.Model.UserProfile", b =>
+            modelBuilder.Entity("MediaHub.Data.ProfileModule.Model.UserProfile", b =>
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("NVARCHAR(450)")
