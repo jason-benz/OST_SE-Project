@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MediaHub.Data.Migrations
 {
     [DbContext(typeof(MediaHubDBContext))]
-    [Migration("20220428164356_AlterMessagePrimaryKey")]
-    partial class AlterMessagePrimaryKey
+    [Migration("20220428140730_Message")]
+    partial class Message
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,7 +24,7 @@ namespace MediaHub.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("MediaHub.Data.Model.MediaRating", b =>
+            modelBuilder.Entity("MediaHub.Data.MediaModule.Model.MediaRating", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -52,7 +52,7 @@ namespace MediaHub.Data.Migrations
                     b.ToTable("MediaRating");
                 });
 
-            modelBuilder.Entity("MediaHub.Data.Model.Message", b =>
+            modelBuilder.Entity("MediaHub.Data.MessagingModule.Model.Message", b =>
                 {
                     b.Property<int>("MessageId")
                         .ValueGeneratedOnAdd()
@@ -87,7 +87,7 @@ namespace MediaHub.Data.Migrations
                     b.ToTable("Message");
                 });
 
-            modelBuilder.Entity("MediaHub.Data.Model.UserProfile", b =>
+            modelBuilder.Entity("MediaHub.Data.ProfileModule.Model.UserProfile", b =>
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("NVARCHAR(450)")
@@ -112,9 +112,9 @@ namespace MediaHub.Data.Migrations
                     b.ToTable("UserProfile");
                 });
 
-            modelBuilder.Entity("MediaHub.Data.Model.MediaRating", b =>
+            modelBuilder.Entity("MediaHub.Data.MediaModule.Model.MediaRating", b =>
                 {
-                    b.HasOne("MediaHub.Data.Model.UserProfile", "Profile")
+                    b.HasOne("MediaHub.Data.ProfileModule.Model.UserProfile", "Profile")
                         .WithMany("Ratings")
                         .HasForeignKey("ProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -123,14 +123,14 @@ namespace MediaHub.Data.Migrations
                     b.Navigation("Profile");
                 });
 
-            modelBuilder.Entity("MediaHub.Data.Model.Message", b =>
+            modelBuilder.Entity("MediaHub.Data.MessagingModule.Model.Message", b =>
                 {
-                    b.HasOne("MediaHub.Data.Model.UserProfile", "Receiver")
+                    b.HasOne("MediaHub.Data.ProfileModule.Model.UserProfile", "Receiver")
                         .WithMany()
                         .HasForeignKey("ReceiverUserId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("MediaHub.Data.Model.UserProfile", "Sender")
+                    b.HasOne("MediaHub.Data.ProfileModule.Model.UserProfile", "Sender")
                         .WithMany()
                         .HasForeignKey("SenderUserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -141,7 +141,7 @@ namespace MediaHub.Data.Migrations
                     b.Navigation("Sender");
                 });
 
-            modelBuilder.Entity("MediaHub.Data.Model.UserProfile", b =>
+            modelBuilder.Entity("MediaHub.Data.ProfileModule.Model.UserProfile", b =>
                 {
                     b.Navigation("Ratings");
                 });
