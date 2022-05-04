@@ -16,6 +16,8 @@ using MediaHub.Data.ProfileModule.Persistency;
 using MediaHub.Data.MessagingModule.Persistency;
 using MediaHub.Data.MediaModule.Persistency;
 using MediaHub.Data.UserSuggestionModule.Persistency;
+using MediaHub.Data.FeedModule.ViewModel;
+using MediaHub.Data.FeedModule.Persistency;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,6 +52,7 @@ builder.Services.AddSingleton(ILogService.Singleton);
 builder.Services.AddScoped<IRatingViewModel>(_ => new RatingViewModel(profileManager));
 builder.Services.AddScoped<IMediaTableViewModel>(_ => new MediaTableViewModel(mediaApi, profileManager));
 builder.Services.AddScoped<IChatViewModel>(_ => new ChatViewModel(chatDataManager, profileManager));
+builder.Services.AddScoped<IFeedViewModel>(_ => new FeedViewModel(new FeedDataManager()));
 
 var app = builder.Build();
 
