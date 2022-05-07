@@ -4,6 +4,7 @@ using MediaHub.Data.MediaModule.Model;
 using MediaHub.Data.PersistencyLayer;
 using MediaHub.Data.ProfileModule.Model;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Xunit;
 
 namespace MediaHub.Test.MediaRatingTest;
@@ -31,7 +32,7 @@ public class MediaRatingPersistencyTest : IDisposable
         }
     }
 
-    [Fact]
+    [Fact, Trait("Category", "Unit")]
     public void TestRatingIsPersisted()
     {
         using MediaHubDBContext context = new();
@@ -39,14 +40,21 @@ public class MediaRatingPersistencyTest : IDisposable
         Assert.Equal(this.rating.Id, rating.Id);
     }
 
-    [Fact]
+    [Fact, Trait("Category", "Unit")]
     public void TestRatingIsAccessibleThroughProfile()
     {
         using MediaHubDBContext context = new();
         var profile = context.UserProfiles.Include(p => p.Ratings).First(p => p.UserId == this.profile.UserId);
         Assert.Equal(rating.Id, profile.Ratings.ElementAt(0).Id);
     }
-
+    
+    [Fact, Trait("Category", "Unit")]
+    public void TestRatingContainsCorrectProfileId()
+    {
+        using MediaHubDBContext context = new();
+        var profile = context.UserProfiles.Include(p => p.Ratings).First(p => p.UserId == this.profile.UserId);
+        Assert.Equal(profile.UserId, rating.ProfileId);
+    }
     public void Dispose()
     {
         using (MediaHubDBContext context = new())
