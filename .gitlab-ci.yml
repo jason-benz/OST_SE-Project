@@ -71,7 +71,8 @@ sonarqube-check:
       - "apt-get install --yes openjdk-11-jre"
       - "dotnet tool install --global dotnet-sonarscanner"
       - "export PATH=\"$PATH:$HOME/.dotnet/tools\""
-      - "dotnet sonarscanner begin /k:\"SEProj_2022-FS_g04-mediahub_code_AX-rfTla5SjtzxusfRYp\" /d:\"sonar.login=$SONAR_TOKEN\" /d:\"sonar.host.url=$SONAR_HOST_URL\""
+      - "dotnet test MediaHub.Test/MediaHub.Test.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover"
+      - "dotnet sonarscanner begin /k:\"SEProj_2022-FS_g04-mediahub_code_AX-rfTla5SjtzxusfRYp\" /d:\"sonar.login=$SONAR_TOKEN\" /d:\"sonar.host.url=$SONAR_HOST_URL\" /d:sonar.cs.opencover.reportsPaths=\"MediaHub.Test/coverage.opencover.xml\" /d:sonar.coverage.exclusions=\"**Tests*.cs\""
       - "dotnet build MediaHub/MediaHub.sln"
       - "dotnet sonarscanner end /d:sonar.login=\"$SONAR_TOKEN\""
   allow_failure: true
