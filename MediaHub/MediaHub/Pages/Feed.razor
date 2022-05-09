@@ -2,12 +2,14 @@
 
 @using MediaHub.Data.FeedModule.ViewModel
 @using MediaHub.Services
+@using MediaHub.View
 
 @inject IFeedViewModel _feedViewModel
 @inject IIdentityService _identityServiceInstance
 
 <h3>Feed</h3>
 
+<Filterbar ViewModel="_feedViewModel.FilterbarViewModel"/>
 @code {
-
+    
 }

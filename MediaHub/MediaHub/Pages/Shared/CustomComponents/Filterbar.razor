@@ -6,7 +6,7 @@
     {
         var currentFilter = filter;
         <div class="FilterBarItem">
-            
+            @currentFilter.Key:
             @if (currentFilter.Value)
             {
                 <input type="checkbox" @onchange="() => ViewModel.OnChange(currentFilter.Key)" checked/> 
@@ -15,7 +15,6 @@
             {
                 <input type="checkbox" @onchange="() => ViewModel.OnChange(currentFilter.Key)"/>   
             }
-            @currentFilter.Key
         </div>
     }
 </div>
