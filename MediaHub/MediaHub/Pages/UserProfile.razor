@@ -5,12 +5,20 @@
 @using MediaHub.Data.ProfileModule.ViewModel
 @using MediaHub.Services
 @using MediaHub.View
+@using MediaHub.Data.FeedModule.ViewModel
 
 @inject IUserProfileViewModel _userProfileServiceInstance
 @inject IIdentityService _identityServiceInstance
 @inject IMediaSearchViewModel _mediaSearchViewModel
 @inject IMediaTableViewModel _mediaTableViewModel
 @inject NavigationManager _navigationManager
+
+@{
+    var dict = new Dictionary<string, bool>();
+    dict["hello"] = true;
+    dict["world"] = false;
+}
+<Filterbar ViewModel="new FilterBarViewModel(dict)"/>
 
 @if (_userProfile == null)
 {
