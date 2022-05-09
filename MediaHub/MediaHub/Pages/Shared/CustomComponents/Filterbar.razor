@@ -1,0 +1,27 @@
+@using MediaHub.Data.FeedModule.ViewModel
+@namespace MediaHub.View
+
+<div class="FilterBarWrapper">
+    @foreach (var filter in ViewModel.FilterSettings)
+    {
+        var currentFilter = filter;
+        <div class="FilterBarItem">
+            
+            @if (currentFilter.Value)
+            {
+                <input type="checkbox" @onchange="() => ViewModel.OnChange(currentFilter.Key)" checked/> 
+            }
+            else
+            {
+                <input type="checkbox" @onchange="() => ViewModel.OnChange(currentFilter.Key)"/>   
+            }
+            @currentFilter.Key
+        </div>
+    }
+</div>
+
+@code {
+
+    [Parameter]
+    public IFilterbarViewModel? ViewModel { get; set; }
+}
