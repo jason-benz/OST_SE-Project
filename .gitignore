@@ -7,3 +7,5 @@
 MediaHub/MediaHub/MediaHub.csproj.user
 MediaHub/MediaHub.sln.DotSettings.user
 /MediaHub/MediaHub.sln.DotSettings.user
+MediaHub/MediaHub.Test/coverage.cobertura.xml
+MediaHub/MediaHub.Test/coveragereport/
