@@ -2,5 +2,6 @@
 {
     public interface IFeedViewModel
     {
+        public IFilterbarViewModel FilterbarViewModel { get; }
     }
 }

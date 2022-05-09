@@ -13,13 +13,6 @@
 @inject IMediaTableViewModel _mediaTableViewModel
 @inject NavigationManager _navigationManager
 
-@{
-    var dict = new Dictionary<string, bool>();
-    dict["hello"] = true;
-    dict["world"] = false;
-}
-<Filterbar ViewModel="new FilterBarViewModel(dict)"/>
-
 @if (_userProfile == null)
 {
     <h3>Unknown profile</h3>
