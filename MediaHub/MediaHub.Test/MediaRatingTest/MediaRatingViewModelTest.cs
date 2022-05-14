@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MediaHub.Data.FeedModule.Model;
 using MediaHub.Data.MediaModule.Model;
 using MediaHub.Data.MediaModule.ViewModel;
+using MediaHub.Data.ProfileModule.Model;
+using MediaHub.Test.FeedTest;
 using MediaHub.Test.UserProfileTest;
 using Xunit;
 
@@ -11,10 +14,12 @@ namespace MediaHub.Test.MediaRatingTest;
 public class MediaRatingVieModelTest
 {
     private readonly UserProfileDataManagerMock _profileDataManager = new UserProfileDataManagerMock();
+    private readonly IFeedUpdateService _feedUpdateService = new FeedUpdateServiceMock();
     private readonly IRatingViewModel _ratingViewModel;
+
     public MediaRatingVieModelTest()
     {
-        _ratingViewModel = new RatingViewModel(_profileDataManager);
+        _ratingViewModel = new RatingViewModel(_profileDataManager, _feedUpdateService);
     }
 
     [Fact, Trait("Category", "Unit")]
