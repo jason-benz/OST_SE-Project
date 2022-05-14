@@ -18,8 +18,7 @@ namespace MediaHub.Data.Migrations
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserId = table.Column<string>(type: "NVARCHAR(450)", nullable: false),
                     ChangedTable = table.Column<int>(type: "int", nullable: false),
-                    OldValue = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NewValue = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    AdditionalInformation = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

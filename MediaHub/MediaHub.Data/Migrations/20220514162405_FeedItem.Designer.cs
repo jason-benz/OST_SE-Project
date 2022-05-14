@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MediaHub.Data.Migrations
 {
     [DbContext(typeof(MediaHubDBContext))]
-    [Migration("20220504071443_FeedItem")]
+    [Migration("20220514162405_FeedItem")]
     partial class FeedItem
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,23 +32,19 @@ namespace MediaHub.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("AdditionalInformation")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("ChangedTable")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("NewValue")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OldValue")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR(450)");
+                        .HasColumnType("NVARCHAR(450)")
+                        .HasColumnName("UserId");
 
                     b.HasKey("Id");
 

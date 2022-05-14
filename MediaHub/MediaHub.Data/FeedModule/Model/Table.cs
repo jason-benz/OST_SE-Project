@@ -1,6 +1,6 @@
 ﻿namespace MediaHub.Data.FeedModule.Model
 {
-    public enum Tables
+    public enum Table
     {
         // FeedModule: 1X
         Feed = 10,
