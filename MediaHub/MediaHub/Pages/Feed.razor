@@ -1,5 +1,6 @@
 ﻿@page "/feed"
 
+@using MediaHub.Data.FeedModule.Model
 @using MediaHub.Data.FeedModule.ViewModel
 @using MediaHub.Services
 @using MediaHub.View
@@ -9,7 +10,36 @@
 
 <h3>Feed</h3>
 
-<Filterbar ViewModel="_feedViewModel.FilterbarViewModel"/>
+@if (_feedItems.Any())
+{
+    <Filterbar ViewModel="_feedViewModel.FilterbarViewModel"/>
+
+    <table class="table table-striped">
+        <tbody>
+            @foreach (var feedItem in _feedItems)
+            {
+                <tr>
+                    <td>
+                        <b><a href="/userProfile/@feedItem.UserProfile.Username">@feedItem.UserProfile.Username</a>: </b>
+                        @_feedViewModel.LoadFeedDescription(feedItem.ChangedTable, feedItem.AdditionalInformation)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No feed items to show. If there are any news with your contacts, they will be displayed here.</p>
+}
+
+
 @code {
-    
+    private IEnumerable<FeedItem> _feedItems = new List<FeedItem>();
+
+    protected override void OnInitialized()
+    {
+        string userId = _identityServiceInstance.UserId;
+        _feedItems = _feedViewModel.LoadAllFeedItems(userId);
+    }
 }
