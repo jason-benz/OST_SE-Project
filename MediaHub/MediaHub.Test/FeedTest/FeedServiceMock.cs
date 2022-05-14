@@ -2,7 +2,7 @@
 
 namespace MediaHub.Test.FeedTest
 {
-    public class FeedUpdateServiceMock : IFeedUpdateService
+    public class FeedServiceMock : IFeedService
     {
         public void AddToFeed(string userId, Table table, string? additionalInformation = null)
         {

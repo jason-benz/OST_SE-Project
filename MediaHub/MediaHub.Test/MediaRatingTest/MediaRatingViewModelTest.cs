@@ -14,12 +14,12 @@ namespace MediaHub.Test.MediaRatingTest;
 public class MediaRatingVieModelTest
 {
     private readonly UserProfileDataManagerMock _profileDataManager = new UserProfileDataManagerMock();
-    private readonly IFeedUpdateService _feedUpdateService = new FeedUpdateServiceMock();
+    private readonly IFeedService _feedService = new FeedServiceMock();
     private readonly IRatingViewModel _ratingViewModel;
 
     public MediaRatingVieModelTest()
     {
-        _ratingViewModel = new RatingViewModel(_profileDataManager, _feedUpdateService);
+        _ratingViewModel = new RatingViewModel(_profileDataManager, _feedService);
     }
 
     [Fact, Trait("Category", "Unit")]

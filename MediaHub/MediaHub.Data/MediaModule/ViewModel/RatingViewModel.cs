@@ -10,14 +10,14 @@ public class RatingViewModel : IRatingViewModel
     private UserProfile? _profile;
     private Movie? _movie;
     private readonly IUserProfileDataManager _profileDataManager;
-    private readonly IFeedUpdateService _feedUpdateService;
+    private readonly IFeedService _feedService;
     private const string UndefinedProfileId = "0";
     private const int UndefinedMovieId = 0;
 
-    public RatingViewModel(IUserProfileDataManager profileDataManager, IFeedUpdateService feedUpdateService)
+    public RatingViewModel(IUserProfileDataManager profileDataManager, IFeedService feedService)
     {
         _profileDataManager = profileDataManager;
-        _feedUpdateService = feedUpdateService;
+        _feedService = feedService;
     }
 
     public void Load(string userId, Movie movie)
@@ -79,7 +79,7 @@ public class RatingViewModel : IRatingViewModel
         if (_profile != null)
         {
             _profileDataManager.UpdateUserProfile(_profile);
-            _feedUpdateService.AddToFeed(_profile.UserId, Table.MediaRating, _movie?.Title);
+            _feedService.AddToFeed(_profile.UserId, Table.MediaRating, _movie?.Title);
         }
     }
 

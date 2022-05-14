@@ -1,10 +1,10 @@
 ﻿namespace MediaHub.Data.FeedModule.Model
 {
-    public class FeedUpdateService : IFeedUpdateService
+    public class FeedService : IFeedService
     {
         private readonly IFeedDataManager _feedDataManager;
 
-        public FeedUpdateService(IFeedDataManager feedDataManager)
+        public FeedService(IFeedDataManager feedDataManager)
         {
             _feedDataManager = feedDataManager;
         }
