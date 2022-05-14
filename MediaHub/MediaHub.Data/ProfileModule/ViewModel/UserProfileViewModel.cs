@@ -1,4 +1,5 @@
-﻿using MediaHub.Data.PersistencyLayer;
+﻿using MediaHub.Data.FeedModule.Model;
+using MediaHub.Data.PersistencyLayer;
 using MediaHub.Data.ProfileModule.Model;
 
 namespace MediaHub.Data.ProfileModule.ViewModel
@@ -6,10 +7,12 @@ namespace MediaHub.Data.ProfileModule.ViewModel
     public class UserProfileViewModel : IUserProfileViewModel
     {
         private readonly IUserProfileDataManager _userProfileDataManager;
+        private readonly IFeedUpdateService _feedUpdateService;
 
-        public UserProfileViewModel(IUserProfileDataManager userProfileDataManager)
+        public UserProfileViewModel(IUserProfileDataManager userProfileDataManager, IFeedUpdateService feedUpdateService)
         {
             _userProfileDataManager = userProfileDataManager;
+            _feedUpdateService = feedUpdateService;
         }
 
         public UserProfile? GetUserProfileById(string userId)
@@ -44,6 +47,7 @@ namespace MediaHub.Data.ProfileModule.ViewModel
             try
             {
                 _userProfileDataManager.UpdateUserProfile(userProfile);
+                _feedUpdateService.AddToFeed(userProfile.UserId, Table.UserProfile);
             }
             catch (Exception e)
             {

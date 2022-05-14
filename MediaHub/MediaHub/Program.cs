@@ -18,6 +18,7 @@ using MediaHub.Data.MediaModule.Persistency;
 using MediaHub.Data.UserSuggestionModule.Persistency;
 using MediaHub.Data.FeedModule.ViewModel;
 using MediaHub.Data.FeedModule.Persistency;
+using MediaHub.Data.FeedModule.Model;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,16 +44,18 @@ builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 builder.Services.AddScoped<IIdentityService>(_ => new IdentityService());
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 var profileManager = new UserProfileDataManager();
+var feedDataManager = new FeedDataManager();
+var feedUpdateService = new FeedUpdateService(feedDataManager);
 IChatDataManager chatDataManager = new ChatDataManager();
 var mediaApi = new TmdbApi();
-builder.Services.AddScoped<IUserProfileViewModel>(_ => new UserProfileViewModel(profileManager));
+builder.Services.AddScoped<IUserProfileViewModel>(_ => new UserProfileViewModel(profileManager, feedUpdateService));
 builder.Services.AddScoped<IUserSuggestionsViewModel>(_ => new UserSuggestionsViewModel(new UserSuggestionDataManager()));
 builder.Services.AddScoped<IMediaSearchViewModel>(_ => new MediaSearchViewModel(mediaApi));
 builder.Services.AddSingleton(ILogService.Singleton);
-builder.Services.AddScoped<IRatingViewModel>(_ => new RatingViewModel(profileManager));
+builder.Services.AddScoped<IRatingViewModel>(_ => new RatingViewModel(profileManager, feedUpdateService));
 builder.Services.AddScoped<IMediaTableViewModel>(_ => new MediaTableViewModel(mediaApi, profileManager));
 builder.Services.AddScoped<IChatViewModel>(_ => new ChatViewModel(chatDataManager, profileManager));
-builder.Services.AddScoped<IFeedViewModel>(_ => new FeedViewModel(new FeedDataManager()));
+builder.Services.AddScoped<IFeedViewModel>(_ => new FeedViewModel(feedDataManager));
 
 var app = builder.Build();
 
