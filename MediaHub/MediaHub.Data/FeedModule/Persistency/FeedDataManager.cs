@@ -16,7 +16,10 @@ namespace MediaHub.Data.FeedModule.Persistency
         {
             using MediaHubDBContext context = new();
             return context.FeedItems
-                .Where(f => f.UserId == userId && f.ChangedTable == table && f.AdditionalInformation == additionalInformation)
+                .Where(f => f.UserId == userId && 
+                            f.ChangedTable == table && 
+                            f.AdditionalInformation == additionalInformation &&
+                            f.CreationDate.Day == DateTime.Now.Day)
                 .Any();
 
         }
