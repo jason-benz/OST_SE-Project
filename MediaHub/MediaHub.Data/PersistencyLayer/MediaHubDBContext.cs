@@ -1,3 +1,4 @@
+using MediaHub.Data.ContactsModule.Model;
 using MediaHub.Data.MediaModule.Model;
 using MediaHub.Data.MessagingModule.Model;
 using MediaHub.Data.ProfileModule.Model;
@@ -14,6 +15,8 @@ public class MediaHubDBContext : DbContext
     public DbSet<MediaRating> Ratings { get; set; }
     public DbSet<Message> Messages { get; set; }
     public DbSet<UserSuggestion> UserSuggestions { get; set; }
+    
+    public DbSet<Contact> Contacts { get; set; }
 
     public MediaHubDBContext()
     {
