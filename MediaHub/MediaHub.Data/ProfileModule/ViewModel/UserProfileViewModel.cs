@@ -7,12 +7,12 @@ namespace MediaHub.Data.ProfileModule.ViewModel
     public class UserProfileViewModel : IUserProfileViewModel
     {
         private readonly IUserProfileDataManager _userProfileDataManager;
-        private readonly IFeedUpdateService _feedUpdateService;
+        private readonly IFeedService _feedService;
 
-        public UserProfileViewModel(IUserProfileDataManager userProfileDataManager, IFeedUpdateService feedUpdateService)
+        public UserProfileViewModel(IUserProfileDataManager userProfileDataManager, IFeedService feedService)
         {
             _userProfileDataManager = userProfileDataManager;
-            _feedUpdateService = feedUpdateService;
+            _feedService = feedService;
         }
 
         public UserProfile? GetUserProfileById(string userId)
@@ -47,7 +47,7 @@ namespace MediaHub.Data.ProfileModule.ViewModel
             try
             {
                 _userProfileDataManager.UpdateUserProfile(userProfile);
-                _feedUpdateService.AddToFeed(userProfile.UserId, Table.UserProfile);
+                _feedService.AddToFeed(userProfile.UserId, Table.UserProfile);
             }
             catch (Exception e)
             {

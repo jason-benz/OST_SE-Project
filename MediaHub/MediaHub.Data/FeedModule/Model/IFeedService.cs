@@ -1,6 +1,6 @@
 ﻿namespace MediaHub.Data.FeedModule.Model
 {
-    public interface IFeedUpdateService
+    public interface IFeedService
     {
         void AddToFeed(string userId, Table table, string? additionalInformation = null);
     }
