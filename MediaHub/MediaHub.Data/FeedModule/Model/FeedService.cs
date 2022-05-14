@@ -25,9 +25,22 @@
             _feedDataManager.AddFeedItem(feedItem);
         }
 
+        public IEnumerable<FeedItem> LoadAllFeedItems(string userId)
+        {
+            var contactIds = new List<string>(); // TODO: Load contacts from DB
+            return _feedDataManager.LoadAllFeedItems(contactIds);
+        }
+
+        public IEnumerable<FeedItem> LoadFilteredFeedItems(string userId, Dictionary<string, bool> filterSettings)
+        {
+            var contactIds = new List<string>(); // TODO: Load contacts from DB
+            var selectedTables = new List<Table>(); // TODO: Map filterSettings to Table
+            return _feedDataManager.LoadFilteredFeedItems(contactIds, selectedTables);
+        }
+
         private bool IsItemExisting(string userId, Table table, string? additionalInformation)
         {
             return _feedDataManager.IsItemExisting(userId, table, additionalInformation);
-        }     
+        }
     }
 }

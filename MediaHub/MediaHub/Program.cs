@@ -44,8 +44,7 @@ builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 builder.Services.AddScoped<IIdentityService>(_ => new IdentityService());
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 var profileManager = new UserProfileDataManager();
-var feedDataManager = new FeedDataManager();
-var feedService = new FeedService(feedDataManager);
+var feedService = new FeedService(new FeedDataManager());
 IChatDataManager chatDataManager = new ChatDataManager();
 var mediaApi = new TmdbApi();
 builder.Services.AddScoped<IUserProfileViewModel>(_ => new UserProfileViewModel(profileManager, feedService));
@@ -55,7 +54,7 @@ builder.Services.AddSingleton(ILogService.Singleton);
 builder.Services.AddScoped<IRatingViewModel>(_ => new RatingViewModel(profileManager, feedService));
 builder.Services.AddScoped<IMediaTableViewModel>(_ => new MediaTableViewModel(mediaApi, profileManager));
 builder.Services.AddScoped<IChatViewModel>(_ => new ChatViewModel(chatDataManager, profileManager));
-builder.Services.AddScoped<IFeedViewModel>(_ => new FeedViewModel(feedDataManager));
+builder.Services.AddScoped<IFeedViewModel>(_ => new FeedViewModel(feedService));
 
 var app = builder.Build();
 
