@@ -15,7 +15,7 @@ public class ContactViewModel
         return _contactDataManager.GetContacts(userId);
     }
 
-    public bool requestContact(string userId, string contactId)
+    public bool RequestContact(string userId, string contactId)
     {
         if (!_contactDataManager.AreContacts(userId, contactId))
         {
@@ -25,12 +25,12 @@ public class ContactViewModel
         return false; 
     }
 
-    public bool acceptContactRequest(string userId, string contactId)
+    public bool AcceptContactRequest(string userId, string contactId)
     {
-        return _contactDataManager.acceptContactRequest(userId, contactId);
+        return _contactDataManager.AcceptContactRequest(userId, contactId);
     }
 
-    public bool removeContact(string userId, string contactId)
+    public bool RemoveContact(string userId, string contactId)
     {
         if (_contactDataManager.AreContacts(userId, contactId))
         {
@@ -40,18 +40,17 @@ public class ContactViewModel
         return false;
     }
 
-    public bool blockContact(string userId, string contactId)
+    public bool BlockContact(string userId, string contactId)
     {
         if (_contactDataManager.AreContacts(userId, contactId))
         {
             _contactDataManager.BlockContact(userId, contactId);
             return true;
         }
-
         return false;
     }
 
-    public bool isContact(string userId, string contactId)
+    public bool IsContact(string userId, string contactId)
     {
         return _contactDataManager.AreContacts(userId, contactId);
     }

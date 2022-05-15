@@ -56,7 +56,7 @@ public class ContactDataManager : IContactDataManager
         if (userId != String.Empty && contactId != String.Empty)
         {
             Contact contact = new Contact(userId, contactId);
-            contact.openRequest = true;
+            contact.OpenRequest = true;
             context.Add(contact);
             context.SaveChanges();
             return true;
@@ -71,7 +71,7 @@ public class ContactDataManager : IContactDataManager
         var contact = context.Contacts
             .Where(c => c.UserId == userId || c.ContactId == userId)
             .Where(c => c.ContactId == contactId || c.UserId == contactId)
-            .Where(c => c.isBlocked == false && c.openRequest == false);
+            .Where(c => c.IsBlocked == false && c.OpenRequest == false);
         if (contact != null)
         {
             return false;
@@ -90,20 +90,20 @@ public class ContactDataManager : IContactDataManager
             return false;
         }
 
-        contact.isBlocked = true;
+        contact.IsBlocked = true;
         return true;
     }
 
-    public bool acceptContactRequest(string userId, string contactId)
+    public bool AcceptContactRequest(string userId, string contactId)
     {
         using MediaHubDBContext context = new();
-        Contact contact = context.Contacts
+        var contact = context.Contacts
             .First(c => c.UserId == userId && c.ContactId == contactId ||
                         c.UserId == contactId && c.ContactId == userId);
 
         if (contact != null)
         {
-            contact.openRequest = false;
+            contact.OpenRequest = false;
             context.SaveChanges();
             return true;
         }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MediaHub.Data.Migrations
 {
     [DbContext(typeof(MediaHubDBContext))]
-    [Migration("20220514205040_Contacts")]
+    [Migration("20220515114002_Contacts")]
     partial class Contacts
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,18 +37,18 @@ namespace MediaHub.Data.Migrations
                         .HasColumnType("NVARCHAR(450)")
                         .HasColumnName("ContactId");
 
+                    b.Property<bool>("IsBlocked")
+                        .HasColumnType("bit")
+                        .HasColumnName("isBlocked");
+
+                    b.Property<bool>("OpenRequest")
+                        .HasColumnType("bit")
+                        .HasColumnName("openRequest");
+
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("NVARCHAR(450)")
                         .HasColumnName("userId");
-
-                    b.Property<bool>("isBlocked")
-                        .HasColumnType("bit")
-                        .HasColumnName("isBlocked");
-
-                    b.Property<bool>("openRequest")
-                        .HasColumnType("bit")
-                        .HasColumnName("openRequest");
 
                     b.HasKey("Id");
 

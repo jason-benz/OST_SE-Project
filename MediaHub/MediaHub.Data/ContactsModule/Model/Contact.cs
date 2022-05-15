@@ -16,10 +16,10 @@ public class Contact
     public string ContactId { get; set; }
     
     [Column("openRequest")]
-    public bool openRequest { get; set; }
+    public bool OpenRequest { get; set; }
     
     [Column("isBlocked")]
-    public bool isBlocked { get; set; }
+    public bool IsBlocked { get; set; }
     
 
 #pragma warning disable CS8618
