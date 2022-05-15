@@ -1,4 +1,5 @@
 ﻿using MediaHub.Data.UserSuggestionModule.Model;
+using System;
 using System.Collections.Generic;
 
 namespace MediaHub.Test.UserSuggestionTest
@@ -17,7 +18,15 @@ namespace MediaHub.Test.UserSuggestionTest
 
         public IEnumerable<UserSuggestion> GetSuggestedUsers(string userId, bool loadIgnoredSuggestions = true)
         {
-            throw new System.NotImplementedException();
+            switch (userId)
+            {
+                case "MockId-1":
+                    return new List<UserSuggestion>();
+                case "MockId-2":
+                    return LoadMockUserSuggestions("MockId-2", loadIgnoredSuggestions);
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(userId));
+            }
         }
 
         public IEnumerable<UserSuggestion> GetSuggestedUsersLazyLoading(string userId, bool loadIgnoredSuggestions = true)
@@ -32,7 +41,29 @@ namespace MediaHub.Test.UserSuggestionTest
 
         public void UpdateUserSuggestion(UserSuggestion userSuggestion)
         {
-            throw new System.NotImplementedException();
+            // No action required
+        }
+
+        private IEnumerable<UserSuggestion> LoadMockUserSuggestions(string userId, bool loadIgnoredSuggestions)
+        {
+            List<UserSuggestion> userSuggestions = new();
+
+            userSuggestions.Add(new UserSuggestion
+            {
+                UserId1 = userId,
+                IgnoreSuggestion = false
+            });
+
+            if (loadIgnoredSuggestions)
+            {
+                userSuggestions.Add(new UserSuggestion
+                {
+                    UserId1 = userId,
+                    IgnoreSuggestion = true
+                });
+            }
+
+            return userSuggestions;
         }
     }
 }
