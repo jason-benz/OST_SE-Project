@@ -16,9 +16,7 @@ namespace MediaHub.Data.FeedModule.ViewModel
             var filterProperties = new Dictionary<string, bool>()
             {
                 {"Media Ratings", true}, 
-                {"Messsages", true}, 
                 {"User profile update", true}, 
-                {"New user suggestions", true}   
             };
             
             FilterbarViewModel = new FilterBarViewModel(filterProperties);
