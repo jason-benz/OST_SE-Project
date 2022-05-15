@@ -12,23 +12,26 @@ namespace MediaHub.Data.UserSuggestionModule.Persistency
         public IEnumerable<UserSuggestion> GetSuggestedUsersLazyLoading(string userId, bool loadIgnoredSuggestions = true)
         {
             using MediaHubDBContext context = new();
-            return context.UserSuggestions
-                .Where(s =>
-                    s.IgnoreSuggestion == loadIgnoredSuggestions &&
-                    (s.UserId1 == userId || s.UserId2 == userId))
-                .ToList();
+            var query = context.UserSuggestions.Where(s => s.UserId1 == userId || s.UserId2 == userId);
+
+            if (!loadIgnoredSuggestions)
+                query = query.Where(q => !q.IgnoreSuggestion);
+
+            return query.ToList();
         }
 
         public IEnumerable<UserSuggestion> GetSuggestedUsers(string userId, bool loadIgnoredSuggestions = true)
         {
             using MediaHubDBContext context = new();
-            return context.UserSuggestions
+            var query = context.UserSuggestions
                 .Include(s => s.UserProfile1)
                 .Include(s => s.UserProfile2)
-                .Where(s =>
-                    s.IgnoreSuggestion == loadIgnoredSuggestions &&
-                    (s.UserId1 == userId || s.UserId2 == userId))
-                .ToList();
+                .Where(s => s.UserId1 == userId || s.UserId2 == userId);
+
+            if (!loadIgnoredSuggestions)
+                query = query.Where(q => !q.IgnoreSuggestion);
+
+            return query.ToList();
         }
 
         public IEnumerable<int> GetLikedMovieIdsByUserId(string userId)
