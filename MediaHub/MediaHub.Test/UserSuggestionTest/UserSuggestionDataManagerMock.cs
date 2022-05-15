@@ -6,14 +6,16 @@ namespace MediaHub.Test.UserSuggestionTest
 {
     public class UserSuggestionDataManagerMock : IUserSuggestionDataManager
     {
+        public string UserId { get; set; }
+
         public void AddUserSuggestion(UserSuggestion userSuggestion)
         {
-            throw new System.NotImplementedException();
+            UserId = userSuggestion.UserId1;
         }
 
         public IEnumerable<int> GetLikedMovieIdsByUserId(string userId)
         {
-            throw new System.NotImplementedException();
+            return new List<int>() { 1 };
         }
 
         public IEnumerable<UserSuggestion> GetSuggestedUsers(string userId, bool loadIgnoredSuggestions = true)
@@ -31,12 +33,19 @@ namespace MediaHub.Test.UserSuggestionTest
 
         public IEnumerable<UserSuggestion> GetSuggestedUsersLazyLoading(string userId, bool loadIgnoredSuggestions = true)
         {
-            throw new System.NotImplementedException();
+            return new List<UserSuggestion>();
         }
 
         public IEnumerable<string> GetUserIdsToBeSuggested(IEnumerable<int> movieIds, IEnumerable<string> usersToIgnore)
         {
-            throw new System.NotImplementedException();
+            List<string> userIds = new List<string>();
+
+            foreach (int movieId in movieIds)
+            {
+                userIds.Add($"MockId-{movieId}");
+            }
+
+            return userIds;
         }
 
         public void UpdateUserSuggestion(UserSuggestion userSuggestion)
