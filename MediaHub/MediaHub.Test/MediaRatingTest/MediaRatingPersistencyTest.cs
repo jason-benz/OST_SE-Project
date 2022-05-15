@@ -46,7 +46,14 @@ public class MediaRatingPersistencyTest : IDisposable
         var profile = context.UserProfiles.Include(p => p.Ratings).First(p => p.UserId == this.profile.UserId);
         Assert.Equal(rating.Id, profile.Ratings.ElementAt(0).Id);
     }
-
+    
+    [Fact]
+    public void TestRatingContainsCorrectProfileId()
+    {
+        using MediaHubDBContext context = new();
+        var profile = context.UserProfiles.Include(p => p.Ratings).First(p => p.UserId == this.profile.UserId);
+        Assert.Equal(profile.UserId, rating.ProfileId);
+    }
     public void Dispose()
     {
         using (MediaHubDBContext context = new())
