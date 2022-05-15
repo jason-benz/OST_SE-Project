@@ -35,18 +35,18 @@ namespace MediaHub.Data.Migrations
                         .HasColumnType("NVARCHAR(450)")
                         .HasColumnName("ContactId");
 
+                    b.Property<bool>("IsBlocked")
+                        .HasColumnType("bit")
+                        .HasColumnName("isBlocked");
+
+                    b.Property<bool>("OpenRequest")
+                        .HasColumnType("bit")
+                        .HasColumnName("openRequest");
+
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("NVARCHAR(450)")
                         .HasColumnName("userId");
-
-                    b.Property<bool>("isBlocked")
-                        .HasColumnType("bit")
-                        .HasColumnName("isBlocked");
-
-                    b.Property<bool>("openRequest")
-                        .HasColumnType("bit")
-                        .HasColumnName("openRequest");
 
                     b.HasKey("Id");
 
