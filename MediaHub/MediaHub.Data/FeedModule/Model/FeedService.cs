@@ -31,10 +31,24 @@
             return _feedDataManager.LoadAllFeedItems(contactIds);
         }
 
+        private Dictionary<string, Table> filterStringToTableMap = new()
+        {
+            {"Media Ratings", Table.MediaRating},
+            {"Messsages", Table.Message},
+            {"User profile update", Table.UserProfile},
+            {"New user suggestions", Table.UserSuggestion}
+        };
         public IEnumerable<FeedItem> LoadFilteredFeedItems(string userId, Dictionary<string, bool> filterSettings)
         {
             var contactIds = new List<string>(); // TODO: Load contacts from DB
             var selectedTables = new List<Table>(); // TODO: Map filterSettings to Table
+            foreach(var filterSetting in filterSettings)
+            {
+                if (filterSetting.Value)
+                {
+                    selectedTables.Add(filterStringToTableMap[filterSetting.Key]);
+                }
+            }
             return _feedDataManager.LoadFilteredFeedItems(contactIds, selectedTables);
         }
 

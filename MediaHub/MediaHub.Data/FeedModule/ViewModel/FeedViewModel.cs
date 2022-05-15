@@ -5,18 +5,27 @@ namespace MediaHub.Data.FeedModule.ViewModel
     public class FeedViewModel : IFeedViewModel
     {
         private readonly IFeedService _feedService;
-
+        public string UserId { get; set; }
+        public IEnumerable<FeedItem> FeedItems { get; private set; }
+        
+        public IFilterbarViewModel FilterbarViewModel { get; }
         public FeedViewModel(IFeedService feedService)
         {
             _feedService = feedService;
 
             var filterProperties = new Dictionary<string, bool>()
             {
-                {"Property 1 filter xy set by default", true},
-                {"Property 2 filter abc", false},
+                {"Media Ratings", true}, 
+                {"Messsages", true}, 
+                {"User profile update", true}, 
+                {"New user suggestions", true}   
             };
+            
             FilterbarViewModel = new FilterBarViewModel(filterProperties);
-            FilterbarViewModel.OnFilterChanged += (string name, bool value) => {Console.WriteLine($"Filter {name} has been set to {value}");};
+            FilterbarViewModel.OnFilterChanged += (string name, bool value) =>
+            {
+                LoadFilteredFeedItems(filterProperties);
+            };
         }
 
         public string LoadFeedDescription(Table table, string? additionalInformation)
@@ -33,16 +42,15 @@ namespace MediaHub.Data.FeedModule.ViewModel
             return string.Empty;
         }
 
-        public IEnumerable<FeedItem> LoadAllFeedItems(string userId)
+        public void LoadAllFeedItems()
         {
-            return _feedService.LoadAllFeedItems(userId);
+            FeedItems = _feedService.LoadAllFeedItems(UserId);
         }
 
-        public IEnumerable<FeedItem> LoadFilteredFeedItems(string userId, Dictionary<string, bool> filterSettings)
+        public void LoadFilteredFeedItems(Dictionary<string, bool> filterSettings)
         {
-            return _feedService.LoadFilteredFeedItems(userId, filterSettings);
+            FeedItems = _feedService.LoadFilteredFeedItems(UserId, filterSettings);
         }
 
-        public IFilterbarViewModel FilterbarViewModel { get; }
     }
 }
