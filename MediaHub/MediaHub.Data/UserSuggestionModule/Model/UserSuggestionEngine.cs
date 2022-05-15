@@ -15,6 +15,7 @@
             {
                 HashSet<string> userIdsToIgnore = new() { userId };
                 userIdsToIgnore.UnionWith(GetSuggestedUserIds(userId));
+                // TODO: J.Benz - Add contacts to ignore list
 
                 var likedMovieIds = _userSuggestionDataManager.GetLikedMovieIdsByUserId(userId);
                 var userIdsToBeSuggested = _userSuggestionDataManager.GetUserIdsToBeSuggested(likedMovieIds, userIdsToIgnore);
