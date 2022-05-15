@@ -37,16 +37,16 @@ namespace MediaHub.Data.Migrations
 
                     b.Property<bool>("IsBlocked")
                         .HasColumnType("bit")
-                        .HasColumnName("isBlocked");
+                        .HasColumnName("IsBlocked");
 
                     b.Property<bool>("OpenRequest")
                         .HasColumnType("bit")
-                        .HasColumnName("openRequest");
+                        .HasColumnName("OpenRequest");
 
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("NVARCHAR(450)")
-                        .HasColumnName("userId");
+                        .HasColumnName("UserId");
 
                     b.HasKey("Id");
 
