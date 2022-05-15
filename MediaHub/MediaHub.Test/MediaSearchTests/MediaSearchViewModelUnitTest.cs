@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using Xunit;
 using MediaHub.Data.MediaModule.ViewModel;
 using MediaHub.Data.MediaModule.Model;
+using MediaHub.Test.UserProfileTest;
 
 namespace MediaHub.Test.MediaSearchTests
 {
     public class MediaSearchViewModelTest
     {
         private readonly IMediaSearchViewModel _mediaSearchViewModel;
+        private readonly IMediaTableViewModel _mediaTableViewModel;
         public MediaSearchViewModelTest()
         {
             _mediaSearchViewModel = new MediaSearchViewModel(new MockMediaApi());
+            _mediaTableViewModel = new MediaTableViewModel(new MockMediaApi(), new UserProfileDataManagerMock());
         }
 
         [Fact, Trait("Category", "Unit")]
@@ -33,15 +36,15 @@ namespace MediaHub.Test.MediaSearchTests
         [Fact, Trait("Category", "Unit")]
         public void GetMoviesByString()
         {
-            List<Movie> movies = _mediaSearchViewModel.GetMoviesAsync("MockMovie").Result;
-            Assert.Equal(12, movies[0].Id);
+            List<IMediaTableViewModel.MovieAndRating> movies = _mediaTableViewModel.GetMoviesByNameAsync("MockMovie").Result;
+            Assert.Equal(12, movies[0].Movie.Id);
         }
 
         [Fact, Trait("Category", "Unit")]
         public void GetMoviesByEmptyString()
         {
-            List<Movie> movies = _mediaSearchViewModel.GetMoviesAsync("").Result;
-            Assert.Contains(DateTime.Now.Year.ToString(), movies[0].Title);
+            List<IMediaTableViewModel.MovieAndRating> movies = _mediaTableViewModel.GetMoviesByNameAsync("").Result;
+            Assert.Contains(DateTime.Now.Year.ToString(), movies[0].Movie.Title);
         }
 
     }
