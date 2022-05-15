@@ -10,13 +10,13 @@
 
 <h3>Feed</h3>
 
-@if (_feedItems.Any())
+@if (_feedViewModel.FeedItems != null && _feedViewModel.FeedItems.Any())
 {
     <Filterbar ViewModel="_feedViewModel.FilterbarViewModel"/>
 
     <table class="table table-striped">
         <tbody>
-            @foreach (var feedItem in _feedItems)
+            @foreach (var feedItem in _feedViewModel.FeedItems)
             {
                 <tr>
                     <td>
@@ -35,11 +35,9 @@ else
 
 
 @code {
-    private IEnumerable<FeedItem> _feedItems = new List<FeedItem>();
 
     protected override void OnInitialized()
     {
-        string userId = _identityServiceInstance.UserId;
-        _feedItems = _feedViewModel.LoadAllFeedItems(userId);
+        _feedViewModel.UserId = _identityServiceInstance.UserId;
     }
 }
