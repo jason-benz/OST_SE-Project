@@ -16,6 +16,7 @@ using MediaHub.Data.ProfileModule.Persistency;
 using MediaHub.Data.MessagingModule.Persistency;
 using MediaHub.Data.MediaModule.Persistency;
 using MediaHub.Data.UserSuggestionModule.Persistency;
+using MediaHub.Data.UserSuggestionModule.Model;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,13 +42,14 @@ builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 builder.Services.AddScoped<IIdentityService>(_ => new IdentityService());
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 var profileManager = new UserProfileDataManager();
+var userSuggestionDataManager = new UserSuggestionDataManager();
 IChatDataManager chatDataManager = new ChatDataManager();
 var mediaApi = new TmdbApi();
 builder.Services.AddScoped<IUserProfileViewModel>(_ => new UserProfileViewModel(profileManager));
-builder.Services.AddScoped<IUserSuggestionsViewModel>(_ => new UserSuggestionsViewModel(new UserSuggestionDataManager()));
+builder.Services.AddScoped<IUserSuggestionsViewModel>(_ => new UserSuggestionsViewModel(userSuggestionDataManager));
 builder.Services.AddScoped<IMediaSearchViewModel>(_ => new MediaSearchViewModel(mediaApi));
 builder.Services.AddSingleton(ILogService.Singleton);
-builder.Services.AddScoped<IRatingViewModel>(_ => new RatingViewModel(profileManager));
+builder.Services.AddScoped<IRatingViewModel>(_ => new RatingViewModel(profileManager, new UserSuggestionEngine(userSuggestionDataManager)));
 builder.Services.AddScoped<IMediaTableViewModel>(_ => new MediaTableViewModel(mediaApi, profileManager));
 builder.Services.AddScoped<IChatViewModel>(_ => new ChatViewModel(chatDataManager, profileManager));
 

@@ -7,7 +7,7 @@ namespace MediaHub.Data.UserSuggestionModule.Persistency
     public class UserSuggestionDataManager : IUserSuggestionDataManager
     {
         private const byte MinimalRating = 7;
-        private const int AmountOfRequiredMatches = 2;
+        private const int AmountOfRequiredMatches = 5;
 
         public IEnumerable<UserSuggestion> GetSuggestedUsersLazyLoading(string userId, bool loadIgnoredSuggestions = true)
         {
