@@ -34,9 +34,7 @@
         private Dictionary<string, Table> filterStringToTableMap = new()
         {
             {"Media Ratings", Table.MediaRating},
-            {"Messsages", Table.Message},
-            {"User profile update", Table.UserProfile},
-            {"New user suggestions", Table.UserSuggestion}
+            {"User profile update", Table.UserProfile}
         };
         public IEnumerable<FeedItem> LoadFilteredFeedItems(string userId, Dictionary<string, bool> filterSettings)
         {
