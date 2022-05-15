@@ -9,16 +9,16 @@ public class Contact
     [Key] 
     public int Id { get; set; }
     
-    [Column("userId", TypeName = "NVARCHAR(450)")]
+    [Column("UserId", TypeName = "NVARCHAR(450)")]
     public string UserId { get; set; }
         
     [Column("ContactId", TypeName = "NVARCHAR(450)")]
     public string ContactId { get; set; }
     
-    [Column("openRequest")]
+    [Column("OpenRequest")]
     public bool OpenRequest { get; set; }
     
-    [Column("isBlocked")]
+    [Column("IsBlocked")]
     public bool IsBlocked { get; set; }
     
 

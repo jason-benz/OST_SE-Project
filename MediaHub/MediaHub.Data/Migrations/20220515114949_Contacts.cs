@@ -14,10 +14,10 @@ namespace MediaHub.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    userId = table.Column<string>(type: "NVARCHAR(450)", nullable: false),
+                    UserId = table.Column<string>(type: "NVARCHAR(450)", nullable: false),
                     ContactId = table.Column<string>(type: "NVARCHAR(450)", nullable: false),
-                    openRequest = table.Column<bool>(type: "bit", nullable: false),
-                    isBlocked = table.Column<bool>(type: "bit", nullable: false)
+                    OpenRequest = table.Column<bool>(type: "bit", nullable: false),
+                    IsBlocked = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
