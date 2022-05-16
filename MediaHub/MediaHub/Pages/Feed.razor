@@ -39,5 +39,6 @@ else
     protected override void OnInitialized()
     {
         _feedViewModel.UserId = _identityServiceInstance.UserId;
+        _feedViewModel.LoadAllFeedItems();
     }
 }
