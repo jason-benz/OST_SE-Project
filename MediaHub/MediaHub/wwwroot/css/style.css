@@ -227,57 +227,34 @@ a, .btn-link {
     grid-area: details;
 }
 
+/* start of style rules for chat */
+#chat-container {
+    display: flex;
+}
+
 #contactlist-container {
-    width: 30%;
-    float: left;
+    width: fit-content;
+    margin-right: 20px;
 }
 
-#chat-messages-container {
-    width: 70%;
-    float: right;
-    height: 500px; /* FIXME HARDCODED HEIGHT */ 
-    overflow-y: scroll;
-    overflow-x:hidden;
+#chat-input-and-messages-container {
+    flex-grow: 1;
 }
 
-#send-msg-btn {
-    width: auto;
-    margin: 0.5em;
+#chat-input-container > form {
+    display: flex;
+    height: fit-content;
 }
 
 #msg-input {
-    width: 70%;
+    flex-grow: 1;
+}
+#send-msg-btn {
+    height: 100%;
+    margin-top: 0;
 }
 
-.single-msg {
-    clear: both;
-    background-color: lightblue;
-    margin: 0.5em;
-    padding: 0.5em;
-    width: fit-content;
-    border-radius: 0.3em;
-}
-
-.msg-line {
-    width: 100%;
-}
-
-.received-msg {
-    background-color: orange;
-    float: left;
-}
-
-.sent-msg {
-    float: right;
-}
-
-.contactlist-element {
-    background-color: lightskyblue;
-    margin: 0.5em;
-    padding: 0.5em;
-    width: 80%;
-    border-radius: 0.3em;
-}
+/* end of style rules for chat */
 
 .detaile-view-container .Rating{
     margin-top: 30px;
