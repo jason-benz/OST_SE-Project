@@ -23,7 +23,7 @@ public class ContactDataManager : IContactDataManager
         using (var context = new MediaHubDBContext())
         {
             var contacts = context.Contacts
-                .Where(c => c.UserId == userId)
+                .Where(c => c.UserId == userId || c.ContactId == userId)
                 .Select(c => c.ContactId)
                 .ToList();
             return contacts;
@@ -34,7 +34,8 @@ public class ContactDataManager : IContactDataManager
     {
         using MediaHubDBContext context = new();
         var contacts = context.Contacts
-            .Where(c => c.UserId == userId && c.ContactId == contactId)
+            .Where(c => c.UserId == userId && c.ContactId == contactId ||
+                        c.UserId == contactId && c.ContactId == userId)
             .ToList();
         
         if (contacts.Count == 0)
@@ -53,6 +54,14 @@ public class ContactDataManager : IContactDataManager
     public bool AddContact(string userId, string contactId)
     {
         using MediaHubDBContext context = new();
+        var alreadyInDatabase = context.Contacts.Where(c => c.UserId == userId && c.ContactId == contactId ||
+                                    c.UserId == contactId && c.UserId == userId);
+
+        if (alreadyInDatabase.Any())
+        {
+            return false;
+        }
+
         if (userId != String.Empty && contactId != String.Empty)
         {
             Contact contact = new Contact(userId, contactId);
@@ -69,21 +78,22 @@ public class ContactDataManager : IContactDataManager
     {
         using MediaHubDBContext context = new();
         var contact = context.Contacts
-            .Where(c => c.UserId == userId || c.ContactId == userId)
-            .Where(c => c.ContactId == contactId || c.UserId == contactId)
+            .Where(c => c.UserId == userId && c.ContactId == contactId ||
+                c.ContactId == contactId && c.UserId == userId)
             .Where(c => c.IsBlocked == false && c.OpenRequest == false);
-        if (contact != null)
+        if (contact.Any())
         {
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
     
     public bool BlockContact(string userId, string contactId)
     {
         using MediaHubDBContext context = new();
         var contact = context.Contacts
-            .First(c => c.UserId == userId && c.ContactId == contactId);
+            .First(c => c.UserId == userId && c.ContactId == contactId || 
+                        c.UserId == contactId && c.ContactId == userId);
 
         if (contact == null)
         {
@@ -98,8 +108,9 @@ public class ContactDataManager : IContactDataManager
     {
         using MediaHubDBContext context = new();
         var contact = context.Contacts
-            .First(c => c.UserId == userId && c.ContactId == contactId ||
-                        c.UserId == contactId && c.ContactId == userId);
+            .First(c => (c.UserId == userId && c.ContactId == contactId) ||
+                        (c.UserId == contactId && c.ContactId == userId) &&
+                        (c.OpenRequest == true));
 
         if (contact != null)
         {
