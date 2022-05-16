@@ -43,12 +43,15 @@ namespace MediaHub.Data.ProfileModule.ViewModel
         {
             try
             {
+                if (userProfile.Biography.Length > 255)
+                {
+                    userProfile.Biography = userProfile.Biography.Substring(0, 255);
+                }
                 _userProfileDataManager.UpdateUserProfile(userProfile);
             }
             catch (Exception e)
             {
                 ILogService.Singleton.LogException("An unknown Error occured, while updating the user profile", ILogService.LogCategory.Identity, e);
-                throw;
             }
         }
 
