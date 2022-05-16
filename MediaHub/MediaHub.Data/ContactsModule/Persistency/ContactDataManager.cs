@@ -10,12 +10,10 @@ public class ContactDataManager : IContactDataManager
 {
     public Contact GetContact(string userId)
     {
-        using (var context = new MediaHubDBContext())
-        {
-            var contact = context.Contacts
+        using MediaHubDBContext context = new();
+        var contact = context.Contacts
                 .First(c => c.UserId == userId);
-            return contact;
-        }
+        return contact;
     }
 
     public List<string> GetContacts(string userId)
@@ -24,6 +22,7 @@ public class ContactDataManager : IContactDataManager
         
         var contacts = context.Contacts
             .Where(c => c.UserId == userId || c.ContactId == userId)
+            .Where(c => c.IsBlocked == false && c.OpenRequest == false)
             .Select(c => c.ContactId)
             .ToList();
         return contacts;
@@ -32,22 +31,17 @@ public class ContactDataManager : IContactDataManager
     public bool RemoveContact(string userId, string contactId)
     {
         using MediaHubDBContext context = new();
-        var contacts = context.Contacts
-            .Where(c => c.UserId == userId && c.ContactId == contactId ||
+        Contact? contact = context.Contacts
+            .First(c => c.UserId == userId && c.ContactId == contactId ||
                          c.UserId == contactId && c.ContactId == userId);
 
-        if (!contacts.Any())
+        if (contact == null)
         {
             return false;
         }
-
-        foreach (var c in contacts)
-        {
-            context.Remove(c);
-        }
+        context.Remove(contact);
         context.SaveChanges();
         return true;
-        
     }
 
     public bool AddContact(string userId, string contactId)
