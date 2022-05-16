@@ -31,7 +31,7 @@ namespace MediaHub.Test.FeedTest
             Assert.Equal(expectedDescription, actualDescription);
         }
 
-        [Fact]
+        [Fact, Trait("Category", "Unit")]
         public void LoadAllFeedItems()
         {
             var userId = "Test";
