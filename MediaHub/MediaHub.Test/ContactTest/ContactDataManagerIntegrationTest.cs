@@ -48,10 +48,10 @@ public class ContactDataManagerIntegrationTest
     [Fact]
     public void AddContact()
     {
-        bool addedContact = _contactDataManager.AddContact(MockUsers[2], MockUsers[1]);
+        bool addedContact = _contactDataManager.AddContact(MockUsers[3], MockUsers[1]);
         using MediaHubDBContext context = new();
         Contact contact = context.Contacts
-            .First(c => c.UserId == MockUsers[2] && c.ContactId == MockUsers[1]);
+            .First(c => c.UserId == MockUsers[3] && c.ContactId == MockUsers[1]);
 
         Assert.True(addedContact && contact != null);
     }
@@ -64,19 +64,21 @@ public class ContactDataManagerIntegrationTest
         using MediaHubDBContext context = new();
         var contact = context.Contacts
             .First(c => c.UserId == MockUsers[0]);
-        contact.isBlocked = true;
+        contact.IsBlocked = true;
         context.SaveChanges();
         
-        Assert.True(contact.isBlocked);
+        Assert.True(contact.IsBlocked);
     }
 
     [Fact]
     public void AreFriends()
     {
-        bool areContacts = _contactDataManager.AreContacts(MockUsers[0], MockUsers[1]);
+        _contactDataManager.AddContact(MockUsers[3], MockUsers[1]);
+        _contactDataManager.AcceptContactRequest(MockUsers[1], MockUsers[3]);
+        bool areContacts = _contactDataManager.AreContacts(MockUsers[3], MockUsers[1]);
         Assert.True(areContacts);
     }
-
+    
     [Fact]
     public void AreNoFriends()
     {

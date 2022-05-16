@@ -5,6 +5,7 @@ using Xunit;
 
 namespace MediaHub.Test.ContactTest;
 
+
 [Collection("Sequential")]
 public class ContactViewModelIntegrationTest
 {
@@ -26,44 +27,44 @@ public class ContactViewModelIntegrationTest
     [Fact]
     public void AreNotContacts()
     {
-        bool areContacts = _contactViewModel.isContact(MockUsers[0], MockUsers[1]);
+        bool areContacts = _contactViewModel.IsContact(MockUsers[0], MockUsers[1]);
         Assert.False(areContacts);
     }
 
     [Fact]
     public void RequestContact()
     {
-        bool requestContact = _contactViewModel.requestContact(MockUsers[0], MockUsers[1]);
+        bool requestContact = _contactViewModel.RequestContact(MockUsers[0], MockUsers[1]);
         Assert.True(requestContact);
     }
 
     [Fact]
     public void AreNotFriends()
     {
-        bool areFriends = _contactViewModel.isContact(MockUsers[0], MockUsers[1]);
+        bool areFriends = _contactViewModel.IsContact(MockUsers[0], MockUsers[1]);
         Assert.False(areFriends);
     }
 
     [Fact]
     public void AcceptContactRequest()
     {
-        _contactViewModel.acceptContactRequest(MockUsers[0], MockUsers[1]);
-        Assert.True(_contactViewModel.acceptContactRequest(MockUsers[0], MockUsers[1]));
+        _contactViewModel.RequestContact(MockUsers[1], MockUsers[2]);
+        Assert.True(_contactViewModel.AcceptContactRequest(MockUsers[1], MockUsers[2]));
     }
 
     [Fact]
     public void BlockUser()
     {
-        var isBlocked = _contactViewModel.blockContact(MockUsers[0], MockUsers[1]);
-        Assert.False(_contactViewModel.isContact(MockUsers[0], MockUsers[1]));
+        _contactViewModel.BlockContact(MockUsers[0], MockUsers[1]);
+        Assert.False(_contactViewModel.IsContact(MockUsers[0], MockUsers[1]));
     }
 
     [Fact]
     public void RemoveContact()
     {
-        _contactViewModel.requestContact(MockUsers[0], MockUsers[1]);
-        _contactViewModel.acceptContactRequest(MockUsers[0], MockUsers[1]);
-        Assert.True(_contactViewModel.isContact(MockUsers[0], MockUsers[1]));
+        _contactViewModel.RequestContact(MockUsers[0], MockUsers[1]);
+        _contactViewModel.AcceptContactRequest(MockUsers[0], MockUsers[1]);
+        Assert.True(_contactViewModel.IsContact(MockUsers[0], MockUsers[1]));
     }
     
 }
