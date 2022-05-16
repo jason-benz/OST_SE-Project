@@ -8,7 +8,7 @@ public class ChatViewModel : IChatViewModel
     private IChatDataManager _chatDataManager { get; set; }
     private IUserProfileDataManager _userProfileDataManager { get; set; }
     private UserProfile? _sender { get; set; }
-    private UserProfile? _receiver { get; set; }
+    public UserProfile? Receiver { get; private set; }
 
     public ChatViewModel(IChatDataManager chatDataManager, IUserProfileDataManager userProfileDataManager)
     {
@@ -23,7 +23,7 @@ public class ChatViewModel : IChatViewModel
 
     public void SetReceiverById(string userId)
     {
-        _receiver = _userProfileDataManager.GetUserProfileById(userId);
+        Receiver = _userProfileDataManager.GetUserProfileById(userId);
     }
 
     public List<UserProfile> GetAllContactUserProfiles()
@@ -35,15 +35,15 @@ public class ChatViewModel : IChatViewModel
 
     public List<Message> GetAllMessagesForActiveChat()
     {
-        return _chatDataManager.GetMessagesBetweenTwoUsers(_receiver.UserId, _sender.UserId);
+        return _chatDataManager.GetMessagesBetweenTwoUsers(Receiver.UserId, _sender.UserId);
     }
 
     public void InsertMessage(string content)
     {
-        if (_sender != null && _receiver != null)
+        if (_sender != null && Receiver != null)
         {
             UserProfile senderProfile = _sender;
-            UserProfile receiverProfile = _receiver;
+            UserProfile receiverProfile = Receiver;
             DateTime timeSent = DateTime.Now;
             Message m = new Message();
             m.Content = content;

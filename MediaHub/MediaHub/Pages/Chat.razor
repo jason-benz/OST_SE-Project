@@ -5,6 +5,7 @@
 @using MediaHub.Services
 @using Microsoft.AspNetCore.Routing.Matching
 @using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@using Microsoft.CodeAnalysis.Scripting
 @using SendGrid.Helpers.Mail.Model
 
 @inject IIdentityService _identityServiceInstance
@@ -19,19 +20,24 @@ else
     <div id="chat-container">
         <div id="contactlist-container">
             <h3>Contact List:</h3>
-            @foreach (var contact in userProfilesOfContacts)
-            {
-                <div class="contactlist-element" @onclick="@(() => OpenChat(@contact.UserId))">@contact.Username</div>
-            }
+            <ul id="contactlist">
+                @foreach (var contact in userProfilesOfContacts)
+                {
+                    <li>
+                        @if (contact.UserId == _chatViewModel.Receiver?.UserId)
+                        {
+                            <div tabindex="0" class="contactlist-element focus-div" @onclick="@(() => OpenChat(@contact.UserId))">@contact.Username</div>
+                        }
+                        else
+                        {
+                            <div tabindex="0" class="contactlist-element" @onclick="@(() => OpenChat(@contact.UserId))">@contact.Username</div>
+                        }
+                    </li>
+                }
+            </ul>
         </div>
 
         <div id="chat-input-and-messages-container">
-            <div id="chat-input-container">
-                <form @onsubmit=SaveMessageToDb>
-                    <input id="msg-input" type="text" placeholder="Type your message here" @bind="currentMessage" required/>
-                    <button id="send-msg-btn" type="submit" class="btn btn-primary">Send Message</button>
-                </form>
-            </div>
             <div id="chat-messages-container">
                 @foreach (var message in _messages)
                 {
@@ -46,6 +52,12 @@ else
                         }
                     </div>
                 }
+            </div>
+            <div id="chat-input-container">
+                <form @onsubmit=SaveMessageToDb>
+                    <input id="msg-input" type="text" placeholder="Type your message here" @bind="currentMessage" required/>
+                    <button id="send-msg-btn" type="submit" class="btn btn-primary">Send Message</button>
+                </form>
             </div>
         </div>
     </div>

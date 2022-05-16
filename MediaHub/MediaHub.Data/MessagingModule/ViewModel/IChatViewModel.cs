@@ -5,6 +5,7 @@ namespace MediaHub.Data.MessagingModule.ViewModel;
 
 public interface IChatViewModel
 {
+    public UserProfile Receiver { get; }
     public void InsertMessage(string content);
     public List<Message> GetAllMessagesForActiveChat();
     public void SetReceiverById(string userId);
