@@ -15,7 +15,7 @@ public class ContactViewModel
         return _contactDataManager.GetContacts(userId);
     }
 
-    public bool RequestContact(string userId, string contactId)
+    public bool AddContact(string userId, string contactId)
     {
         if (!_contactDataManager.AreContacts(userId, contactId))
         {
