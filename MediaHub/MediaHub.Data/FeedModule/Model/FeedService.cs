@@ -3,6 +3,11 @@
     public class FeedService : IFeedService
     {
         private readonly IFeedDataManager _feedDataManager;
+        private readonly Dictionary<string, Table> _filterStringToTableMap = new()
+        {
+            { "Media Ratings", Table.MediaRating },
+            { "User profile update", Table.UserProfile }
+        };
 
         public FeedService(IFeedDataManager feedDataManager)
         {
@@ -25,20 +30,15 @@
             _feedDataManager.AddFeedItem(feedItem);
         }
 
-        private Dictionary<string, Table> filterStringToTableMap = new()
-        {
-            {"Media Ratings", Table.MediaRating},
-            {"User profile update", Table.UserProfile}
-        };
         public IEnumerable<FeedItem> LoadFilteredFeedItems(string userId, Dictionary<string, bool> filterSettings)
         {
             var contactIds = new List<string>(); // TODO: Load contacts from DB
-            var selectedTables = new List<Table>(); // TODO: Map filterSettings to Table
+            var selectedTables = new List<Table>();
             foreach(var filterSetting in filterSettings)
             {
                 if (filterSetting.Value)
                 {
-                    selectedTables.Add(filterStringToTableMap[filterSetting.Key]);
+                    selectedTables.Add(_filterStringToTableMap[filterSetting.Key]);
                 }
             }
             return _feedDataManager.LoadFilteredFeedItems(contactIds, selectedTables);
