@@ -9,12 +9,20 @@ namespace MediaHub.Test.FeedTest
     {
         public void AddFeedItem(FeedItem feedItem)
         {
-            throw new NotImplementedException();
+            // No action required
         }
 
         public bool IsItemExisting(string userId, Table table, string? additionalInformation)
         {
-            throw new NotImplementedException();
+            switch (userId)
+            {
+                case "MockId-1":
+                    return true;
+                case "MockId-2":
+                    return false;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(userId));
+            }
         }
 
         public IEnumerable<FeedItem> LoadAllFeedItems(IEnumerable<string> userIds)
@@ -40,9 +48,8 @@ namespace MediaHub.Test.FeedTest
                 if (selectedTables != null && selectedTables.Any())
                 {
                     feedItem.ChangedTable = selectedTables.First();
+                    feedItems.Add(feedItem);
                 }
-
-                feedItems.Add(feedItem);
             }
 
             return feedItems;
