@@ -42,7 +42,7 @@
             var selectedTables = new List<Table>();
             foreach(var filterSetting in filterSettings)
             {
-                if (filterSetting.Value)
+                if (filterSetting.Value && _filterStringToTableMap.ContainsKey(filterSetting.Key))
                 {
                     selectedTables.Add(_filterStringToTableMap[filterSetting.Key]);
                 }
