@@ -1,0 +1,20 @@
+﻿@page
+@using MediaHub.Data.PersistencyLayer
+@using MediaHub.Data.ProfileModule.ViewModel
+@using MediaHub.Services
+@using Microsoft.CodeAnalysis.CSharp.Syntax
+@model RegisterConfirmationModel
+@{
+    ViewData["Title"] = "Register confirmation";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@{
+    <p>
+        Please check your email to confirm your account.
+    </p>
+    
+    <a href="/"><button class="btn btn-secondary oi oi-arrow-thick-left"> Back to login</button> </a> 
+}
+
