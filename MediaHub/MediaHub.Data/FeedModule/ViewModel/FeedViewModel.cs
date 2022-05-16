@@ -41,6 +41,11 @@ namespace MediaHub.Data.FeedModule.ViewModel
             return string.Empty;
         }
 
+        public void LoadAllFeedItems()
+        {
+            FeedItems = _feedService.LoadAllFeedItems(UserId);
+        }
+
         private void LoadFilteredFeedItems(Dictionary<string, bool> filterSettings)
         {
             FeedItems = _feedService.LoadFilteredFeedItems(UserId, filterSettings).OrderByDescending(f => f.CreationDate);

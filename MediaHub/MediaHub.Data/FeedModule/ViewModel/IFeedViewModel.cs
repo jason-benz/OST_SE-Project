@@ -7,9 +7,11 @@ namespace MediaHub.Data.FeedModule.ViewModel
         string UserId { get; set; }
 
         IEnumerable<FeedItem> FeedItems { get; }
-        
-        string LoadFeedDescription(Table table, string? additionalInformation);
 
         IFilterbarViewModel FilterbarViewModel { get; }
+
+        string LoadFeedDescription(Table table, string? additionalInformation);
+
+        void LoadAllFeedItems();
     }
 }

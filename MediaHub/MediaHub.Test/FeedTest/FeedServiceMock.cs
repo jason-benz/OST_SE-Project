@@ -6,6 +6,11 @@ namespace MediaHub.Test.FeedTest
     public class FeedServiceMock : IFeedService
     {
         private readonly IFeedDataManager _feedDataManager;
+        private readonly Dictionary<string, Table> _filterStringToTableMap = new()
+        {
+            { "Media Ratings", Table.MediaRating },
+            { "User profile update", Table.UserProfile }
+        };
 
         public FeedServiceMock(IFeedDataManager feedDataManager)
         {
@@ -19,12 +24,24 @@ namespace MediaHub.Test.FeedTest
 
         public IEnumerable<FeedItem> LoadAllFeedItems(string userId)
         {
-            throw new System.NotImplementedException();
+            var userIds = new List<string> { userId };
+            return _feedDataManager.LoadAllFeedItems(userIds);
         }
 
         public IEnumerable<FeedItem> LoadFilteredFeedItems(string userId, Dictionary<string, bool> filterSettings)
         {
-            throw new System.NotImplementedException();
+            var userIds = new List<string> { userId };
+            var selectedTables = new List<Table>();
+            
+            foreach (var filterSetting in filterSettings)
+            {
+                if (filterSetting.Value)
+                {
+                    selectedTables.Add(_filterStringToTableMap[filterSetting.Key]);
+                }
+            }
+
+            return _feedDataManager.LoadFilteredFeedItems(userIds, selectedTables);
         }
     }
 }
