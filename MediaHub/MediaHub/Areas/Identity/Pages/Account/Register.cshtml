@@ -13,6 +13,13 @@
         <form id="registerForm" class="shadow-box" asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <h1>Register</h1>
             <h2>Create a new account</h2>
+            Password requirements: 
+            <ul>
+                <li>Between 6 and 100 characters long</li>
+                <li>Contains at least one digit (0-9)</li>
+                <li>Contains at least one upper-case character (A-Z)</li>
+                <li>Contains at least one special character ($,&,%,*,...)</li>
+            </ul>
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-floating">
