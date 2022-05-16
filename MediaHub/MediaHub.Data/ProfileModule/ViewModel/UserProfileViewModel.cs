@@ -52,6 +52,7 @@ namespace MediaHub.Data.ProfileModule.ViewModel
             catch (Exception e)
             {
                 ILogService.Singleton.LogException("An unknown Error occured, while updating the user profile", ILogService.LogCategory.Identity, e);
+                throw;
             }
         }
 
