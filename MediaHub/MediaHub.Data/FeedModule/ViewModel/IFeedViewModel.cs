@@ -4,14 +4,12 @@ namespace MediaHub.Data.FeedModule.ViewModel
 {
     public interface IFeedViewModel
     {
-        public IEnumerable<FeedItem> FeedItems { get; }
-        public string UserId { get; set; }
-        void LoadAllFeedItems();
+        string UserId { get; set; }
 
-        void LoadFilteredFeedItems(Dictionary<string, bool> filterSettings);
-
+        IEnumerable<FeedItem> FeedItems { get; }
+        
         string LoadFeedDescription(Table table, string? additionalInformation);
 
-        public IFilterbarViewModel FilterbarViewModel { get; }
+        IFilterbarViewModel FilterbarViewModel { get; }
     }
 }
