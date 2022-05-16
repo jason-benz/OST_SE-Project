@@ -25,12 +25,6 @@
             _feedDataManager.AddFeedItem(feedItem);
         }
 
-        public IEnumerable<FeedItem> LoadAllFeedItems(string userId)
-        {
-            var contactIds = new List<string>(); // TODO: Load contacts from DB
-            return _feedDataManager.LoadAllFeedItems(contactIds);
-        }
-
         private Dictionary<string, Table> filterStringToTableMap = new()
         {
             {"Media Ratings", Table.MediaRating},

@@ -9,6 +9,7 @@ namespace MediaHub.Data.FeedModule.ViewModel
         public IEnumerable<FeedItem> FeedItems { get; private set; }
         
         public IFilterbarViewModel FilterbarViewModel { get; }
+
         public FeedViewModel(IFeedService feedService)
         {
             _feedService = feedService;
@@ -40,14 +41,9 @@ namespace MediaHub.Data.FeedModule.ViewModel
             return string.Empty;
         }
 
-        public void LoadAllFeedItems()
+        private void LoadFilteredFeedItems(Dictionary<string, bool> filterSettings)
         {
-            FeedItems = _feedService.LoadAllFeedItems(UserId);
-        }
-
-        public void LoadFilteredFeedItems(Dictionary<string, bool> filterSettings)
-        {
-            FeedItems = _feedService.LoadFilteredFeedItems(UserId, filterSettings);
+            FeedItems = _feedService.LoadFilteredFeedItems(UserId, filterSettings).OrderByDescending(f => f.CreationDate);
         }
 
     }

@@ -15,7 +15,7 @@ namespace MediaHub.Test.UserProfileTest
         public UserProfileViewModelUnitTest()
         {
             ILogService.Singleton = new LogServiceMock();
-            _userProfileViewModel = new UserProfileViewModel(new UserProfileDataManagerMock(), new FeedServiceMock());
+            _userProfileViewModel = new UserProfileViewModel(new UserProfileDataManagerMock(), new FeedServiceMock(new FeedDataManagerMock()));
         }
 
         [Fact, Trait("Category", "Unit")]

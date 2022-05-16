@@ -14,7 +14,7 @@ namespace MediaHub.Test.MediaRatingTest;
 public class MediaRatingVieModelTest
 {
     private readonly UserProfileDataManagerMock _profileDataManager = new UserProfileDataManagerMock();
-    private readonly IFeedService _feedService = new FeedServiceMock();
+    private readonly IFeedService _feedService = new FeedServiceMock(new FeedDataManagerMock());
     private readonly IRatingViewModel _ratingViewModel;
 
     public MediaRatingVieModelTest()
