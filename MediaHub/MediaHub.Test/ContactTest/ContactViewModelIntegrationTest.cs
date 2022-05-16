@@ -34,7 +34,7 @@ public class ContactViewModelIntegrationTest
     [Fact]
     public void RequestContact()
     {
-        bool requestContact = _contactViewModel.RequestContact(MockUsers[0], MockUsers[1]);
+        bool requestContact = _contactViewModel.AddContact(MockUsers[0], MockUsers[1]);
         Assert.True(requestContact);
     }
 
@@ -48,7 +48,7 @@ public class ContactViewModelIntegrationTest
     [Fact]
     public void AcceptContactRequest()
     {
-        _contactViewModel.RequestContact(MockUsers[1], MockUsers[2]);
+        _contactViewModel.AddContact(MockUsers[1], MockUsers[2]);
         Assert.True(_contactViewModel.AcceptContactRequest(MockUsers[1], MockUsers[2]));
     }
 
@@ -62,9 +62,10 @@ public class ContactViewModelIntegrationTest
     [Fact]
     public void RemoveContact()
     {
-        _contactViewModel.RequestContact(MockUsers[0], MockUsers[1]);
+        _contactViewModel.AddContact(MockUsers[0], MockUsers[1]);
         _contactViewModel.AcceptContactRequest(MockUsers[0], MockUsers[1]);
-        Assert.True(_contactViewModel.IsContact(MockUsers[0], MockUsers[1]));
+        _contactViewModel.RemoveContact(MockUsers[1], MockUsers[0]);
+        Assert.False(_contactViewModel.IsContact(MockUsers[0], MockUsers[1]));
     }
     
 }

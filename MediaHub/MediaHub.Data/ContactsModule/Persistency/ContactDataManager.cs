@@ -20,14 +20,13 @@ public class ContactDataManager : IContactDataManager
 
     public List<string> GetContacts(string userId)
     {
-        using (var context = new MediaHubDBContext())
-        {
-            var contacts = context.Contacts
-                .Where(c => c.UserId == userId || c.ContactId == userId)
-                .Select(c => c.ContactId)
-                .ToList();
-            return contacts;
-        }
+        using MediaHubDBContext context = new();
+        
+        var contacts = context.Contacts
+            .Where(c => c.UserId == userId || c.ContactId == userId)
+            .Select(c => c.ContactId)
+            .ToList();
+        return contacts;
     }
     
     public bool RemoveContact(string userId, string contactId)
@@ -35,27 +34,27 @@ public class ContactDataManager : IContactDataManager
         using MediaHubDBContext context = new();
         var contacts = context.Contacts
             .Where(c => c.UserId == userId && c.ContactId == contactId ||
-                        c.UserId == contactId && c.ContactId == userId)
-            .ToList();
-        
-        if (contacts.Count == 0)
+                         c.UserId == contactId && c.ContactId == userId);
+
+        if (!contacts.Any())
         {
-            return false; 
+            return false;
         }
+
         foreach (var c in contacts)
         {
             context.Remove(c);
         }
-
         context.SaveChanges();
         return true;
+        
     }
 
     public bool AddContact(string userId, string contactId)
     {
         using MediaHubDBContext context = new();
         var alreadyInDatabase = context.Contacts.Where(c => c.UserId == userId && c.ContactId == contactId ||
-                                    c.UserId == contactId && c.UserId == userId);
+                                    c.UserId == contactId && c.ContactId == userId);
 
         if (alreadyInDatabase.Any())
         {
@@ -79,7 +78,7 @@ public class ContactDataManager : IContactDataManager
         using MediaHubDBContext context = new();
         var contact = context.Contacts
             .Where(c => c.UserId == userId && c.ContactId == contactId ||
-                c.ContactId == contactId && c.UserId == userId)
+                c.UserId == contactId && c.ContactId == userId)
             .Where(c => c.IsBlocked == false && c.OpenRequest == false);
         if (contact.Any())
         {
