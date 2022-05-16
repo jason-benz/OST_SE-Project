@@ -14,6 +14,7 @@ public class MediaHubDBContext : DbContext
     public DbSet<MediaRating> Ratings { get; set; }
     public DbSet<Message> Messages { get; set; }
     public DbSet<UserSuggestion> UserSuggestions { get; set; }
+    public DbSet<MediaComment> MediaComments { get; set; }
 
     public MediaHubDBContext()
     {
