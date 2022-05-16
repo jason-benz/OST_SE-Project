@@ -1,5 +1,4 @@
 ﻿using MediaHub.Data.MediaModule.Model;
-using MediaHub.Data.ProfileModule.Model;
 using MediaHub.Data.PersistencyLayer;
 
 namespace MediaHub.Data.MediaModule.Persistency;
@@ -9,7 +8,6 @@ public class MediaCommentDataManager : IMediaCommentDataManager
     private int _mediaId;
     private string _userId;
     private List<MediaComment> _comments;
-    private readonly Random rndGenerator = new Random();
 
     public List<MediaComment> MediaComments
     {
@@ -36,7 +34,6 @@ public class MediaCommentDataManager : IMediaCommentDataManager
         using MediaHubDBContext context = new();
         var _comment = new MediaComment()
         {
-            Id = rndGenerator.Next(),
             MediaId = _mediaId,
             UserId = _userId,
             Created = DateTime.UtcNow,

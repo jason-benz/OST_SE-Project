@@ -56,7 +56,6 @@ public class MediaCommentIntegrationTest
         mediaId = new Movie(41).Id;
         var comment = new MediaComment()
         {
-            Id = 1,
             MediaId = mediaId,
             UserId = userId,
             Created = DateTime.UtcNow,

@@ -6,10 +6,10 @@ using Xunit;
 
 namespace MediaHub.Test.MediaCommentTest;
 
-public class MediaCommentViewModelTest
+public class MediaCommentViewModelUnitTest
 {
     private readonly IMediaCommentViewModel _mediaCommentViewModel;
-    public MediaCommentViewModelTest()
+    public MediaCommentViewModelUnitTest()
     {
         _mediaCommentViewModel = new MediaCommentViewModel(new MediaCommentDataManagerMock());
     }
