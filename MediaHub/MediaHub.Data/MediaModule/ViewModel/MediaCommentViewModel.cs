@@ -1,5 +1,4 @@
 using MediaHub.Data.MediaModule.Model;
-using MediaHub.Data.ProfileModule.Model;
 using MediaHub.Data.PersistencyLayer;
 
 namespace MediaHub.Data.MediaModule.ViewModel;
