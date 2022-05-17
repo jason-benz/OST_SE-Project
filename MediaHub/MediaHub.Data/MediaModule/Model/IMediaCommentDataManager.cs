@@ -10,5 +10,7 @@ public interface IMediaCommentDataManager
 
     public void UpdateComment(int Id, string text);
 
+    public void DeleteComment(int Id);
+
     public List<MediaComment> MediaComments { get; }
 }

@@ -44,5 +44,15 @@ namespace MediaHub.Test.MediaCommentTest
             comment!.CommentText = text;
             comment!.Created = DateTime.UtcNow;
         }
+
+        public void DeleteComment(int Id)
+        {
+            var comment = _comments.Find(c => c.Id == Id);
+            if (comment!.UserId != _userId)
+            {
+                throw new InvalidOperationException("You are not allowed to edit this comment");
+            }
+            _comments.Remove(comment);
+        }
     }
 }

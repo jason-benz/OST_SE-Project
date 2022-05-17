@@ -19,7 +19,7 @@ public class MediaCommentIntegrationTest
     {
         var expectedComment = AddCommentToDB();
         _mediaCommentDataManager.Load(mediaId, userId);
-        var actualComment = _mediaCommentDataManager.MediaComments.First();
+        var actualComment = _mediaCommentDataManager.MediaComments.First(c => c.UserId == userId);
         RemoveCommentsFromDB();
 
         Assert.Equal(expectedComment.Id, actualComment.Id);
@@ -31,10 +31,10 @@ public class MediaCommentIntegrationTest
         AddCommentToDB();
         _mediaCommentDataManager.Load(mediaId, userId);
         _mediaCommentDataManager.AddComment("Est Lorem Ipsum");
-        var mediaComments = _mediaCommentDataManager.MediaComments;
+        int mediaCommentsCount = _mediaCommentDataManager.MediaComments.Count(c => c.UserId == userId);
         RemoveCommentsFromDB();
 
-        Assert.Equal(2, mediaComments.Count);
+        Assert.Equal(2, mediaCommentsCount);
     }
 
     [Fact]
@@ -43,10 +43,22 @@ public class MediaCommentIntegrationTest
         var comment = AddCommentToDB();
         _mediaCommentDataManager.Load(mediaId, userId);
         _mediaCommentDataManager.UpdateComment(comment.Id, "New Text");
-        var commentText = _mediaCommentDataManager.MediaComments.First().CommentText;
+        var commentText = _mediaCommentDataManager.MediaComments.First(c => c.Id == comment.Id).CommentText;
         RemoveCommentsFromDB();
 
         Assert.True(commentText.Equals("New Text"));
+    }
+
+    [Fact]
+    public void DelteExistingCommentOfMedia()
+    {
+        var comment = AddCommentToDB();
+        _mediaCommentDataManager.Load(mediaId, userId);
+        _mediaCommentDataManager.DeleteComment(comment.Id);
+        bool commentNotDeleted = _mediaCommentDataManager.MediaComments.Any(c => c.UserId == userId);
+        RemoveCommentsFromDB();
+
+        Assert.False(commentNotDeleted);
     }
 
     private MediaComment AddCommentToDB()
@@ -64,7 +76,6 @@ public class MediaCommentIntegrationTest
         context.MediaComments.Add(comment);
         context.SaveChanges();
         return comment;
-        
     }
 
     private void RemoveCommentsFromDB()
@@ -72,9 +83,9 @@ public class MediaCommentIntegrationTest
         using MediaHubDBContext context = new();
         foreach (var comment in context.MediaComments)
         {
-            context.MediaComments.Remove(comment);
+            if (comment.UserId == userId) { context.MediaComments.Remove(comment); }
         }
         context.SaveChanges();
     }
-    
+
 }

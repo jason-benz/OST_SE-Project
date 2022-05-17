@@ -1,7 +1,8 @@
 using System;
 using System.Linq;
 using MediaHub.Data.MediaModule.ViewModel;
-
+using MediaHub.Data.PersistencyLayer;
+using MediaHub.Test.LogTests;
 using Xunit;
 
 namespace MediaHub.Test.MediaCommentTest;
@@ -12,6 +13,7 @@ public class MediaCommentViewModelUnitTest
     public MediaCommentViewModelUnitTest()
     {
         _mediaCommentViewModel = new MediaCommentViewModel(new MediaCommentDataManagerMock());
+        ILogService.Singleton = new LogServiceMock();
     }
 
     [Fact, Trait("Category", "Unit")]
@@ -50,6 +52,16 @@ public class MediaCommentViewModelUnitTest
     }
 
     [Fact, Trait("Category", "Unit")]
+    public void TestDeleteComment()
+    {
+        _mediaCommentViewModel.GetComments(41, "MockId-1");
+        _mediaCommentViewModel.AddComment("Lorem Ipsum est");
+        int commentId = _mediaCommentViewModel.GetComments(41, "MockId-1").First().Id;
+        _mediaCommentViewModel.DeleteComment(commentId);
+        Assert.DoesNotContain(_mediaCommentViewModel.GetComments(41, "MockId-1"), c => c.Id == commentId);
+    }
+
+    [Fact, Trait("Category", "Unit")]
     public void TestTooLongCommentThrows()
     {
         string TooLongComment = get_unique_string(300);
@@ -64,6 +76,16 @@ public class MediaCommentViewModelUnitTest
         int commentId = _mediaCommentViewModel.GetComments(41, "MockId-1").First().Id;
         _mediaCommentViewModel.GetComments(41, "MockId-2");
         Assert.Throws<InvalidOperationException>(() => _mediaCommentViewModel.UpdateComment(commentId, "Changed Text"));
+    }
+
+    [Fact, Trait("Category", "Unit")]
+    public void TestDeleteCommentOfOtherUserThrows()
+    {
+        _mediaCommentViewModel.GetComments(41, "MockId-1");
+        _mediaCommentViewModel.AddComment("Lorem Ipsum est");
+        int commentId = _mediaCommentViewModel.GetComments(41, "MockId-1").First().Id;
+        _mediaCommentViewModel.GetComments(41, "MockId-2");
+        Assert.Throws<InvalidOperationException>(() => _mediaCommentViewModel.DeleteComment(commentId));
     }
 
     private string get_unique_string(int string_length)

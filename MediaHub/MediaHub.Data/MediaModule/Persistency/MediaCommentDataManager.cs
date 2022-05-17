@@ -60,4 +60,19 @@ public class MediaCommentDataManager : IMediaCommentDataManager
         context.SaveChanges();
         LoadComments();
     }
+
+    public void DeleteComment(int Id)
+    {
+        using MediaHubDBContext context = new();
+        MediaComment _comment = context.MediaComments
+                              .Where(r => r.Id == Id)
+                              .First();
+        if (_comment.UserId != _userId)
+        {
+            throw new InvalidOperationException("You are not allowed to delete this comment");
+        }
+        context.MediaComments.Remove(_comment);
+        context.SaveChanges();
+        LoadComments();
+    }
 }
