@@ -60,17 +60,17 @@
     <div class="media-detail-comments-list">
         @if (_showAddComment)
         {
-            <form class="comment-form">
+            <form class="comment-form" @onsubmit="AddComment">
                 <textarea id="addCommentText" class="form-control" placeholder="Write a Comment" @bind="_addCommentText" @bind:event="oninput"/>
-                <button type="button" @onclick="AddComment" class="btn btn-secondary">Submit</button>
+                <button type="submit" class="btn btn-secondary">Submit</button>
             </form>
         }
          @if (_showEditComment)
         {
-            <form class="comment-form">
+            <form class="comment-form" @onsubmit="UpdateComment" @onreset="CancleEditComment">
                 <textarea id="editCommentText" class="form-control" maxlength="500" @bind="_editCommentText"/>
-                <button type="button" @onclick="UpdateComment" class="btn btn-primary">Save Changes</button>
-                <button type="button" @onclick="CancleEditComment" class="btn btn-secondary">Cancle</button>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+                <button type="reset" class="btn btn-secondary">Cancle</button>
                 <button type="button" @onclick="DeleteComment" class="btn btn-danger">Delete</button>
             </form>
         }
