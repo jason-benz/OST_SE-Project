@@ -113,12 +113,18 @@ namespace MediaHub.Areas.Identity.Pages.Account.Manage
         private void DeleteUserProfile(string userId)
         {
             using MediaHubDBContext context = new();
-            
-            var messages = context.Messages.Where(m => m.Receiver.UserId.Equals(userId) || m.Sender.UserId.Equals(userId));
+
+            var ratings = context.Ratings.Where(r => r.ProfileId == userId);
+            context.Ratings.RemoveRange(ratings);
+
+            var messages = context.Messages.Where(m => m.Receiver.UserId == userId || m.Sender.UserId == userId);
             context.Messages.RemoveRange(messages);
-            
-            var userProfileToDelete = new UserProfile(userId);
-            context.UserProfiles.Remove(userProfileToDelete);
+
+            var userSuggestions = context.UserSuggestions.Where(us => us.UserId1 == userId || us.UserId2 == userId);
+            context.UserSuggestions.RemoveRange(userSuggestions);
+
+            var userProfile = new UserProfile(userId);
+            context.UserProfiles.Remove(userProfile);
             context.SaveChanges();
         }
     }
