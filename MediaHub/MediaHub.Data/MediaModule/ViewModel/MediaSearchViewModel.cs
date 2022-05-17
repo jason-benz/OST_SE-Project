@@ -9,22 +9,6 @@ public class MediaSearchViewModel : IMediaSearchViewModel
     {
         _api = api;
     }
-    public async Task<List<Movie>> GetMoviesAsync(string searchString)
-    {
-        if (searchString == string.Empty)
-        {
-            searchString = DateTime.Now.Year.ToString();
-        }
-
-        try
-        {
-            return await _api.Search(searchString);
-        }
-        catch (Exception)
-        {
-            return new List<Movie>();
-        }
-    }
 
     public async Task<Movie> GetMovieAsync(int id)
     {
