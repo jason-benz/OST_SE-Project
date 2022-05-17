@@ -5,7 +5,21 @@
 
 <div class="comment">
     <p><b>@getUsername(UserId)</b> (@CreationDate)</p>
-    <p class="comment-text">@Text</p>
+    <p class="comment-text">
+        @GetDisplayText()
+
+        @if (CanBeExpanded)
+        {
+            @if (IsExpanded)
+            {
+                 <a @onclick="@(() => { IsExpanded = false; })" class="expand-comment-text"> Show less ▲</a>
+            }
+            else
+            {
+                <a @onclick="@(() => { IsExpanded = true; })" class="expand-comment-text"> Show more ▼</a>
+            }
+        }
+    </p>
 </div>
 
 @code {
@@ -21,6 +35,13 @@
     [Parameter]
     public DateTime CreationDate { get; set; } = DateTime.UtcNow;
 
+    [Parameter]
+    public int MaxCharacters { get; set; } = 200;
+
+    public bool IsExpanded { get; set; }
+    
+    public bool CanBeExpanded => Text.Length > MaxCharacters;
+
     private string getUsername(string userId)
     {
         if(_userProfileViewModel.GetUserProfileById(userId) == null)
@@ -28,5 +49,15 @@
             return "Deleted User";
         }
         return _userProfileViewModel.GetUserProfileById(userId).Username;
+    }
+
+    public string GetDisplayText()
+    {
+        return IsExpanded ? Text : Truncate(Text, MaxCharacters);
+    }
+
+    public string Truncate(string value, int maxChars)
+    {
+        return value.Length <= maxChars ? value : value.Substring(0, maxChars) + "...";
     }
 }

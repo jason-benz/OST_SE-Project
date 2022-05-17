@@ -62,13 +62,6 @@ public class MediaCommentViewModelUnitTest
     }
 
     [Fact, Trait("Category", "Unit")]
-    public void TestTooLongCommentThrows()
-    {
-        string TooLongComment = get_unique_string(300);
-        Assert.Throws<ArgumentOutOfRangeException>(() => _mediaCommentViewModel.AddComment(TooLongComment));
-    }
-
-    [Fact, Trait("Category", "Unit")]
     public void TestEditCommentOfOtherUserThrows()
     {
         _mediaCommentViewModel.GetComments(41, "MockId-1");
@@ -86,19 +79,5 @@ public class MediaCommentViewModelUnitTest
         int commentId = _mediaCommentViewModel.GetComments(41, "MockId-1").First().Id;
         _mediaCommentViewModel.GetComments(41, "MockId-2");
         Assert.Throws<InvalidOperationException>(() => _mediaCommentViewModel.DeleteComment(commentId));
-    }
-
-    private string get_unique_string(int string_length)
-    {
-        var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        var stringChars = new char[string_length];
-        var random = new Random();
-
-        for (int i = 0; i < stringChars.Length; i++)
-        {
-            stringChars[i] = chars[random.Next(chars.Length)];
-        }
-
-        return new String(stringChars);
     }
 }

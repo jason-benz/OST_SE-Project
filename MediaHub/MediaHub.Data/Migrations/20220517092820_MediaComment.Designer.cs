@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MediaHub.Data.Migrations
 {
     [DbContext(typeof(MediaHubDBContext))]
-    [Migration("20220516090337_MediaComment")]
+    [Migration("20220517092820_MediaComment")]
     partial class MediaComment
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
