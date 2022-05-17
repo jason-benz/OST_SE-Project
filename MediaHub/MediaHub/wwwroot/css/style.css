@@ -182,21 +182,21 @@ a, .btn-link {
     background: white;
 }
 
-.detaile-view-container {
+.detail-view-container {
     display: grid;
     grid-template:
         "title title" auto
         "image details" auto
-        "body body" 20vh
+        "rating commentHead" auto
+        "rating commentList" 50vh
         / 1fr 3fr;
     row-gap: 20px;
     column-gap: 10px;
     background: #F0F0F0;
-    max-height: 80vh;
     max-width: 80vw;
     margin: auto;
     padding: 2vh 2vw;
-    overflow-y: auto;
+    overflow-y: hidden;
 }
 
 .title-and-add-button {
@@ -214,17 +214,57 @@ a, .btn-link {
     font-weight: bold;
 }
 
-.detaile-view-container > .title-and-add-button {
+.detail-view-container h2 {
+    font-size: 1.5rem;
+}
+
+.detail-view-container > .title-and-add-button {
     grid-area: title;
 }
 
-.detaile-view-container > img {
+.detail-view-container > img {
     grid-area: image;
     width: 200px;
 }
 
-.detaile-view-container > .media-data-table {
+.detail-view-container > .media-data-table {
     grid-area: details;
+}
+
+.detail-view-container > .rating {
+    grid-area: rating;
+    margin-top: 30px;
+}
+
+.detail-view-container > .comments-heading-and-button {
+    grid-area: commentHead;
+    margin-top: 30px;
+    display: flex;
+    justify-content:space-between;
+}
+
+.detail-view-container > .comments-heading-and-button > button{
+    margin-top: 0;
+}
+
+.detail-view-container > .media-detail-comments-list{
+    grid-area: commentList;
+    max-height: 100%
+}
+
+.detail-view-container > .media-detail-comments-list > .comment-form {
+    margin-bottom: 10px;
+}
+
+.detail-view-container > .media-detail-comments-list > .comment-form > button{
+    margin-top: 5px;
+}
+
+.comments-box {
+    background: white;
+    border-radius: 8px;
+    overflow-y: auto;
+    max-height: 100%;
 }
 
 #contactlist-container {
@@ -279,9 +319,7 @@ a, .btn-link {
     border-radius: 0.3em;
 }
 
-.detaile-view-container .Rating{
-    margin-top: 30px;
-}
+
 
 .userProfileOverview {
     display: grid;

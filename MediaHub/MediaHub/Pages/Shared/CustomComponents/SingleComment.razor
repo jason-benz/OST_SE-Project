@@ -1,0 +1,32 @@
+﻿@namespace MediaHub.View
+@using MediaHub.Data.ProfileModule.ViewModel
+
+@inject IUserProfileViewModel _userProfileViewModel
+
+<div class="comment">
+    <p><b>@getUsername(UserId)</b> (@CreationDate)</p>
+    <p class="comment-text">@Text</p>
+</div>
+
+@code {
+    [Parameter]
+    public int Id { get; set; } = 0;
+
+    [Parameter]
+    public string UserId { get; set; } = string.Empty;
+
+    [Parameter]
+    public string Text { get; set; } = string.Empty;
+
+    [Parameter]
+    public DateTime CreationDate { get; set; } = DateTime.UtcNow;
+
+    private string getUsername(string userId)
+    {
+        if(_userProfileViewModel.GetUserProfileById(userId) == null)
+        {
+            return "Deleted User";
+        }
+        return _userProfileViewModel.GetUserProfileById(userId).Username;
+    }
+}

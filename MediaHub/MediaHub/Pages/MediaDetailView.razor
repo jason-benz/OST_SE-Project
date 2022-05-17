@@ -8,12 +8,13 @@
 @inject IMediaSearchViewModel _mediaSearchViewModel 
 @inject IIdentityService _identityService
 @inject IRatingViewModel _ratingViewModel
+@inject IMediaCommentViewModel _mediaCommentViewModel
 
 <PageTitle>Media Details</PageTitle>
 
 @if (_movie != null)
 {
-<div class="detaile-view-container">
+<div class="detail-view-container">
     <div class="title-and-add-button">
         <h1>@_movie.Title</h1>
         @if (_ratingViewModel.IsAddedToProfile)
@@ -23,10 +24,6 @@
         {
             <button class="btn btn-primary" @onclick="_ratingViewModel.ToggleIsAddedToProfile"><span class="oi oi-plus" aria-hidden="true"></span> Add to favorites</button>
         }
-    </div>
-    <div class="Rating">
-        <h3>My Rating</h3>
-        <Rating Callback="(byte value) => _ratingViewModel.Rating = value" CurrentValue="_ratingViewModel.Rating"/>
     </div>
     <img alt="Poster" width="100px" src="@_movie.PosterUrl">
     <table class="media-data-table">
@@ -52,6 +49,50 @@
             </tr>
         </tbody>
     </table>
+    <div class="rating">
+        <h2>My Rating</h2>
+        <Rating Callback="(byte value) => _ratingViewModel.Rating = value" CurrentValue="_ratingViewModel.Rating"/>
+    </div>
+    <div class="comments-heading-and-button">
+        <h2>Comments</h2>
+        <button class="btn btn-primary" @onclick="ToggleShowAddComment">Write comment</button>
+    </div>
+    <div class="media-detail-comments-list">
+        @if (_showAddComment)
+        {
+            <form class="comment-form">
+                <textarea id="addCommentText" class="form-control" placeholder="Write a Comment" maxlength="500" @bind="_addCommentText" @bind:event="oninput"/>
+                <button type="button" @onclick="AddComment" class="btn btn-secondary">Submit</button>
+            </form>
+        }
+         @if (_showEditComment)
+        {
+            <form class="comment-form">
+                <textarea id="editCommentText" class="form-control" maxlength="500" @bind="_editCommentText"/>
+                <button type="button" @onclick="UpdateComment" class="btn btn-primary">Save Changes</button>
+                <button type="button" @onclick="CancleEditComment" class="btn btn-secondary">Cancle</button>
+                <button type="button" @onclick="DeleteComment" class="btn btn-danger">Delete</button>
+            </form>
+        }
+        <div class="comments-box">
+            <table class="table">
+                <tbody>
+                @foreach (var comment in _mediaComments.OrderByDescending(c => c.Created).ToList())
+                {
+                    <tr>
+                        <td><SingleComment Id="@comment.Id" UserId="@comment.UserId" Text="@comment.CommentText" CreationDate="@comment.Created"/></td>
+                        @if(comment.UserId == _userId)
+                        {
+                            <td><button class="btn btn-secondary oi oi-pencil" @onclick="_ => ShowEditCommentView(comment)"/></td>
+                        } else {
+                            <td></td>
+                        }
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 }
 
@@ -59,11 +100,78 @@
     [Parameter]
     public int Id { get; set; }
 
+    private string _userId;
+
     private Movie? _movie;
+
+    private List<MediaComment>? _mediaComments;
+
+    private string _addCommentText;
+    private string _editCommentText;
+    private int _editCommentId;
+
+    private bool _showAddComment = false;
+    private bool _showEditComment = false;
+
+    private void AddComment()
+    {
+        if (!string.IsNullOrWhiteSpace(_addCommentText))
+        {
+           _mediaCommentViewModel.AddComment(_addCommentText);
+           LoadComments();
+        }
+        ToggleShowAddComment();
+    }
+
+    private void UpdateComment()
+    {
+        if (!string.IsNullOrWhiteSpace(_editCommentText))
+        {
+            _mediaCommentViewModel.UpdateComment(_editCommentId, _editCommentText);
+            LoadComments();
+        }
+        CancleEditComment();
+    }
+
+    private void CancleEditComment()
+    {
+        _showEditComment = false;
+        _editCommentText = string.Empty;
+        _editCommentId = 0;
+    }
+
+    private void DeleteComment()
+    {
+        _mediaCommentViewModel.DeleteComment(_editCommentId);
+        LoadComments();
+        CancleEditComment();
+    }
+
+    private void ToggleShowAddComment()
+    {
+        if (_showEditComment) { CancleEditComment(); }
+        _showAddComment = !_showAddComment;
+        _addCommentText = string.Empty;
+    }
+
+    private void ShowEditCommentView(MediaComment comment)
+    {
+        if (_showAddComment) { ToggleShowAddComment(); }
+        _editCommentText = comment.CommentText;
+        _editCommentId = comment.Id;
+        _showEditComment = true;
+    }
+
+    private void LoadComments()
+    {
+        _mediaComments = _mediaCommentViewModel.GetComments(Id, _userId);
+    }
 
     protected override async Task OnInitializedAsync()
     {
         _movie = await _mediaSearchViewModel.GetMovieAsync(Id);
-        _ratingViewModel.Load(_identityService!.UserId!, _movie); //force not null --> handled by microsoft auth framework
+        _userId = _identityService!.UserId!;
+        _ratingViewModel.Load(_userId, _movie); //force not null --> handled by microsoft auth framework
+        LoadComments();
     }
 }
