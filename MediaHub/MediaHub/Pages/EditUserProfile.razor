@@ -21,7 +21,7 @@
 }
 else
 {
-    <form class="edit-user-profile-form">
+    <div class="edit-user-profile-form">
         <div class="form-control-file">
             <img src="@_userProfile.ProfilePicture" alt="No profile picture set..." />
             <br /><br />
@@ -37,7 +37,7 @@ else
         </div>
         <button type="button" @onclick="SaveChanges" class="btn btn-primary">Save changes</button>
         <label class="hint-message @(_showedHint.Value ? "valid" : "invalid")">@_showedHint.Key</label>
-    </form>
+    </div>
 }
 
 @code {
