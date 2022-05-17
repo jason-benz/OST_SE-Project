@@ -9,4 +9,6 @@ public interface IMediaCommentViewModel
     public void AddComment(string text);
 
     public void UpdateComment(int Id, string text);
+
+    public void DeleteComment(int Id);
 }
