@@ -61,7 +61,7 @@
         @if (_showAddComment)
         {
             <form class="comment-form">
-                <textarea id="addCommentText" class="form-control" placeholder="Write a Comment" maxlength="500" @bind="_addCommentText" @bind:event="oninput"/>
+                <textarea id="addCommentText" class="form-control" placeholder="Write a Comment" @bind="_addCommentText" @bind:event="oninput"/>
                 <button type="button" @onclick="AddComment" class="btn btn-secondary">Submit</button>
             </form>
         }
@@ -75,7 +75,11 @@
             </form>
         }
         <div class="comments-box">
-            <table class="table">
+                @if (!_mediaComments.Any())
+                {
+                    <p class="alternative-text">@AlternativeText</p>
+                } else {
+                <table class="table">
                 <tbody>
                 @foreach (var comment in _mediaComments.OrderByDescending(c => c.Created).ToList())
                 {
@@ -91,6 +95,7 @@
                 }
                 </tbody>
             </table>
+            }
         </div>
     </div>
 </div>
@@ -99,6 +104,9 @@
 @code {
     [Parameter]
     public int Id { get; set; }
+
+    [Parameter]
+    public string AlternativeText { get; set; } = "No comments here - write the first one!";
 
     private string _userId;
 
