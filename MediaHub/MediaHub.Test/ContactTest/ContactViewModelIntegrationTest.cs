@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using MediaHub.Data.ContactsModule.Persistency;
 using MediaHub.Data.ContactsModule.ViewModel;
@@ -7,21 +8,19 @@ namespace MediaHub.Test.ContactTest;
 
 
 [Collection("Sequential")]
-public class ContactViewModelIntegrationTest
+public class ContactViewModelIntegrationTest : IDisposable
 {
     private readonly ContactViewModel _contactViewModel;
+    private readonly List<string> MockUsers = MockUser.GetMockUsers();
 
-    private readonly List<string> MockUsers = new List<string>()
-    {
-        "c67f490b-e0a0-460d-95b0-6505910f6700",
-        "c87b8391-0e96-45d8-a3cf-9300498f5a701",
-        "9d6855fb-7aff-4a55-b41e-aab429a54d702",
-        "9d6855fb-7aff-4a55-b41e-aab429adsd703"
-    };
-    
     public ContactViewModelIntegrationTest()
     {
         _contactViewModel = new ContactViewModel(new ContactDataManager());
+    }
+    
+    public void Dispose()
+    {
+        _contactViewModel.RemoveContact(MockUsers[1], MockUsers[2]);
     }
 
     [Fact]
