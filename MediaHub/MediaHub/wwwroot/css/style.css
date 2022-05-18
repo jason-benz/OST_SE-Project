@@ -337,15 +337,13 @@ a, .btn-link {
     border-radius: 0.3em;
 }
 
-
-
 .userProfileOverview {
     display: grid;
     grid:
         "title1 title1" auto
         "image title2" 35px
         "image movies" 280px
-        "bibliography movies" 20vh
+        "biography movies" 20vh
         "genres movies" 40vh
         / 1fr 1.5fr;
     column-gap: 50px;
@@ -377,8 +375,8 @@ a, .btn-link {
     grid-area: image;
 }
 
-.userProfileOverview > .bibliography {
-    grid-area: bibliography;
+.userProfileOverview > .biography {
+    grid-area: biography;
     text-align: justify;
 }
 
@@ -393,10 +391,10 @@ a, .btn-link {
     border-radius: 8px;
 }
 
-    .addedMovies > .alternative-text, .comments-box > .alternative-text{
-        margin-top: 20px;
-        background: transparent;
-    }
+.addedMovies > .alternative-text, .comments-box > .alternative-text{
+    margin-top: 20px;
+    background: transparent;
+}
 
 .edit-user-profile-form {
     margin-top: 20px;
