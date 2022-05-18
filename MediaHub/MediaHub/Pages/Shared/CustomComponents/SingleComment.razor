@@ -4,7 +4,7 @@
 @inject IUserProfileViewModel _userProfileViewModel
 
 <div class="comment">
-    <p><b>@getUsername(UserId)</b> (@CreationDate)</p>
+    <p class="comment-head">@((MarkupString)getUsername(UserId)) <em>(@CreationDate)</em></p>
     <p class="comment-text">
         @GetDisplayText()
 
@@ -39,16 +39,16 @@
     public int MaxCharacters { get; set; } = 200;
 
     public bool IsExpanded { get; set; }
-    
+
     public bool CanBeExpanded => Text.Length > MaxCharacters;
 
     private string getUsername(string userId)
     {
         if(_userProfileViewModel.GetUserProfileById(userId) == null)
         {
-            return "Deleted User";
+            return "<em>Deleted User</em>";
         }
-        return _userProfileViewModel.GetUserProfileById(userId).Username;
+        return $"<b>{_userProfileViewModel.GetUserProfileById(userId).Username}</b>";
     }
 
     public string GetDisplayText()
