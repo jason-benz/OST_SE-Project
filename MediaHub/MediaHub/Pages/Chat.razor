@@ -26,11 +26,11 @@ else
                     <li>
                         @if (contact.UserId == _chatViewModel.Receiver?.UserId)
                         {
-                            <div tabindex="0" class="contactlist-element focus-div" @onclick="@(() => OpenChat(@contact.UserId))">@contact.Username</div>
+                            <button class="contactlist-element focus" @onclick="@(() => OpenChat(@contact.UserId))">@contact.Username</button>
                         }
                         else
                         {
-                            <div tabindex="0" class="contactlist-element" @onclick="@(() => OpenChat(@contact.UserId))">@contact.Username</div>
+                            <button class="contactlist-element" @onclick="@(() => OpenChat(@contact.UserId))">@contact.Username</button>
                         }
                     </li>
                 }
