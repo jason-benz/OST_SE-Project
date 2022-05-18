@@ -8,11 +8,11 @@ using Xunit;
 
 namespace MediaHub.Test.ContactTest;
 [Collection("Sequential")]
-public class ContactDataManagerIntegrationTest : IDisposable
+public class ContactDataManagerIntegrationTest : IClassFixture<ContactDatabaseFixture>
 {
     private readonly IContactDataManager _contactDataManager = new ContactDataManager();
-
-    private readonly List<string> MockUsers = new List<string>()
+    private ContactDatabaseFixture _contactDatabaseFixture;
+    private static readonly List<string> MockUsers = new List<string>()
     {
         "c67f490b-e0a0-460d-95b0-6505910f6600",
         "c87b8391-0e96-45d8-a3cf-9300498f5601",
@@ -20,27 +20,11 @@ public class ContactDataManagerIntegrationTest : IDisposable
         "9d6855fb-7aff-4a55-b41e-aab429a70603"
     };
 
-    public ContactDataManagerIntegrationTest()
+    public ContactDataManagerIntegrationTest(ContactDatabaseFixture databaseFixture)
     {
-        var contact1 = new Contact(MockUsers[0], MockUsers[1]);
-        var contact2 = new Contact(MockUsers[1], MockUsers[2]);
-        var contact3 = new Contact(MockUsers[2], MockUsers[3]);
-
-        using MediaHubDBContext context = new();
-        context.Add(contact1);
-        context.Add(contact2);
-        context.Add(contact3);
-        context.SaveChanges();
+        _contactDatabaseFixture = databaseFixture;
     }
-
-    public void Dispose()
-    {
-        _contactDataManager.RemoveContact(MockUsers[0], MockUsers[1]);
-        _contactDataManager.RemoveContact(MockUsers[1], MockUsers[2]);
-        _contactDataManager.RemoveContact(MockUsers[2], MockUsers[3]);
-        _contactDataManager.RemoveContact(MockUsers[1], MockUsers[3]);
-    }
-
+    
     [Fact]
     public void GetContact()
     {
