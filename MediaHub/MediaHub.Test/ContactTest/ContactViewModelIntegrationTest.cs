@@ -11,14 +11,7 @@ namespace MediaHub.Test.ContactTest;
 public class ContactViewModelIntegrationTest : IDisposable
 {
     private readonly ContactViewModel _contactViewModel;
-
-    private readonly List<string> MockUsers = new List<string>()
-    {
-        "c67f490b-e0a0-460d-95b0-6505910f6700",
-        "c87b8391-0e96-45d8-a3cf-9300498f5a701",
-        "9d6855fb-7aff-4a55-b41e-aab429a54d702",
-        "9d6855fb-7aff-4a55-b41e-aab429adsd703"
-    };
+    private readonly List<string> MockUsers = MockUser.GetMockUsers();
 
     public ContactViewModelIntegrationTest()
     {
