@@ -8,19 +8,17 @@ using Xunit;
 
 namespace MediaHub.Test.MediaCommentTest;
 
-public class MediaCommentIntegrationTest
+public class MediaCommentIntegrationTest : IDisposable
 {
     private readonly IMediaCommentDataManager _mediaCommentDataManager = new MediaCommentDataManager();
-    private string userId;
-    private int mediaId;
+    private readonly string _userId = "test";
+    private readonly int _mediaId = 41;
 
     [Fact]
     public void LoadCommentsForMedia()
     {
-        var expectedComment = AddCommentToDB();
-        _mediaCommentDataManager.Load(mediaId, userId);
-        var actualComment = _mediaCommentDataManager.MediaComments.First(c => c.UserId == userId);
-        RemoveCommentsFromDB();
+        var expectedComment = AddCommentToDBUser();
+        var actualComment = _mediaCommentDataManager.LoadComments(_mediaId).First(c => c.MediaId == _mediaId);
 
         Assert.Equal(expectedComment.Id, actualComment.Id);
     }
@@ -28,11 +26,9 @@ public class MediaCommentIntegrationTest
     [Fact]
     public void AddNewCommentToMedia()
     {
-        AddCommentToDB();
-        _mediaCommentDataManager.Load(mediaId, userId);
-        _mediaCommentDataManager.AddComment("Est Lorem Ipsum");
-        int mediaCommentsCount = _mediaCommentDataManager.MediaComments.Count(c => c.UserId == userId);
-        RemoveCommentsFromDB();
+        AddCommentToDBUser();
+        _mediaCommentDataManager.AddComment(_mediaId, _userId, "Add comment");
+        int mediaCommentsCount = _mediaCommentDataManager.LoadComments(_mediaId).Count(c => c.MediaId == _mediaId);
 
         Assert.Equal(2, mediaCommentsCount);
     }
@@ -40,11 +36,9 @@ public class MediaCommentIntegrationTest
     [Fact]
     public void UpdateExistingCommentOfMedia()
     {
-        var comment = AddCommentToDB();
-        _mediaCommentDataManager.Load(mediaId, userId);
-        _mediaCommentDataManager.UpdateComment(comment.Id, "New Text");
-        var commentText = _mediaCommentDataManager.MediaComments.First(c => c.Id == comment.Id).CommentText;
-        RemoveCommentsFromDB();
+        var comment = AddCommentToDBUser();
+        _mediaCommentDataManager.UpdateComment(comment.Id, _userId, "New Text");
+        var commentText = _mediaCommentDataManager.LoadComments(_mediaId).First(c => c.Id == comment.Id).CommentText;
 
         Assert.True(commentText.Equals("New Text"));
     }
@@ -52,40 +46,35 @@ public class MediaCommentIntegrationTest
     [Fact]
     public void DelteExistingCommentOfMedia()
     {
-        var comment = AddCommentToDB();
-        _mediaCommentDataManager.Load(mediaId, userId);
-        _mediaCommentDataManager.DeleteComment(comment.Id);
-        bool commentNotDeleted = _mediaCommentDataManager.MediaComments.Any(c => c.UserId == userId);
-        RemoveCommentsFromDB();
+        var comment = AddCommentToDBUser();
+        _mediaCommentDataManager.DeleteComment(comment.Id, _userId);
+        bool commentNotDeleted = _mediaCommentDataManager.LoadComments(_mediaId).Any(c => c.MediaId == _mediaId);
 
         Assert.False(commentNotDeleted);
     }
 
-    private MediaComment AddCommentToDB()
+    private MediaComment AddCommentToDBUser()
     {
-        using MediaHubDBContext context = new();
-        userId = new UserProfile("test").UserId;
-        mediaId = new Movie(41).Id;
         var comment = new MediaComment()
         {
-            MediaId = mediaId,
-            UserId = userId,
+            MediaId = _mediaId,
+            UserId = _userId,
             Created = DateTime.UtcNow,
             CommentText = "Lorem ipsum est"
         };
+        using MediaHubDBContext context = new();
         context.MediaComments.Add(comment);
         context.SaveChanges();
         return comment;
     }
 
-    private void RemoveCommentsFromDB()
+    public void Dispose()
     {
         using MediaHubDBContext context = new();
         foreach (var comment in context.MediaComments)
         {
-            if (comment.UserId == userId) { context.MediaComments.Remove(comment); }
+            if (comment.UserId == _userId) { context.MediaComments.Remove(comment); }
         }
         context.SaveChanges();
     }
-
 }

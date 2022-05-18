@@ -11,11 +11,11 @@ public class MediaCommentViewModel : IMediaCommentViewModel
     {
         _mediaCommentDataManager = mediaCommentDataManager;
     }
-    public void AddComment(string text)
+    public void AddComment(int mediaId, string userId, string text)
     {
         try
         {
-            _mediaCommentDataManager.AddComment(text);
+            _mediaCommentDataManager.AddComment(mediaId, userId, text);
         } catch (Exception ex)
         {
             ILogService.Singleton.LogException("An error occured while adding a Media Comment to the Database", ILogService.LogCategory.Identity, ex);
@@ -23,12 +23,11 @@ public class MediaCommentViewModel : IMediaCommentViewModel
         }
     }
 
-    public List<MediaComment> GetComments(int mediaId, string userId)
+    public List<MediaComment> GetComments(int mediaId)
     {
         try
         {
-            _mediaCommentDataManager.Load(mediaId, userId);
-            return _mediaCommentDataManager.MediaComments;
+            return _mediaCommentDataManager.LoadComments(mediaId);
         } catch (Exception ex)
         {
             ILogService.Singleton.LogException("An unknown error occured while loading Media Comments from Database", ILogService.LogCategory.Identity, ex);
@@ -36,11 +35,11 @@ public class MediaCommentViewModel : IMediaCommentViewModel
         }
     }
 
-    public void UpdateComment(int Id, string text)
+    public void UpdateComment(int Id, string userId, string text)
     {
         try
         {
-            _mediaCommentDataManager.UpdateComment(Id, text);
+            _mediaCommentDataManager.UpdateComment(Id, userId, text);
         } catch(Exception ex)
         {
             ILogService.Singleton.LogException("An error occured while updating a Media Comments in Database", ILogService.LogCategory.Identity, ex);
@@ -48,11 +47,11 @@ public class MediaCommentViewModel : IMediaCommentViewModel
         }
     }
 
-    public void DeleteComment(int Id)
+    public void DeleteComment(int Id, string userId)
     {
         try
         {
-            _mediaCommentDataManager.DeleteComment(Id);
+            _mediaCommentDataManager.DeleteComment(Id, userId);
         }
         catch (Exception ex)
         {

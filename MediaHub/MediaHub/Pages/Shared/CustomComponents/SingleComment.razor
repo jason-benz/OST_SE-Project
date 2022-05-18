@@ -12,11 +12,11 @@
         {
             @if (IsExpanded)
             {
-                 <a @onclick="@(() => { IsExpanded = false; })" class="expand-comment-text"> Show less ▲</a>
+                 <a @onclick="@(() => { IsExpanded = false; })" class="expand-comment-text"> Show less &#x25B2;</a>
             }
             else
             {
-                <a @onclick="@(() => { IsExpanded = true; })" class="expand-comment-text"> Show more ▼</a>
+                <a @onclick="@(() => { IsExpanded = true; })" class="expand-comment-text"> Show more &#x25BC;</a>
             }
         }
     </p>

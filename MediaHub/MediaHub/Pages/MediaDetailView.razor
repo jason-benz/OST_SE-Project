@@ -67,7 +67,7 @@
         }
          @if (_showEditComment)
         {
-            <form class="comment-form" @onsubmit="UpdateComment" @onreset="CancleEditComment">
+            <form class="comment-form" @onsubmit="UpdateComment" @onreset="CancelEditComment">
                 <textarea id="editCommentText" class="form-control" maxlength="500" @bind="_editCommentText"/>
                 <button type="submit" class="btn btn-primary">Save Changes</button>
                 <button type="reset" class="btn btn-secondary">Cancle</button>
@@ -125,7 +125,7 @@
     {
         if (!string.IsNullOrWhiteSpace(_addCommentText))
         {
-           _mediaCommentViewModel.AddComment(_addCommentText);
+           _mediaCommentViewModel.AddComment(_movie.Id, _userId, _addCommentText);
            LoadComments();
         }
         ToggleShowAddComment();
@@ -135,13 +135,13 @@
     {
         if (!string.IsNullOrWhiteSpace(_editCommentText))
         {
-            _mediaCommentViewModel.UpdateComment(_editCommentId, _editCommentText);
+            _mediaCommentViewModel.UpdateComment(_editCommentId, _userId, _editCommentText);
             LoadComments();
         }
-        CancleEditComment();
+        CancelEditComment();
     }
 
-    private void CancleEditComment()
+    private void CancelEditComment()
     {
         _showEditComment = false;
         _editCommentText = string.Empty;
@@ -150,14 +150,14 @@
 
     private void DeleteComment()
     {
-        _mediaCommentViewModel.DeleteComment(_editCommentId);
+        _mediaCommentViewModel.DeleteComment(_editCommentId, _userId);
         LoadComments();
-        CancleEditComment();
+        CancelEditComment();
     }
 
     private void ToggleShowAddComment()
     {
-        if (_showEditComment) { CancleEditComment(); }
+        if (_showEditComment) { CancelEditComment(); }
         _showAddComment = !_showAddComment;
         _addCommentText = string.Empty;
     }
@@ -172,7 +172,7 @@
 
     private void LoadComments()
     {
-        _mediaComments = _mediaCommentViewModel.GetComments(Id, _userId);
+        _mediaComments = _mediaCommentViewModel.GetComments(Id);
     }
 
     protected override async Task OnInitializedAsync()

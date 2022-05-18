@@ -7,37 +7,29 @@ namespace MediaHub.Test.MediaCommentTest
     internal class MediaCommentDataManagerMock : IMediaCommentDataManager
     {
         private List<MediaComment> _comments = new List<MediaComment>();
-        private int _mediaId = 0;
-        private string _userId = "0";
         private readonly Random rndGenerator = new Random();
 
-        public List<MediaComment> MediaComments
+        public List<MediaComment> LoadComments(int mediaId)
         {
-            get { return _comments.FindAll(c => c.MediaId == _mediaId); }
+            return _comments.FindAll(c => c.MediaId == mediaId);
         }
 
-        public void AddComment(string text)
+        public void AddComment(int mediaId, string userId, string text)
         {
             _comments.Add(new MediaComment()
             {
                 Id = rndGenerator.Next(),
-                MediaId = _mediaId,
-                UserId = _userId,
+                MediaId = mediaId,
+                UserId = userId,
                 Created = DateTime.UtcNow,
                 CommentText = text
             });
         }
 
-        public void Load(int mediaId, string userId)
-        {
-            _mediaId = mediaId;
-            _userId = userId;
-        }
-
-        public void UpdateComment(int Id, string text)
+        public void UpdateComment(int Id, string userId, string text)
         {
             var comment = _comments.Find(c => c.Id == Id);
-            if (comment!.UserId != _userId)
+            if (comment!.UserId != userId)
             {
                 throw new InvalidOperationException("You are not allowed to edit this comment");
             }
@@ -45,10 +37,10 @@ namespace MediaHub.Test.MediaCommentTest
             comment!.Created = DateTime.UtcNow;
         }
 
-        public void DeleteComment(int Id)
+        public void DeleteComment(int Id, string userId)
         {
             var comment = _comments.Find(c => c.Id == Id);
-            if (comment!.UserId != _userId)
+            if (comment!.UserId != userId)
             {
                 throw new InvalidOperationException("You are not allowed to edit this comment");
             }
