@@ -1,4 +1,5 @@
 ﻿using MediaHub.Data.FeedModule.Model;
+using MediaHub.Test.ContactTest;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -11,7 +12,7 @@ namespace MediaHub.Test.FeedTest
 
         public FeedServiceTest()
         {
-            _feedService = new FeedService(new FeedDataManagerMock());
+            _feedService = new FeedService(new FeedDataManagerMock(), new ContactDataManagerMock());
         }
 
         [Theory, Trait("Category", "Unit")]
@@ -25,39 +26,36 @@ namespace MediaHub.Test.FeedTest
             Assert.Null(exception);
         }
 
-        /// <summary>
-        /// It fails at the moment and this is correct! Contact integration required! (issue #57)
-        /// </summary>
-        [Theory, Trait("Category", "Unit")]
-        [InlineData("MockId-1")]
-        [InlineData("MockId-2")]
-        public void LoadAllFeedItems(string userId)
+        [Fact, Trait("Category", "Unit")]
+        public void LoadAllFeedItems()
         {
+            var userId = "MockId-1";
+            var contactId = "MockId-1-Contact";
+
             var feedItems = _feedService.LoadAllFeedItems(userId);
             Assert.True(feedItems.Any());
-            Assert.Equal(userId, feedItems.First().UserId);
+            Assert.Equal(contactId, feedItems.First().UserId);
         }
 
-        /// <summary>
-        /// It fails at the moment and this is correct! Contact integration required! (issue #57)
-        /// </summary>
         [Theory, Trait("Category", "Unit")]
         [InlineData("Media Ratings", true, Table.MediaRating)]
         [InlineData("User profile update", true, Table.UserProfile)]
         public void LoadfilteredFeedItems_FilterTrue(string filterName, bool filterApplied, Table expectedTable)
         {
             var userId = "MockId-1";
+            var contactId = "MockId-1-Contact";
+
             var filter = new Dictionary<string, bool> { { filterName, filterApplied } };
             var feedItems = _feedService.LoadFilteredFeedItems(userId, filter);
             Assert.True(feedItems.Any());
-            Assert.Equal(userId, feedItems.First().UserId);
+            Assert.Equal(contactId, feedItems.First().UserId);
             Assert.Equal(expectedTable, feedItems.First().ChangedTable);
         }
 
         [Theory, Trait("Category", "Unit")]
-        [InlineData("Media Ratings", true, Table.MediaRating)]
-        [InlineData("User profile update", true, Table.UserProfile)]
-        public void LoadFilteredFeedItems_FilterFalse(string filterName, bool filterApplied, Table expectedTable)
+        [InlineData("Media Ratings", false)]
+        [InlineData("User profile update", false)]
+        public void LoadFilteredFeedItems_FilterFalse(string filterName, bool filterApplied)
         {
             var userId = "MockId-1";
             var filter = new Dictionary<string, bool> { { filterName, filterApplied } };
