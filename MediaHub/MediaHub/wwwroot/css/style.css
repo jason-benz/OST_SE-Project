@@ -264,10 +264,17 @@ a, .btn-link {
     border-radius: 8px;
     overflow-y: auto;
     height: 100%;
+    width:100%;
+}
+
+.comments-box td:nth-child(2){
+    width: 65px;
 }
 
 .comment-text{
     margin-left: 1rem;
+    word-break:break-all;
+    hyphens: auto;
 }
 
 .expand-comment-text {

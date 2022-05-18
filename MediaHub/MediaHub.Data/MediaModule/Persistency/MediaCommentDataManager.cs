@@ -5,52 +5,36 @@ namespace MediaHub.Data.MediaModule.Persistency;
 
 public class MediaCommentDataManager : IMediaCommentDataManager
 {
-    private int _mediaId;
-    private string _userId;
-    private List<MediaComment> _comments;
-
-    public List<MediaComment> MediaComments
-    {
-        get => _comments;
-    }
-
-    public void Load(int mediaId, string userId)
-    {
-        _mediaId = mediaId;
-        _userId = userId;
-        LoadComments();
-    }
-
-    private void LoadComments()
+    public List<MediaComment> LoadComments(int mediaId)
     {
         using MediaHubDBContext context = new();
-        _comments = context.MediaComments
-                           .Where(r => r.MediaId == _mediaId)
+        var _comments = context.MediaComments
+                           .Where(r => r.MediaId == mediaId)
                            .ToList();
+        return _comments;
     }
 
-    public void AddComment(string text)
+    public void AddComment(int mediaId, string userId, string text)
     {
         using MediaHubDBContext context = new();
         var _comment = new MediaComment()
         {
-            MediaId = _mediaId,
-            UserId = _userId,
+            MediaId = mediaId,
+            UserId = userId,
             Created = DateTime.UtcNow,
             CommentText = text
         };
         context.MediaComments.Add(_comment);
         context.SaveChanges();
-        LoadComments();
     }
 
-    public void UpdateComment(int Id, string text)
+    public void UpdateComment(int Id, string userId, string text)
     {
         using MediaHubDBContext context = new();
         MediaComment _comment = context.MediaComments
                               .Where(r => r.Id == Id)
                               .First();
-        if (_comment.UserId != _userId)
+        if (_comment.UserId != userId)
         {
             throw new InvalidOperationException("You are not allowed to edit this comment");
         }
@@ -58,21 +42,19 @@ public class MediaCommentDataManager : IMediaCommentDataManager
         _comment.Created = DateTime.UtcNow;
         context.MediaComments.Update(_comment);
         context.SaveChanges();
-        LoadComments();
     }
 
-    public void DeleteComment(int Id)
+    public void DeleteComment(int Id, string userId)
     {
         using MediaHubDBContext context = new();
         MediaComment _comment = context.MediaComments
                               .Where(r => r.Id == Id)
                               .First();
-        if (_comment.UserId != _userId)
+        if (_comment.UserId != userId)
         {
             throw new InvalidOperationException("You are not allowed to delete this comment");
         }
         context.MediaComments.Remove(_comment);
         context.SaveChanges();
-        LoadComments();
     }
 }

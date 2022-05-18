@@ -10,6 +10,9 @@ namespace MediaHub.Test.MediaCommentTest;
 public class MediaCommentViewModelUnitTest
 {
     private readonly IMediaCommentViewModel _mediaCommentViewModel;
+    private int _movieId = 41;
+    private string _mockUserId1 = "MockId-1";
+    private string _mockUserId2 = "MockId-2";
     public MediaCommentViewModelUnitTest()
     {
         _mediaCommentViewModel = new MediaCommentViewModel(new MediaCommentDataManagerMock());
@@ -19,65 +22,57 @@ public class MediaCommentViewModelUnitTest
     [Fact, Trait("Category", "Unit")]
     public void TestCommentsListLoadedOnInitialEmpty()
     {
-        Assert.Empty(_mediaCommentViewModel.GetComments(41, "MockId-1"));
+        Assert.Empty(_mediaCommentViewModel.GetComments(_movieId));
     }
 
     [Fact, Trait("Category", "Unit")]
     public void TestAddCommentToMovie()
     {
-        _mediaCommentViewModel.GetComments(41, "MockId-1");
-        _mediaCommentViewModel.AddComment("Lorem Ipsum est");
-        Assert.Single(_mediaCommentViewModel.GetComments(41, "MockId-1"));
+        _mediaCommentViewModel.AddComment(_movieId, _mockUserId1, "Lorem Ipsum est");
+        Assert.Single(_mediaCommentViewModel.GetComments(_movieId));
     }
 
     [Fact, Trait("Category", "Unit")]
     public void TestAddMultipleComments()
     {
-        _mediaCommentViewModel.GetComments(41, "MockId-1");
-        _mediaCommentViewModel.AddComment("Lorem Ipsum est");
+        _mediaCommentViewModel.AddComment(_movieId, _mockUserId1, "Lorem Ipsum est");
         System.Threading.Thread.Sleep(1000);
-        _mediaCommentViewModel.AddComment("Ipsum Lorem est");
-        Assert.Equal(2, _mediaCommentViewModel.GetComments(41, "MockId-1").Count);
-        Assert.True(_mediaCommentViewModel.GetComments(41, "MockId-1").OrderByDescending(c => c.Created).First().CommentText.Equals("Ipsum Lorem est"));
+        _mediaCommentViewModel.AddComment(_movieId, _mockUserId2, "Ipsum Lorem est");
+        Assert.Equal(2, _mediaCommentViewModel.GetComments(_movieId).Count);
+        Assert.True(_mediaCommentViewModel.GetComments(_movieId).OrderByDescending(c => c.Created).First().UserId.Equals(_mockUserId2));
     }
 
     [Fact, Trait("Category", "Unit")]
     public void TestUpdateComment()
     {
-        _mediaCommentViewModel.GetComments(41, "MockId-1");
-        _mediaCommentViewModel.AddComment("Lorem Ipsum est");
-        int commentId = _mediaCommentViewModel.GetComments(41, "MockId-1").First().Id;
-        _mediaCommentViewModel.UpdateComment(commentId, "Changed Text");
-        Assert.True(_mediaCommentViewModel.GetComments(41, "MockId-1").First().CommentText.Equals("Changed Text"));
+        _mediaCommentViewModel.AddComment(_movieId, _mockUserId1, "Lorem Ipsum est");
+        int commentId = _mediaCommentViewModel.GetComments(_movieId).First(c=>c.UserId == _mockUserId1).Id;
+        _mediaCommentViewModel.UpdateComment(commentId, _mockUserId1, "Changed Text");
+        Assert.True(_mediaCommentViewModel.GetComments(_movieId).First(c => c.UserId == _mockUserId1).CommentText.Equals("Changed Text"));
     }
 
     [Fact, Trait("Category", "Unit")]
     public void TestDeleteComment()
     {
-        _mediaCommentViewModel.GetComments(41, "MockId-1");
-        _mediaCommentViewModel.AddComment("Lorem Ipsum est");
-        int commentId = _mediaCommentViewModel.GetComments(41, "MockId-1").First().Id;
-        _mediaCommentViewModel.DeleteComment(commentId);
-        Assert.DoesNotContain(_mediaCommentViewModel.GetComments(41, "MockId-1"), c => c.Id == commentId);
+        _mediaCommentViewModel.AddComment(_movieId, _mockUserId1, "Lorem Ipsum est");
+        int commentId = _mediaCommentViewModel.GetComments(_movieId).First(c => c.UserId == _mockUserId1).Id;
+        _mediaCommentViewModel.DeleteComment(commentId, _mockUserId1);
+        Assert.DoesNotContain(_mediaCommentViewModel.GetComments(_movieId), c => c.Id == commentId);
     }
 
     [Fact, Trait("Category", "Unit")]
     public void TestEditCommentOfOtherUserThrows()
     {
-        _mediaCommentViewModel.GetComments(41, "MockId-1");
-        _mediaCommentViewModel.AddComment("Lorem Ipsum est");
-        int commentId = _mediaCommentViewModel.GetComments(41, "MockId-1").First().Id;
-        _mediaCommentViewModel.GetComments(41, "MockId-2");
-        Assert.Throws<InvalidOperationException>(() => _mediaCommentViewModel.UpdateComment(commentId, "Changed Text"));
+        _mediaCommentViewModel.AddComment(_movieId, _mockUserId1, "Lorem Ipsum est");
+        int commentId = _mediaCommentViewModel.GetComments(_movieId).First(c => c.UserId == _mockUserId1).Id;
+        Assert.Throws<InvalidOperationException>(() => _mediaCommentViewModel.UpdateComment(commentId, _mockUserId2, "Changed Text"));
     }
 
     [Fact, Trait("Category", "Unit")]
     public void TestDeleteCommentOfOtherUserThrows()
     {
-        _mediaCommentViewModel.GetComments(41, "MockId-1");
-        _mediaCommentViewModel.AddComment("Lorem Ipsum est");
-        int commentId = _mediaCommentViewModel.GetComments(41, "MockId-1").First().Id;
-        _mediaCommentViewModel.GetComments(41, "MockId-2");
-        Assert.Throws<InvalidOperationException>(() => _mediaCommentViewModel.DeleteComment(commentId));
+        _mediaCommentViewModel.AddComment(_movieId, _mockUserId1, "Lorem Ipsum est");
+        int commentId = _mediaCommentViewModel.GetComments(_movieId).First(c => c.UserId == _mockUserId1).Id;
+        Assert.Throws<InvalidOperationException>(() => _mediaCommentViewModel.DeleteComment(commentId, _mockUserId2));
     }
 }

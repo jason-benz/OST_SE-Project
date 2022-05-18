@@ -4,13 +4,11 @@ namespace MediaHub.Data.MediaModule.Model;
 
 public interface IMediaCommentDataManager
 {
-    public void Load(int mediaId, string userId);
+    public List<MediaComment> LoadComments(int mediaId);
 
-    public void AddComment(string text);
+    public void AddComment(int mediaId, string userId, string text);
 
-    public void UpdateComment(int Id, string text);
+    public void UpdateComment(int Id, string userId, string text);
 
-    public void DeleteComment(int Id);
-
-    public List<MediaComment> MediaComments { get; }
+    public void DeleteComment(int Id, string userId);
 }
