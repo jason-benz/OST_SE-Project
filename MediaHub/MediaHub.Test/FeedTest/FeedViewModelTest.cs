@@ -32,11 +32,11 @@ namespace MediaHub.Test.FeedTest
         }
 
         [Fact, Trait("Category", "Unit")]
-        public void LoadAllFeedItems()
+        public void LoadFeedItems()
         {
             var userId = "Test";
             _feedViewModel.UserId = userId;
-            _feedViewModel.LoadAllFeedItems();
+            _feedViewModel.LoadFeedItems();
             var feedItems = _feedViewModel.FeedItems;
 
             Assert.True(feedItems.Any());
