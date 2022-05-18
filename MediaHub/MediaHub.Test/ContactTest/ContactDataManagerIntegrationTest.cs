@@ -8,34 +8,23 @@ using Xunit;
 
 namespace MediaHub.Test.ContactTest;
 [Collection("Sequential")]
-public class ContactDataManagerIntegrationTest
+public class ContactDataManagerIntegrationTest : IClassFixture<ContactDatabaseFixture>
 {
     private readonly IContactDataManager _contactDataManager = new ContactDataManager();
+    private ContactDatabaseFixture _contactDatabaseFixture;
+    private readonly List<string> MockUsers;
 
-    private readonly List<string> MockUsers = new List<string>()
+    public ContactDataManagerIntegrationTest(ContactDatabaseFixture databaseFixture)
     {
-        "c67f490b-e0a0-460d-95b0-6505910f6818",
-        "c87b8391-0e96-45d8-a3cf-9300498f5af7",
-        "9d6855fb-7aff-4a55-b41e-aab429a54db1",
-        "9d6855fb-7aff-4a55-b41e-aab429a70000"
-    };
-
-    public ContactDataManagerIntegrationTest()
-    {
-        var contact1 = new Contact(MockUsers[0], MockUsers[1]);
-        var contact2 = new Contact(MockUsers[1], MockUsers[2]);
-
-        using MediaHubDBContext context = new();
-        context.Add(contact1);
-        context.Add(contact2);
-        context.SaveChanges();
+        MockUsers = MockUser.GetMockUsers();
+        _contactDatabaseFixture = databaseFixture;
     }
-
+    
     [Fact]
     public void GetContact()
     {
-        var contact = _contactDataManager.GetContact(MockUsers[0]);
-        Assert.Equal(MockUsers[1], contact.ContactId);
+        var contact = _contactDataManager.GetContact(MockUsers[3]);
+        Assert.Equal(MockUsers[2], contact.UserId);
     }
 
     [Fact]
