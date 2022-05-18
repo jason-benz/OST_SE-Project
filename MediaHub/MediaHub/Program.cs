@@ -52,6 +52,7 @@ builder.Services.AddSingleton(ILogService.Singleton);
 builder.Services.AddScoped<IRatingViewModel>(_ => new RatingViewModel(profileManager, new UserSuggestionEngine(userSuggestionDataManager)));
 builder.Services.AddScoped<IMediaTableViewModel>(_ => new MediaTableViewModel(mediaApi, profileManager));
 builder.Services.AddScoped<IChatViewModel>(_ => new ChatViewModel(chatDataManager, profileManager));
+builder.Services.AddScoped<IMediaCommentViewModel>(_ => new MediaCommentViewModel(new MediaCommentDataManager()));
 
 var app = builder.Build();
 
