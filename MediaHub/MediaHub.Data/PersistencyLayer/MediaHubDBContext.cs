@@ -18,6 +18,8 @@ public class MediaHubDBContext : DbContext
     
     public DbSet<Contact> Contacts { get; set; }
 
+    public DbSet<MediaComment> MediaComments { get; set; }
+
     public MediaHubDBContext()
     {
     }
