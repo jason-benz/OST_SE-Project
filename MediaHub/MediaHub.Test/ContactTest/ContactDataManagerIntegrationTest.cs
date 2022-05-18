@@ -12,16 +12,11 @@ public class ContactDataManagerIntegrationTest : IClassFixture<ContactDatabaseFi
 {
     private readonly IContactDataManager _contactDataManager = new ContactDataManager();
     private ContactDatabaseFixture _contactDatabaseFixture;
-    private static readonly List<string> MockUsers = new List<string>()
-    {
-        "c67f490b-e0a0-460d-95b0-6505910f6600",
-        "c87b8391-0e96-45d8-a3cf-9300498f5601",
-        "9d6855fb-7aff-4a55-b41e-aab429a54602",
-        "9d6855fb-7aff-4a55-b41e-aab429a70603"
-    };
+    private readonly List<string> MockUsers;
 
     public ContactDataManagerIntegrationTest(ContactDatabaseFixture databaseFixture)
     {
+        MockUsers = MockUser.GetMockUsers();
         _contactDatabaseFixture = databaseFixture;
     }
     
