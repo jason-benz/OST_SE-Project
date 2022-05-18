@@ -1,4 +1,3 @@
-using MediaHub.Data.FeedModule.Model;
 using MediaHub.Data.MediaModule.Model;
 using MediaHub.Data.MessagingModule.Model;
 using MediaHub.Data.ProfileModule.Model;
@@ -16,6 +15,9 @@ public class MediaHubDBContext : DbContext
     public DbSet<Message> Messages { get; set; }
     public DbSet<UserSuggestion> UserSuggestions { get; set; }
     public DbSet<FeedItem> FeedItems { get; set; }
+
+    
+    public DbSet<Contact> Contacts { get; set; }
 
     public MediaHubDBContext()
     {
