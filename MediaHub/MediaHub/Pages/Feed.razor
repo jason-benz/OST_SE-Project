@@ -10,10 +10,10 @@
 
 <h3>Feed</h3>
 
+<Filterbar ViewModel="_feedViewModel.FilterbarViewModel"/>
+
 @if (_feedViewModel.FeedItems != null && _feedViewModel.FeedItems.Any())
 {
-    <Filterbar ViewModel="_feedViewModel.FilterbarViewModel"/>
-
     <table class="table table-striped">
         <tbody>
             @foreach (var feedItem in _feedViewModel.FeedItems)
@@ -30,15 +30,21 @@
 }
 else
 {
+    <br />
     <p>No feed items to show. If there are any news with your contacts, they will be displayed here.</p>
 }
 
 
 @code {
-
     protected override void OnInitialized()
     {
+        _feedViewModel.RefreshRequested += RefreshPage;
         _feedViewModel.UserId = _identityServiceInstance.UserId;
-        _feedViewModel.LoadAllFeedItems();
+        _feedViewModel.LoadFeedItems();
+    }
+
+    private void RefreshPage()
+    {
+        StateHasChanged();
     }
 }

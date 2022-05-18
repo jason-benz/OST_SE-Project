@@ -7,7 +7,8 @@ namespace MediaHub.Data.FeedModule.ViewModel
         private readonly IFeedService _feedService;
         public string UserId { get; set; }
         public IEnumerable<FeedItem> FeedItems { get; private set; }
-        
+        public event Action RefreshRequested;
+
         public IFilterbarViewModel FilterbarViewModel { get; }
 
         public FeedViewModel(IFeedService feedService)
@@ -24,6 +25,7 @@ namespace MediaHub.Data.FeedModule.ViewModel
             FilterbarViewModel.OnFilterChanged += (string name, bool value) =>
             {
                 LoadFilteredFeedItems(filterProperties);
+                RefreshRequested?.Invoke();
             };
         }
 
@@ -41,9 +43,9 @@ namespace MediaHub.Data.FeedModule.ViewModel
             return string.Empty;
         }
 
-        public void LoadAllFeedItems()
+        public void LoadFeedItems()
         {
-            FeedItems = _feedService.LoadAllFeedItems(UserId);
+            LoadFilteredFeedItems(FilterbarViewModel.FilterSettings);
         }
 
         private void LoadFilteredFeedItems(Dictionary<string, bool> filterSettings)
