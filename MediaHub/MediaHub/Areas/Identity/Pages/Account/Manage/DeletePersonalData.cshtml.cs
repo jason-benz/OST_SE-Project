@@ -126,6 +126,9 @@ namespace MediaHub.Areas.Identity.Pages.Account.Manage
             var feedItems = context.FeedItems.Where(f => f.UserId == userId);
             context.FeedItems.RemoveRange(feedItems);
 
+            var contacts = context.Contacts.Where(c => c.UserId == userId || c.ContactId == userId);
+            context.Contacts.RemoveRange(contacts);
+
             var userProfile = new UserProfile(userId);
             context.UserProfiles.Remove(userProfile);
             context.SaveChanges();
