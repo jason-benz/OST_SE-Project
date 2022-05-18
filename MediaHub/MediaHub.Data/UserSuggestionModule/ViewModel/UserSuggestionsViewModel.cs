@@ -1,14 +1,17 @@
-﻿using MediaHub.Data.UserSuggestionModule.Model;
+﻿using MediaHub.Data.ContactsModule.Model;
+using MediaHub.Data.UserSuggestionModule.Model;
 
 namespace MediaHub.Data.UserSuggestionModule.ViewModel
 {
     public class UserSuggestionsViewModel : IUserSuggestionsViewModel
     {
         private readonly IUserSuggestionDataManager _userSuggestionDataManager;
+        private readonly IContactDataManager _contactDataManager;
 
-        public UserSuggestionsViewModel(IUserSuggestionDataManager userSuggestionDataManager)
+        public UserSuggestionsViewModel(IUserSuggestionDataManager userSuggestionDataManager, IContactDataManager contactDataManager)
         {
             _userSuggestionDataManager = userSuggestionDataManager;
+            _contactDataManager = contactDataManager;
         }
 
         public IEnumerable<UserSuggestion> GetUserSuggestions(string userId, bool loadIgnoredSuggestions = false)
@@ -21,6 +24,11 @@ namespace MediaHub.Data.UserSuggestionModule.ViewModel
         {
             userSuggestion.IgnoreSuggestion = true;
             _userSuggestionDataManager.UpdateUserSuggestion(userSuggestion);
+        }
+
+        public void AddToContact(string userId, string contactId)
+        {
+            _contactDataManager.AddContact(userId, contactId);
         }
     }
 }
