@@ -1,5 +1,6 @@
 ﻿using MediaHub.Data.UserSuggestionModule.Model;
 using MediaHub.Data.UserSuggestionModule.ViewModel;
+using MediaHub.Test.ContactTest;
 using System.Linq;
 using Xunit;
 
@@ -11,7 +12,7 @@ namespace MediaHub.Test.UserSuggestionTest
 
         public UserSuggestionsViewModelTest()
         {
-            _userSuggestionsViewModel = new UserSuggestionsViewModel(new UserSuggestionDataManagerMock());
+            _userSuggestionsViewModel = new UserSuggestionsViewModel(new UserSuggestionDataManagerMock(), new ContactDataManagerMock());
         }
 
         [Theory, Trait("Category", "Unit")]

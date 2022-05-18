@@ -1,4 +1,5 @@
 ﻿using MediaHub.Data.UserSuggestionModule.Model;
+using MediaHub.Test.ContactTest;
 using System.Threading;
 using Xunit;
 
@@ -8,11 +9,13 @@ namespace MediaHub.Test.UserSuggestionTest
     {
         private readonly IUserSuggestionEngine _userSuggestionEngine;
         private readonly UserSuggestionDataManagerMock _userSuggestionDataManager;
+        private readonly ContactDataManagerMock _contactDataManager;
 
         public UserSuggestionEngineTest()
         {
             _userSuggestionDataManager = new UserSuggestionDataManagerMock();
-            _userSuggestionEngine = new UserSuggestionEngine(_userSuggestionDataManager);
+            _contactDataManager = new ContactDataManagerMock();
+            _userSuggestionEngine = new UserSuggestionEngine(_userSuggestionDataManager, _contactDataManager);
         }
 
         [Fact, Trait("Category", "Unit")]

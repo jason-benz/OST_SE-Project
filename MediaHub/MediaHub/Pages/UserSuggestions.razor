@@ -23,7 +23,7 @@
                     <div class="card-body">
                         <h5 class="card-title">@_userProfile.Username</h5>
                         <p class="card-text">@ShortenBio(_userProfile.Biography) ... (<NavLink href="@($"userProfile/{_userProfile.Username}")">read more</NavLink>)</p>
-                        <a href="#" class="btn btn-primary">Add to contacts</a>
+                        <a onclick="@(() => AddToContacts(suggestion, _userProfile.UserId))" class="btn btn-primary">Add to contacts</a>
                         <a onclick="@(() => IgnoreUserSuggestion(suggestion))" class="btn btn-close"></a>
                     </div>
                 </div>
@@ -61,6 +61,13 @@ else
 
     private void IgnoreUserSuggestion(UserSuggestion suggestion)
     {
+        _userSuggestionsViewModel.IgnoreUserSuggestion(suggestion);
+        _navManager.NavigateTo("/userSuggestions", forceLoad: true);
+    }
+
+    private void AddToContacts(UserSuggestion suggestion, string contactId)
+    {
+        _userSuggestionsViewModel.AddToContact(_personalUserId, contactId);
         _userSuggestionsViewModel.IgnoreUserSuggestion(suggestion);
         _navManager.NavigateTo("/userSuggestions", forceLoad: true);
     }
