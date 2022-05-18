@@ -1,5 +1,6 @@
 ﻿using MediaHub.Data.FeedModule.Model;
 using MediaHub.Data.PersistencyLayer;
+using Microsoft.EntityFrameworkCore;
 
 namespace MediaHub.Data.FeedModule.Persistency
 {
@@ -26,13 +27,19 @@ namespace MediaHub.Data.FeedModule.Persistency
         public IEnumerable<FeedItem> LoadAllFeedItems(IEnumerable<string> userIds)
         {
             using MediaHubDBContext context = new();
-            return context.FeedItems.Where(f => userIds.Contains(f.UserId)).ToList();
+            return context.FeedItems
+                .Include(f => f.UserProfile)
+                .Where(f => userIds.Contains(f.UserId))
+                .ToList();
         }
 
         public IEnumerable<FeedItem> LoadFilteredFeedItems(IEnumerable<string> userIds, IEnumerable<Table> selectedTables)
         {
             using MediaHubDBContext context = new();
-            return context.FeedItems.Where(f => userIds.Contains(f.UserId) && selectedTables.Contains(f.ChangedTable)).ToList();
+            return context.FeedItems
+                .Include(f => f.UserProfile)
+                .Where(f => userIds.Contains(f.UserId) && selectedTables.Contains(f.ChangedTable))
+                .ToList();
         }
     }
 }
