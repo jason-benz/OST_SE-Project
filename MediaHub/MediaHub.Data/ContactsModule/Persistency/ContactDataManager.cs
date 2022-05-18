@@ -8,11 +8,11 @@ namespace MediaHub.Data.ContactsModule.Persistency;
 
 public class ContactDataManager : IContactDataManager
 {
-    public Contact GetContact(string userId)
+    public Contact? GetContact(string userId)
     {
         using MediaHubDBContext context = new();
         var contact = context.Contacts
-                .First(c => c.UserId == userId);
+                .FirstOrDefault(c => c.UserId == userId || c.ContactId == userId);
         return contact;
     }
 
@@ -32,7 +32,7 @@ public class ContactDataManager : IContactDataManager
     {
         using MediaHubDBContext context = new();
         Contact? contact = context.Contacts
-            .First(c => c.UserId == userId && c.ContactId == contactId ||
+            .FirstOrDefault(c => c.UserId == userId && c.ContactId == contactId ||
                          c.UserId == contactId && c.ContactId == userId);
 
         if (contact == null)
@@ -85,7 +85,7 @@ public class ContactDataManager : IContactDataManager
     {
         using MediaHubDBContext context = new();
         var contact = context.Contacts
-            .First(c => c.UserId == userId && c.ContactId == contactId || 
+            .FirstOrDefault(c => c.UserId == userId && c.ContactId == contactId || 
                         c.UserId == contactId && c.ContactId == userId);
 
         if (contact == null)
@@ -101,7 +101,7 @@ public class ContactDataManager : IContactDataManager
     {
         using MediaHubDBContext context = new();
         var contact = context.Contacts
-            .First(c => (c.UserId == userId && c.ContactId == contactId) ||
+            .FirstOrDefault(c => (c.UserId == userId && c.ContactId == contactId) ||
                         (c.UserId == contactId && c.ContactId == userId) &&
                         (c.OpenRequest == true));
 
