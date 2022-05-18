@@ -19,6 +19,7 @@ using MediaHub.Data.UserSuggestionModule.Persistency;
 using MediaHub.Data.FeedModule.ViewModel;
 using MediaHub.Data.FeedModule.Persistency;
 using MediaHub.Data.FeedModule.Model;
+using MediaHub.Data.ContactsModule.Persistency;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,7 +45,8 @@ builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 builder.Services.AddScoped<IIdentityService>(_ => new IdentityService());
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 var profileManager = new UserProfileDataManager();
-var feedService = new FeedService(new FeedDataManager());
+var contactDataManager = new ContactDataManager();
+var feedService = new FeedService(new FeedDataManager(), contactDataManager);
 IChatDataManager chatDataManager = new ChatDataManager();
 var mediaApi = new TmdbApi();
 builder.Services.AddScoped<IUserProfileViewModel>(_ => new UserProfileViewModel(profileManager, feedService));

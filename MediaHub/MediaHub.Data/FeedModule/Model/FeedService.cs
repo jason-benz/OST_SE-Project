@@ -1,17 +1,21 @@
-﻿namespace MediaHub.Data.FeedModule.Model
+﻿using MediaHub.Data.ContactsModule.Model;
+
+namespace MediaHub.Data.FeedModule.Model
 {
     public class FeedService : IFeedService
     {
         private readonly IFeedDataManager _feedDataManager;
+        private readonly IContactDataManager _contactDataManager;
         private readonly Dictionary<string, Table> _filterStringToTableMap = new()
         {
             { "Media Ratings", Table.MediaRating },
             { "User profile update", Table.UserProfile }
         };
 
-        public FeedService(IFeedDataManager feedDataManager)
+        public FeedService(IFeedDataManager feedDataManager, IContactDataManager contactDataManager)
         {
             _feedDataManager = feedDataManager;
+            _contactDataManager = contactDataManager;
         }
 
         public void AddToFeed(string userId, Table table, string? additionalInformation = null)
@@ -32,15 +36,15 @@
 
         public IEnumerable<FeedItem> LoadAllFeedItems(string userId)
         {
-            var contactIds = new List<string>(); // TODO: Load contacts from DB
+            var contactIds = _contactDataManager.GetContacts(userId);
             return _feedDataManager.LoadAllFeedItems(contactIds);
         }
 
         public IEnumerable<FeedItem> LoadFilteredFeedItems(string userId, Dictionary<string, bool> filterSettings)
         {
-            var contactIds = new List<string>(); // TODO: Load contacts from DB
+            var contactIds = _contactDataManager.GetContacts(userId);
             var selectedTables = new List<Table>();
-            foreach(var filterSetting in filterSettings)
+            foreach (var filterSetting in filterSettings)
             {
                 if (filterSetting.Value && _filterStringToTableMap.ContainsKey(filterSetting.Key))
                 {
