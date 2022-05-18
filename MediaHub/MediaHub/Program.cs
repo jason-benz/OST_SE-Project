@@ -55,6 +55,7 @@ builder.Services.AddScoped<IRatingViewModel>(_ => new RatingViewModel(profileMan
 builder.Services.AddScoped<IMediaTableViewModel>(_ => new MediaTableViewModel(mediaApi, profileManager));
 builder.Services.AddScoped<IChatViewModel>(_ => new ChatViewModel(chatDataManager, profileManager));
 builder.Services.AddScoped<IFeedViewModel>(_ => new FeedViewModel(feedService));
+builder.Services.AddScoped<IMediaCommentViewModel>(_ => new MediaCommentViewModel(new MediaCommentDataManager()));
 
 var app = builder.Build();
 
