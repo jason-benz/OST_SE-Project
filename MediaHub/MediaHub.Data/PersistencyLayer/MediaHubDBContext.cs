@@ -1,3 +1,5 @@
+using MediaHub.Data.ContactsModule.Model;
+using MediaHub.Data.FeedModule.Model;
 using MediaHub.Data.MediaModule.Model;
 using MediaHub.Data.MessagingModule.Model;
 using MediaHub.Data.ProfileModule.Model;
