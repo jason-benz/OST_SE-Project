@@ -1,9 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
 using MediaHub.Data.MediaModule.Model;
 
 namespace MediaHub.Data.MediaModule.ViewModel;
 
 public interface IMediaTableViewModel
 {
+    [ExcludeFromCodeCoverage]
     public class MovieAndRating
     {
         public Movie Movie { get; set; }
