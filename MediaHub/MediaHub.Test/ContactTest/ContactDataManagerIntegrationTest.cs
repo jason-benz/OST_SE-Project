@@ -30,7 +30,7 @@ public class ContactDataManagerIntegrationTest : IClassFixture<ContactDatabaseFi
     [Fact]
     public void GetContacts()
     {
-        var contacts = _contactDataManager.GetContacts(MockUsers[0]);
+        var contacts = _contactDataManager.GetContactIds(MockUsers[0]);
         Assert.All(contacts, contact => Assert.Contains(MockUsers[1], contact));
     }
 
