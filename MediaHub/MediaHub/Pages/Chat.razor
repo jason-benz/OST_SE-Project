@@ -5,10 +5,14 @@
 @using MediaHub.Services
 @using Microsoft.AspNetCore.Routing.Matching
 @using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@using Microsoft.AspNetCore.SignalR.Client
+@using Microsoft.CodeAnalysis.Scripting
 @using SendGrid.Helpers.Mail.Model
+@using System.Net.Sockets
 
 @inject IIdentityService _identityServiceInstance
 @inject IChatViewModel _chatViewModel
+@inject NavigationManager NavigationManager
 
 @if (_identityServiceInstance.UserId == null)
 {
@@ -19,19 +23,24 @@ else
     <div id="chat-container">
         <div id="contactlist-container">
             <h3>Contact List:</h3>
-            @foreach (var contact in userProfilesOfContacts)
-            {
-                <div class="contactlist-element" @onclick="@(() => OpenChat(@contact.UserId))">@contact.Username</div>
-            }
+            <ul id="contactlist">
+                @foreach (var contact in _userProfilesOfContacts)
+                {
+                    <li>
+                        @if (contact.UserId == _chatViewModel.Receiver?.UserId)
+                        {
+                            <button class="contactlist-element focus" @onclick="@(() => OpenChat(@contact.UserId))">@contact.Username</button>
+                        }
+                        else
+                        {
+                            <button class="contactlist-element" @onclick="@(() => OpenChat(@contact.UserId))">@contact.Username</button>
+                        }
+                    </li>
+                }
+            </ul>
         </div>
 
         <div id="chat-input-and-messages-container">
-            <div id="chat-input-container">
-                <form @onsubmit=SaveMessageToDb>
-                    <input id="msg-input" type="text" placeholder="Type your message here" @bind="currentMessage" required/>
-                    <button id="send-msg-btn" type="submit" class="btn btn-primary">Send Message</button>
-                </form>
-            </div>
             <div id="chat-messages-container">
                 @foreach (var message in _messages)
                 {
@@ -47,6 +56,12 @@ else
                     </div>
                 }
             </div>
+            <div id="chat-input-container">
+                <form @onsubmit=SendMessage>
+                    <input id="msg-input" type="text" placeholder="Type your message here" @bind="currentMessage" required/>
+                    <button id="send-msg-btn" type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
         </div>
     </div>
 }
@@ -55,17 +70,29 @@ else
 {
     private string currentMessage { get; set; }= "";
     private List<Message> _messages = new();
-    public List<Data.ProfileModule.Model.UserProfile> userProfilesOfContacts { get; set; }
+    private IEnumerable<MediaHub.Data.ProfileModule.Model.UserProfile> _userProfilesOfContacts;
+    private HubConnection? hubConnection;
 
     protected override async Task OnInitializedAsync()
     {
-        _chatViewModel.SetSenderById(_identityServiceInstance.UserId);
-        userProfilesOfContacts = _chatViewModel.GetAllContactUserProfiles();
+        string userId = _identityServiceInstance.UserId;
+        SetupHubEndpoints();
+        _chatViewModel.SetSenderById(userId);
+        _userProfilesOfContacts = _chatViewModel.GetAllContactUserProfiles(userId);
     }
     
-    void SaveMessageToDb()
+    async void SendMessage()
     {
-        _chatViewModel.InsertMessage(currentMessage);
+        var m = _chatViewModel.InsertMessage(currentMessage);
+        if (m == null)
+        {
+            return;
+        }
+        _messages.Add(m);
+        if (hubConnection is not null)
+        {
+            await hubConnection.SendAsync("SendMessage", m);
+        }
         currentMessage = "";
     }
 
@@ -73,6 +100,25 @@ else
     {
         _chatViewModel.SetReceiverById(userId);
         _messages = _chatViewModel.GetAllMessagesForActiveChat();
+    }
+
+    public void ReceiveMessage(Message m)
+    {
+        if (m.Receiver.UserId == _identityServiceInstance.UserId && m.Sender.UserId == _chatViewModel.Receiver.UserId)
+        {
+            _messages.Add(m);
+            InvokeAsync(StateHasChanged);
+        }
+    }
+    
+    public async void SetupHubEndpoints()
+    {
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl(NavigationManager.ToAbsoluteUri("/chathub")).Build();
+        
+        hubConnection.On("ReceiveMessage", (Message message) => ReceiveMessage(message));
+
+        await hubConnection.StartAsync();
     }
 }
 

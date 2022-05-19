@@ -23,6 +23,10 @@ a, .btn-link {
     margin-top: 50px;
 }
 
+.navBackButton {
+    margin-top: 50px;
+}
+
 .content {
     padding-top: 1.1rem;
 }
@@ -295,26 +299,53 @@ a, .btn-link {
     text-decoration: none;
 }
 
+/* start of style rules for chat */
+#chat-container {
+    display: flex;
+}
+
+#contactlist {
+    list-style-type: none; 
+}
+
 #contactlist-container {
-    width: 30%;
-    float: left;
+    width: fit-content;
+    margin-right: 20px;
+    overflow-y: scroll;
+}
+
+#chat-input-and-messages-container {
+    flex-grow: 1;
+    height: 100%;
+    display:flex;
+    flex-direction: column;
+}
+
+button.focus {
+    background-color: lightblue;
 }
 
 #chat-messages-container {
-    width: 70%;
-    float: right;
-    height: 500px; /* FIXME HARDCODED HEIGHT */ 
     overflow-y: scroll;
-    overflow-x:hidden;
+    height: 400px;
+    margin-bottom: 2em;
 }
 
-#send-msg-btn {
-    width: auto;
-    margin: 0.5em;
+#chat-input-container {
+    width: 100%;
+}
+#chat-input-container > form {
+    display: flex;
+    height: fit-content;
 }
 
 #msg-input {
-    width: 70%;
+    flex-grow: 1;
+}
+#send-msg-btn {
+    height: 100%;
+    margin-top: 0;
+    width: fit-content;
 }
 
 .single-msg {
@@ -340,11 +371,9 @@ a, .btn-link {
 }
 
 .contactlist-element {
-    background-color: lightskyblue;
-    margin: 0.5em;
-    padding: 0.5em;
-    width: 80%;
-    border-radius: 0.3em;
+    border-radius: 1em;
+    border-style: none;
+    background-color: dodgerblue;
 }
 
 .userProfileOverview {
