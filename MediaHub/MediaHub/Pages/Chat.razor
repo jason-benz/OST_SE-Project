@@ -112,7 +112,7 @@ else
     public async void SetupHubEndpoints()
     {
         hubConnection = new HubConnectionBuilder()
-            .WithUrl(NavigationManager.ToAbsoluteUri("/chathub")) // NavigationManager.ToAbsoluteUrl()
+            .WithUrl(NavigationManager.ToAbsoluteUri("/chathub"), options => { options.UseDefaultCredentials = true;}) // NavigationManager.ToAbsoluteUrl()
             .Build();
         
         hubConnection.On("ReceiveMessage", (Message message) => ReceiveMessage(message));
