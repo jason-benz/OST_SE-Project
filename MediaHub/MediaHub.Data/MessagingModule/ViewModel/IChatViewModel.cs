@@ -11,5 +11,5 @@ public interface IChatViewModel
     public List<Message> GetAllMessagesForActiveChat();
     public void SetReceiverById(string userId);
     public void SetSenderById(string userId);
-    public List<UserProfile> GetAllContactUserProfiles(); 
+    public IEnumerable<UserProfile> GetAllContactUserProfiles(string userId);
 }

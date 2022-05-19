@@ -24,7 +24,7 @@ else
         <div id="contactlist-container">
             <h3>Contact List:</h3>
             <ul id="contactlist">
-                @foreach (var contact in userProfilesOfContacts)
+                @foreach (var contact in _userProfilesOfContacts)
                 {
                     <li>
                         @if (contact.UserId == _chatViewModel.Receiver?.UserId)
@@ -70,14 +70,15 @@ else
 {
     private string currentMessage { get; set; }= "";
     private List<Message> _messages = new();
-    public List<Data.ProfileModule.Model.UserProfile> userProfilesOfContacts { get; set; }
+    private IEnumerable<MediaHub.Data.ProfileModule.Model.UserProfile> _userProfilesOfContacts;
     private HubConnection? hubConnection;
 
     protected override async Task OnInitializedAsync()
     {
+        string userId = _identityServiceInstance.UserId;
         SetupHubEndpoints();
-        _chatViewModel.SetSenderById(_identityServiceInstance.UserId);
-        userProfilesOfContacts = _chatViewModel.GetAllContactUserProfiles();
+        _chatViewModel.SetSenderById(userId);
+        _userProfilesOfContacts = _chatViewModel.GetAllContactUserProfiles(userId);
     }
     
     async void SendMessage()
