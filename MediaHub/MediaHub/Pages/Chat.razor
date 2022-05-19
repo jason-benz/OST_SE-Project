@@ -90,7 +90,6 @@ else
         _messages.Add(m);
         if (hubConnection is not null)
         {
-            Console.WriteLine("THISISINFO Sending hubmessage");
             await hubConnection.SendAsync("SendMessage", m);
         }
         currentMessage = "";
@@ -108,7 +107,6 @@ else
         {
             _messages.Add(m);
             InvokeAsync(StateHasChanged);
-            Console.WriteLine("THISISINFO Receiving hubmessage");
         }
     }
     
