@@ -14,7 +14,7 @@ namespace MediaHub.Test.ContactTest
             var userId = "MockId-1";
             var contactId = "MockId-1-Contact";
 
-            var contacts = _contactViewModel.GetContacts(userId);
+            var contacts = _contactViewModel.GetContactIds(userId);
 
             Assert.True(contacts.Any());
             Assert.Equal(contacts.First(), contactId);
@@ -27,7 +27,7 @@ namespace MediaHub.Test.ContactTest
             var contactId1 = "MockId-2-Contact-1";
             var contactId2 = "MockId-2-Contact-2";
 
-            var contacts = _contactViewModel.GetContacts(userId);
+            var contacts = _contactViewModel.GetContactIds(userId);
 
             Assert.True(contacts.Any());
             Assert.Equal(contacts[0], contactId1);
