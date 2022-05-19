@@ -54,9 +54,11 @@ namespace MediaHub.Test.UserProfileTest
         [Fact]
         public void IsUsernameAvailable_False()
         {
-            var takenUsername = InsertTestUserProfileInDB().Username;
+            var userProfile = InsertTestUserProfileInDB();
 
-            var isUsernameAvailable = _userProfileDataManager.IsUsernameAvailable(takenUsername);
+            var isUsernameAvailable = _userProfileDataManager.IsUsernameAvailable(userProfile.Username);
+            RemoveTestUserProfileFromDB(userProfile);
+
             Assert.False(isUsernameAvailable);
         }
 

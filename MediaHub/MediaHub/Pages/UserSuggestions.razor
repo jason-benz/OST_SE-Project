@@ -10,24 +10,31 @@
 
 <h3>User Suggestions</h3>
 
-<div class="d-flex flex-row flex-wrap">
-@foreach (var suggestion in _suggestions)
+@if (_suggestions.Any())
 {
-    { ChooseUserProfile(suggestion); }
+    <div class="d-flex flex-row flex-wrap">
+        @foreach (var suggestion in _suggestions)
+        {
+            { ChooseUserProfile(suggestion); }
 
-    <div class="p-2">
-        <div class="card">
-            <img class="card-img-top" src="@_userProfile.ProfilePicture" alt="Profile picture">
-            <div class="card-body">
-                <h5 class="card-title">@_userProfile.Username</h5>
-                <p class="card-text">@_userProfile.Biography.Substring(0, 50) ... (<NavLink href="@($"userProfile/{_userProfile.Username}")">read more</NavLink>)</p>
-                <a href="#" class="btn btn-primary">Add to contacts</a>
-                <a onclick="@(() => IgnoreUserSuggestion(suggestion))" class="btn btn-close"></a>
+            <div class="p-2">
+                <div class="card">
+                    <img class="card-img-top" src="@_userProfile.ProfilePicture" alt="Profile picture">
+                    <div class="card-body">
+                        <h5 class="card-title">@_userProfile.Username</h5>
+                        <p class="card-text">@ShortenBio(_userProfile.Biography) ... (<NavLink href="@($"userProfile/{_userProfile.Username}")">read more</NavLink>)</p>
+                        <a onclick="@(() => AddToContacts(suggestion, _userProfile.UserId))" class="btn btn-primary">Add to contacts</a>
+                        <a onclick="@(() => IgnoreUserSuggestion(suggestion))" class="btn btn-close"></a>
+                    </div>
+                </div>
             </div>
-        </div>
+        }
     </div>
 }
-</div>
+else
+{
+    <p>No users were found with similar interests.</p>
+}
 
 @code {
     private string _personalUserId;
@@ -56,5 +63,17 @@
     {
         _userSuggestionsViewModel.IgnoreUserSuggestion(suggestion);
         _navManager.NavigateTo("/userSuggestions", forceLoad: true);
+    }
+
+    private void AddToContacts(UserSuggestion suggestion, string contactId)
+    {
+        _userSuggestionsViewModel.AddToContact(_personalUserId, contactId);
+        _userSuggestionsViewModel.IgnoreUserSuggestion(suggestion);
+        _navManager.NavigateTo("/userSuggestions", forceLoad: true);
+    }
+
+    private string ShortenBio(string biography)
+    {
+        return biography.Length > 50 ? biography.Substring(0, 50) : biography;
     }
 }
