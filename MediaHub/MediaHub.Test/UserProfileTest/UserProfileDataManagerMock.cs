@@ -35,6 +35,11 @@ namespace MediaHub.Test.UserProfileTest
             }
         }
 
+        public UserProfile? GetUserProfileByIdLazyLoading(string userId)
+        {
+            throw new NotImplementedException();
+        }
+
         public UserProfile? GetUserProfileByIdNoTracking(string userId)
         {
             throw new NotImplementedException();
@@ -58,6 +63,11 @@ namespace MediaHub.Test.UserProfileTest
             }
         }
 
+        public IEnumerable<UserProfile> GetUserProfilesById(IEnumerable<string> userIds)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool IsUsernameAvailable(string username)
         {
             if (username == "true")
@@ -66,11 +76,6 @@ namespace MediaHub.Test.UserProfileTest
             }
 
             return false;
-        }
-
-        public List<UserProfile> GetAllUserProfiles()
-        {
-            throw new NotImplementedException();
         }
 
         public void UpdateUserProfile(UserProfile userProfile)
