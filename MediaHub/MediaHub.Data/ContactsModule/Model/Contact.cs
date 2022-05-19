@@ -1,3 +1,4 @@
+using MediaHub.Data.ProfileModule.Model;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -11,10 +12,16 @@ public class Contact
     
     [Column("UserId", TypeName = "NVARCHAR(450)")]
     public string UserId { get; set; }
-        
+
+    [ForeignKey(nameof(UserId))]
+    public UserProfile UserProfile { get; set; }
+
     [Column("ContactId", TypeName = "NVARCHAR(450)")]
     public string ContactId { get; set; }
-    
+
+    [ForeignKey(nameof(ContactId))]
+    public UserProfile ContactUserProfile { get; set; }
+
     [Column("OpenRequest")]
     public bool OpenRequest { get; set; }
     

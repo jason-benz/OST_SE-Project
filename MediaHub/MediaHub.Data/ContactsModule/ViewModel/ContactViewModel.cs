@@ -5,14 +5,23 @@ namespace MediaHub.Data.ContactsModule.ViewModel;
 public class ContactViewModel : IContactViewModel
 {
     private readonly IContactDataManager _contactDataManager;
+
+    public List<Contact> Contacts { get; set; }
+
     public ContactViewModel(IContactDataManager contactDataManager)
     {
         _contactDataManager = contactDataManager;
     }
 
-    public List<string> GetContacts(string userId)
+    public List<Contact> GetContacts(string userId)
     {
-        return _contactDataManager.GetContacts(userId);
+        Contacts = _contactDataManager.GetContacts(userId, true);
+        return Contacts;
+    }
+
+    public List<string> GetContactIds(string userId)
+    {
+        return _contactDataManager.GetContactIds(userId);
     }
 
     public bool AddContact(string userId, string contactId)
