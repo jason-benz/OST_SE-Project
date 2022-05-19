@@ -123,6 +123,9 @@ namespace MediaHub.Areas.Identity.Pages.Account.Manage
             var userSuggestions = context.UserSuggestions.Where(us => us.UserId1 == userId || us.UserId2 == userId);
             context.UserSuggestions.RemoveRange(userSuggestions);
 
+            var feedItems = context.FeedItems.Where(f => f.UserId == userId);
+            context.FeedItems.RemoveRange(feedItems);
+
             var contacts = context.Contacts.Where(c => c.UserId == userId || c.ContactId == userId);
             context.Contacts.RemoveRange(contacts);
 
