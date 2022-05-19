@@ -104,16 +104,18 @@ else
 
     public void ReceiveMessage(Message m)
     {
-        _messages.Add(m);
-        InvokeAsync(StateHasChanged);
-        Console.WriteLine("THISISINFO Receiving hubmessage");
+        if (m.Receiver.UserId == _identityServiceInstance.UserId && m.Sender.UserId == _chatViewModel.Receiver.UserId)
+        {
+            _messages.Add(m);
+            InvokeAsync(StateHasChanged);
+            Console.WriteLine("THISISINFO Receiving hubmessage");
+        }
     }
     
     public async void SetupHubEndpoints()
     {
         hubConnection = new HubConnectionBuilder()
-            .WithUrl(NavigationManager.ToAbsoluteUri("/chathub"), options => { options.UseDefaultCredentials = true;}) // NavigationManager.ToAbsoluteUrl()
-            .Build();
+            .WithUrl(NavigationManager.ToAbsoluteUri("/chathub")).Build();
         
         hubConnection.On("ReceiveMessage", (Message message) => ReceiveMessage(message));
 
