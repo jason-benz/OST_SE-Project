@@ -10,12 +10,12 @@
 
 <h3>Contacts</h3>
 
-@if (_contactViewModel.Contacts.Where(c => c.OpenRequest).Any())
+@if (_contactViewModel.Contacts.Where(c => c.OpenRequest && c.ContactId == _personalUserId).Any())
 {
     <h4>Open contact requests</h4>
 
     <div class="d-flex flex-row flex-wrap">
-        @foreach (var contact in _contactViewModel.Contacts.Where(c => c.OpenRequest))
+        @foreach (var contact in _contactViewModel.Contacts.Where(c => c.OpenRequest && c.ContactId == _personalUserId))
         {
             { ChooseContactProfile(contact); }
 
