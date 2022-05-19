@@ -1,8 +1,5 @@
 using MediaHub.Data.ContactsModule.Model;
-using MediaHub.Data.Migrations;
 using MediaHub.Data.PersistencyLayer;
-using Microsoft.EntityFrameworkCore;
-using UserProfile = MediaHub.Data.ProfileModule.Model.UserProfile;
 
 namespace MediaHub.Data.ContactsModule.Persistency;
 
@@ -19,11 +16,11 @@ public class ContactDataManager : IContactDataManager
     public List<string> GetContacts(string userId)
     {
         using MediaHubDBContext context = new();
-        
+
         var contacts = context.Contacts
             .Where(c => c.UserId == userId || c.ContactId == userId)
-            .Where(c => c.IsBlocked == false && c.OpenRequest == false)
-            .Select(c => c.ContactId)
+            .Where(c => !c.IsBlocked && !c.OpenRequest)
+            .Select(c => c.UserId == userId ? c.ContactId : c.UserId)
             .ToList();
         return contacts;
     }

@@ -13,9 +13,14 @@ a, .btn-link {
 }
 
 .btn-primary {
+    margin-top: 15px;
+    background-color: rgb(0, 0, 150);
+    border-color: rgb(0, 0, 100);
     color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
+}
+
+.navBackButton {
+    margin-top: 50px;
 }
 
 .content {
@@ -46,12 +51,12 @@ a, .btn-link {
     z-index: 1000;
 }
 
-    #blazor-error-ui .dismiss {
-        cursor: pointer;
-        position: absolute;
-        right: 0.75rem;
-        top: 0.5rem;
-    }
+#blazor-error-ui .dismiss {
+    cursor: pointer;
+    position: absolute;
+    right: 0.75rem;
+    top: 0.5rem;
+}
 
 .blazor-error-boundary {
     background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTYiIGhlaWdodD0iNDkiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIG92ZXJmbG93PSJoaWRkZW4iPjxkZWZzPjxjbGlwUGF0aCBpZD0iY2xpcDAiPjxyZWN0IHg9IjIzNSIgeT0iNTEiIHdpZHRoPSI1NiIgaGVpZ2h0PSI0OSIvPjwvY2xpcFBhdGg+PC9kZWZzPjxnIGNsaXAtcGF0aD0idXJsKCNjbGlwMCkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMzUgLTUxKSI+PHBhdGggZD0iTTI2My41MDYgNTFDMjY0LjcxNyA1MSAyNjUuODEzIDUxLjQ4MzcgMjY2LjYwNiA1Mi4yNjU4TDI2Ny4wNTIgNTIuNzk4NyAyNjcuNTM5IDUzLjYyODMgMjkwLjE4NSA5Mi4xODMxIDI5MC41NDUgOTIuNzk1IDI5MC42NTYgOTIuOTk2QzI5MC44NzcgOTMuNTEzIDI5MSA5NC4wODE1IDI5MSA5NC42NzgyIDI5MSA5Ny4wNjUxIDI4OS4wMzggOTkgMjg2LjYxNyA5OUwyNDAuMzgzIDk5QzIzNy45NjMgOTkgMjM2IDk3LjA2NTEgMjM2IDk0LjY3ODIgMjM2IDk0LjM3OTkgMjM2LjAzMSA5NC4wODg2IDIzNi4wODkgOTMuODA3MkwyMzYuMzM4IDkzLjAxNjIgMjM2Ljg1OCA5Mi4xMzE0IDI1OS40NzMgNTMuNjI5NCAyNTkuOTYxIDUyLjc5ODUgMjYwLjQwNyA1Mi4yNjU4QzI2MS4yIDUxLjQ4MzcgMjYyLjI5NiA1MSAyNjMuNTA2IDUxWk0yNjMuNTg2IDY2LjAxODNDMjYwLjczNyA2Ni4wMTgzIDI1OS4zMTMgNjcuMTI0NSAyNTkuMzEzIDY5LjMzNyAyNTkuMzEzIDY5LjYxMDIgMjU5LjMzMiA2OS44NjA4IDI1OS4zNzEgNzAuMDg4N0wyNjEuNzk1IDg0LjAxNjEgMjY1LjM4IDg0LjAxNjEgMjY3LjgyMSA2OS43NDc1QzI2Ny44NiA2OS43MzA5IDI2Ny44NzkgNjkuNTg3NyAyNjcuODc5IDY5LjMxNzkgMjY3Ljg3OSA2Ny4xMTgyIDI2Ni40NDggNjYuMDE4MyAyNjMuNTg2IDY2LjAxODNaTTI2My41NzYgODYuMDU0N0MyNjEuMDQ5IDg2LjA1NDcgMjU5Ljc4NiA4Ny4zMDA1IDI1OS43ODYgODkuNzkyMSAyNTkuNzg2IDkyLjI4MzcgMjYxLjA0OSA5My41Mjk1IDI2My41NzYgOTMuNTI5NSAyNjYuMTE2IDkzLjUyOTUgMjY3LjM4NyA5Mi4yODM3IDI2Ny4zODcgODkuNzkyMSAyNjcuMzg3IDg3LjMwMDUgMjY2LjExNiA4Ni4wNTQ3IDI2My41NzYgODYuMDU0N1oiIGZpbGw9IiNGRkU1MDAiIGZpbGwtcnVsZT0iZXZlbm9kZCIvPjwvZz48L3N2Zz4=) no-repeat 1rem/1.8rem, #b32121;
@@ -93,6 +98,12 @@ a, .btn-link {
     margin-bottom: 0;
 }
 
+.account-settings-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
 .shadow-box {
     background: #F0F0F0;
     box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.15);
@@ -107,12 +118,6 @@ a, .btn-link {
 
 #account > h2, #registerForm > h2 {
     font-size: min(calc(1rem + 0.9vw), 1.5rem);
-}
-
-.btn-primary {
-    margin-top: 15px;
-    background-color: rgb(0, 0, 150);
-    border-color: rgb(0, 0, 100);
 }
 
 .centeredFront .checkbox > .form-label {
@@ -182,21 +187,21 @@ a, .btn-link {
     background: white;
 }
 
-.detaile-view-container {
+.detail-view-container {
     display: grid;
     grid-template:
         "title title" auto
         "image details" auto
-        "body body" 20vh
+        "rating commentHead" auto
+        "rating commentList" 50vh
         / 1fr 3fr;
     row-gap: 20px;
     column-gap: 10px;
     background: #F0F0F0;
-    max-height: 80vh;
     max-width: 80vw;
     margin: auto;
     padding: 2vh 2vw;
-    overflow-y: auto;
+    overflow-y: hidden;
 }
 
 .title-and-add-button {
@@ -214,17 +219,80 @@ a, .btn-link {
     font-weight: bold;
 }
 
-.detaile-view-container > .title-and-add-button {
+.detail-view-container h2 {
+    font-size: 1.5rem;
+}
+
+.detail-view-container > .title-and-add-button {
     grid-area: title;
 }
 
-.detaile-view-container > img {
+.detail-view-container > img {
     grid-area: image;
     width: 200px;
 }
 
-.detaile-view-container > .media-data-table {
+.detail-view-container > .media-data-table {
     grid-area: details;
+}
+
+.detail-view-container > .rating {
+    grid-area: rating;
+    margin-top: 30px;
+}
+
+.detail-view-container > .comments-heading-and-button {
+    grid-area: commentHead;
+    margin-top: 30px;
+    display: flex;
+    justify-content:space-between;
+}
+
+.detail-view-container > .comments-heading-and-button > button{
+    margin-top: 0;
+}
+
+.detail-view-container > .media-detail-comments-list{
+    grid-area: commentList;
+}
+
+.detail-view-container > .media-detail-comments-list > .comment-form {
+    margin-bottom: 10px;
+}
+
+.detail-view-container > .media-detail-comments-list > .comment-form > button{
+    margin-top: 5px;
+}
+
+.comments-box {
+    background: white;
+    border-radius: 8px;
+    overflow-y: auto;
+    height: 100%;
+    width:100%;
+}
+
+.comments-box td:nth-child(2){
+    width: 65px;
+}
+
+.comment-head{
+    display: flex;
+    justify-content: space-between;
+}
+
+.comment-text {
+    margin-left: 1rem;
+    word-break: break-all;
+    hyphens: auto;
+}
+
+.expand-comment-text {
+    font-style: initial;
+    font-size: 0.7em;
+    color: dimgray;
+    cursor: pointer;
+    text-decoration: none;
 }
 
 /* start of style rules for chat */
@@ -304,19 +372,13 @@ button.focus {
     background-color: dodgerblue;
 }
 
-/* end of style rules for chat */
-
-.detaile-view-container .Rating{
-    margin-top: 30px;
-}
-
 .userProfileOverview {
     display: grid;
     grid:
         "title1 title1" auto
         "image title2" 35px
         "image movies" 280px
-        "bibliography movies" 20vh
+        "biography movies" 20vh
         "genres movies" 40vh
         / 1fr 1.5fr;
     column-gap: 50px;
@@ -348,8 +410,8 @@ button.focus {
     grid-area: image;
 }
 
-.userProfileOverview > .bibliography {
-    grid-area: bibliography;
+.userProfileOverview > .biography {
+    grid-area: biography;
     text-align: justify;
 }
 
@@ -364,7 +426,7 @@ button.focus {
     border-radius: 8px;
 }
 
-.addedMovies > .alternative-text{
+.addedMovies > .alternative-text, .comments-box > .alternative-text{
     margin-top: 20px;
     background: transparent;
 }
@@ -410,4 +472,24 @@ img.card-img-top {
     max-width: 300px;
     max-height: 300px;
     object-fit: cover;
+}
+
+.FilterBarWrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    background-color: rgb(0, 0, 150, 0.1);
+    border-radius: 0.3em;
+}
+
+.FilterBarItem {
+    background-color: rgb(0,0,150, 0.2);
+    border-radius: 0.3em;
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+    padding: 0.2em;
+}
+.FilterBarItem > input{
+    margin-right: 5px;
 }

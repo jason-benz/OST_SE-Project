@@ -1,4 +1,5 @@
-﻿using MediaHub.Data.PersistencyLayer;
+﻿using MediaHub.Data.FeedModule.Model;
+using MediaHub.Data.PersistencyLayer;
 using MediaHub.Data.ProfileModule.Model;
 
 namespace MediaHub.Data.ProfileModule.ViewModel
@@ -6,10 +7,12 @@ namespace MediaHub.Data.ProfileModule.ViewModel
     public class UserProfileViewModel : IUserProfileViewModel
     {
         private readonly IUserProfileDataManager _userProfileDataManager;
+        private readonly IFeedService _feedService;
 
-        public UserProfileViewModel(IUserProfileDataManager userProfileDataManager)
+        public UserProfileViewModel(IUserProfileDataManager userProfileDataManager, IFeedService feedService)
         {
             _userProfileDataManager = userProfileDataManager;
+            _feedService = feedService;
         }
 
         public UserProfile? GetUserProfileById(string userId)
@@ -18,9 +21,9 @@ namespace MediaHub.Data.ProfileModule.ViewModel
             {
                 return _userProfileDataManager.GetUserProfileById(userId);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                ILogService.Singleton.LogException("An unknown error occured while reading the userprofile from the database", ILogService.LogCategory.Identity, e);
+                ILogService.Singleton.LogException("An unknown error occured while reading the userprofile from the database", ILogService.LogCategory.UserSuggestion, ex);
                 return null;
             }
         }
@@ -43,7 +46,12 @@ namespace MediaHub.Data.ProfileModule.ViewModel
         {
             try
             {
+                if (userProfile.Biography.Length > 255)
+                {
+                    userProfile.Biography = userProfile.Biography.Substring(0, 255);
+                }
                 _userProfileDataManager.UpdateUserProfile(userProfile);
+                _feedService.AddToFeed(userProfile.UserId, Table.UserProfile);
             }
             catch (Exception e)
             {

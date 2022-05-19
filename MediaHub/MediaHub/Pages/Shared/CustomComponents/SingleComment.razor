@@ -1,0 +1,63 @@
+﻿@namespace MediaHub.View
+@using MediaHub.Data.ProfileModule.ViewModel
+
+@inject IUserProfileViewModel _userProfileViewModel
+
+<div class="comment">
+    <p class="comment-head">@((MarkupString)getUsername(UserId)) <em>(@CreationDate)</em></p>
+    <p class="comment-text">
+        @GetDisplayText()
+
+        @if (CanBeExpanded)
+        {
+            @if (IsExpanded)
+            {
+                 <a @onclick="@(() => { IsExpanded = false; })" class="expand-comment-text"> Show less &#x25B2;</a>
+            }
+            else
+            {
+                <a @onclick="@(() => { IsExpanded = true; })" class="expand-comment-text"> Show more &#x25BC;</a>
+            }
+        }
+    </p>
+</div>
+
+@code {
+    [Parameter]
+    public int Id { get; set; } = 0;
+
+    [Parameter]
+    public string UserId { get; set; } = string.Empty;
+
+    [Parameter]
+    public string Text { get; set; } = string.Empty;
+
+    [Parameter]
+    public DateTime CreationDate { get; set; } = DateTime.UtcNow;
+
+    [Parameter]
+    public int MaxCharacters { get; set; } = 200;
+
+    public bool IsExpanded { get; set; }
+
+    public bool CanBeExpanded => Text.Length > MaxCharacters;
+
+    private string getUsername(string userId)
+    {
+        if(_userProfileViewModel.GetUserProfileById(userId) == null)
+        {
+            return "<em>Deleted User</em>";
+        }
+        return $"<b>{_userProfileViewModel.GetUserProfileById(userId).Username}</b>";
+    }
+
+    public string GetDisplayText()
+    {
+        return IsExpanded ? Text : Truncate(Text, MaxCharacters);
+    }
+
+    public string Truncate(string value, int maxChars)
+    {
+        return value.Length <= maxChars ? value : value.Substring(0, maxChars) + "...";
+    }
+}
