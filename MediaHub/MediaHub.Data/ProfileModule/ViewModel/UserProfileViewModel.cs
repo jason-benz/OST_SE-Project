@@ -21,9 +21,9 @@ namespace MediaHub.Data.ProfileModule.ViewModel
             {
                 return _userProfileDataManager.GetUserProfileById(userId);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                ILogService.Singleton.LogException("An unknown error occured while reading the userprofile from the database", ILogService.LogCategory.Identity, e);
+                ILogService.Singleton.LogException("An unknown error occured while reading the userprofile from the database", ILogService.LogCategory.UserSuggestion, ex);
                 return null;
             }
         }

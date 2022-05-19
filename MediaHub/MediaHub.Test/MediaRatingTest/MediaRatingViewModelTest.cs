@@ -6,7 +6,9 @@ using MediaHub.Data.MediaModule.Model;
 using MediaHub.Data.MediaModule.ViewModel;
 using MediaHub.Data.ProfileModule.Model;
 using MediaHub.Test.FeedTest;
+using MediaHub.Data.UserSuggestionModule.Model;
 using MediaHub.Test.UserProfileTest;
+using MediaHub.Test.UserSuggestionTest;
 using Xunit;
 
 namespace MediaHub.Test.MediaRatingTest;
@@ -14,12 +16,13 @@ namespace MediaHub.Test.MediaRatingTest;
 public class MediaRatingVieModelTest
 {
     private readonly UserProfileDataManagerMock _profileDataManager = new UserProfileDataManagerMock();
+    private readonly IUserSuggestionEngine _userSuggestionEngine = new UserSuggestionEngineMock();
     private readonly IFeedService _feedService = new FeedServiceMock(new FeedDataManagerMock());
     private readonly IRatingViewModel _ratingViewModel;
 
     public MediaRatingVieModelTest()
     {
-        _ratingViewModel = new RatingViewModel(_profileDataManager, _feedService);
+        _ratingViewModel = new RatingViewModel(_profileDataManager, _userSuggestionEngine, _feedService);
     }
 
     [Fact, Trait("Category", "Unit")]
