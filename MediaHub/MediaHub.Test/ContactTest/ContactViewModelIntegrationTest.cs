@@ -10,7 +10,7 @@ namespace MediaHub.Test.ContactTest;
 [Collection("Sequential")]
 public class ContactViewModelIntegrationTest : IDisposable
 {
-    private readonly ContactViewModel _contactViewModel;
+    private readonly IContactViewModel _contactViewModel;
     private readonly List<string> MockUsers = MockUser.GetMockUsers();
 
     public ContactViewModelIntegrationTest()
