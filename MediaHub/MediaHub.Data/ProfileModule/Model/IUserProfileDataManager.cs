@@ -4,6 +4,8 @@
     {
         public UserProfile? GetUserProfileById(string userId);
 
+        public UserProfile? GetUserProfileByIdLazyLoading(string userId);
+
         public UserProfile? GetUserProfileByIdNoTracking(string userId);
 
         public UserProfile? GetUserProfileByUsername(string username);
@@ -12,6 +14,6 @@
 
         public bool IsUsernameAvailable(string username);
 
-        public List<UserProfile> GetAllUserProfiles();
+        public IEnumerable<UserProfile> GetUserProfilesById(IEnumerable<string> userIds);
     }
 }
