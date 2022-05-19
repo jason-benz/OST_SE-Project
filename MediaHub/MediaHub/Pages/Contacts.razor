@@ -1,0 +1,103 @@
+﻿@page "/contacts"
+
+@using MediaHub.Data.ContactsModule.Model
+@using MediaHub.Data.ContactsModule.ViewModel
+@using MediaHub.Services
+
+@inject IContactViewModel _contactViewModel
+@inject IIdentityService _identityServiceInstance
+@inject NavigationManager _navManager
+
+<h3>Contacts</h3>
+
+@if (_contactViewModel.Contacts.Where(c => c.OpenRequest && c.ContactId == _personalUserId).Any())
+{
+    <h4>Open contact requests</h4>
+
+    <div class="d-flex flex-row flex-wrap">
+        @foreach (var contact in _contactViewModel.Contacts.Where(c => c.OpenRequest && c.ContactId == _personalUserId))
+        {
+            { ChooseContactProfile(contact); }
+
+            <div class="p-2">
+                <div class="card">
+                    <img class="card-img-top" src="@_userProfile.ProfilePicture" alt="Profile picture">
+                    <div class="card-body">
+                        <h5 class="card-title">@_userProfile.Username</h5>
+                        <p class="card-text">@ShortenBio(_userProfile.Biography) ... (<NavLink href="@($"userProfile/{_userProfile.Username}")">read more</NavLink>)</p>
+                        <a onclick="@(() => AcceptContactRequest(contact.UserId, contact.ContactId))" class="btn btn-primary">Accept contact request</a>
+                        <a onclick="@(() => BlockContact(contact.UserId, contact.ContactId))" class="btn btn-close"></a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+<h4>Contact list</h4>
+
+@if (_contactViewModel.Contacts.Where(c => !c.OpenRequest && !c.IsBlocked).Any())
+{
+    <div class="d-flex flex-row flex-wrap">
+        @foreach (var contact in _contactViewModel.Contacts.Where(c => !c.OpenRequest && !c.IsBlocked))
+        {
+            { ChooseContactProfile(contact); }
+
+            <div class="p-2">
+                <div class="card">
+                    <img class="card-img-top" src="@_userProfile.ProfilePicture" alt="Profile picture">
+                    <div class="card-body">
+                        <h5 class="card-title">@_userProfile.Username</h5>
+                        <p class="card-text">@ShortenBio(_userProfile.Biography) ... (<NavLink href="@($"userProfile/{_userProfile.Username}")">read more</NavLink>)</p>
+                        <a onclick="@(() => BlockContact(contact.UserId, contact.ContactId))" class="btn btn-primary">Block contact</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>No contacts were found.</p>
+}
+
+@code {
+    private string _personalUserId;
+    private Data.ProfileModule.Model.UserProfile _userProfile;
+
+
+    protected override void OnInitialized()
+    {
+        _personalUserId = _identityServiceInstance.UserId;
+        _contactViewModel.GetContacts(_personalUserId);
+    }
+
+    private void ChooseContactProfile(Contact contact)
+    {
+        if (contact.UserId == _personalUserId)
+        {
+            _userProfile = contact.ContactUserProfile;
+        }
+        else
+        {
+            _userProfile = contact.UserProfile;
+        }
+    }
+
+    private string ShortenBio(string biography)
+    {
+        return biography.Length > 50 ? biography.Substring(0, 50) : biography;
+    }
+
+    private void AcceptContactRequest(string userId, string contactId)
+    {
+        _contactViewModel.AcceptContactRequest(userId, contactId);
+        _navManager.NavigateTo("/contacts", forceLoad: true);
+    }
+
+    private void BlockContact(string userId, string contactId)
+    {
+        _contactViewModel.BlockContact(userId, contactId);
+        _navManager.NavigateTo("/contacts", forceLoad: true);
+    }
+}

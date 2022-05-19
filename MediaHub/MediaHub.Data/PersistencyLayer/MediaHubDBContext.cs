@@ -56,5 +56,8 @@ public class MediaHubDBContext : DbContext
         modelBuilder.Entity<UserSuggestion>().HasOne(s => s.UserProfile2).WithMany().OnDelete(DeleteBehavior.NoAction);
 
         modelBuilder.Entity<FeedItem>().HasOne(s => s.UserProfile).WithMany().OnDelete(DeleteBehavior.NoAction);
+
+        modelBuilder.Entity<Contact>().HasOne(s => s.UserProfile).WithMany().OnDelete(DeleteBehavior.NoAction);
+        modelBuilder.Entity<Contact>().HasOne(s => s.ContactUserProfile).WithMany().OnDelete(DeleteBehavior.NoAction);
     }
 }
