@@ -4,7 +4,7 @@ public interface ILogService
 {
     public enum LogCategory
     {
-        Chat, Media, Identity
+        Chat, Media, Identity, UserSuggestion
     }
 
     private static ILogService? _singleton = null;

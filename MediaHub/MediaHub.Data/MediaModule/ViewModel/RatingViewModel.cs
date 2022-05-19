@@ -1,5 +1,6 @@
 using MediaHub.Data.MediaModule.Model;
 using MediaHub.Data.ProfileModule.Model;
+using MediaHub.Data.UserSuggestionModule.Model;
 
 namespace MediaHub.Data.MediaModule.ViewModel;
 
@@ -9,11 +10,14 @@ public class RatingViewModel : IRatingViewModel
     private UserProfile? _profile;
     private Movie? _movie;
     private readonly IUserProfileDataManager _profileDataManager;
+    private readonly IUserSuggestionEngine _userSuggestionEngine;
     private const string UndefinedProfileId = "0";
     private const int UndefinedMovieId = 0;
-    public RatingViewModel(IUserProfileDataManager profileDataManager)
+
+    public RatingViewModel(IUserProfileDataManager profileDataManager, IUserSuggestionEngine userSuggestionEngine)
     {
         _profileDataManager = profileDataManager;
+        _userSuggestionEngine = userSuggestionEngine;
     }
 
     public void Load(string userId, Movie movie)
@@ -75,6 +79,7 @@ public class RatingViewModel : IRatingViewModel
         if (_profile != null)
         {
             _profileDataManager.UpdateUserProfile(_profile);
+            _userSuggestionEngine.StartUserSuggestionEngine(_profile.UserId);
         }
     }
 
