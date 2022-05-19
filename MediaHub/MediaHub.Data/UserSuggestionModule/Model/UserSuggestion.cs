@@ -17,5 +17,25 @@ namespace MediaHub.Data.UserSuggestionModule.Model
         public UserProfile UserProfile2 { get; set; }
 
         public bool IgnoreSuggestion { get; set; }
+
+        /// <summary>
+        /// Compares all UserSuggestion properties
+        /// </summary>
+        public override bool Equals(object? obj)
+        {
+            if (obj == null || !GetType().Equals(obj.GetType()))
+            {
+                return false;
+            }
+            else
+            {
+                UserSuggestion us = (UserSuggestion)obj;
+                return UserId1 == us.UserId1
+                    && UserId2 == us.UserId2
+                    && IgnoreSuggestion == us.IgnoreSuggestion;
+            }
+        }
+
+        public override int GetHashCode() => HashCode.Combine(UserId1, UserId2, IgnoreSuggestion);
     }
 }
