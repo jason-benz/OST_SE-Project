@@ -4,6 +4,7 @@ using MediaHub.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using MediaHub.Data.MediaModule.ViewModel;
@@ -35,6 +36,12 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages();
+builder.Services.AddSignalR();
+builder.Services.AddResponseCompression(opts =>
+{
+    opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+        new[] { "application/octet-stream" });
+});
 builder.Services.AddServerSideBlazor().AddCircuitOptions(options => { options.DetailedErrors = true; }); // TODO Remove circuit options
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
@@ -52,6 +59,7 @@ builder.Services.AddScoped<IMediaTableViewModel>(_ => new MediaTableViewModel(me
 builder.Services.AddScoped<IChatViewModel>(_ => new ChatViewModel(chatDataManager, profileManager));
 
 var app = builder.Build();
+app.UseResponseCompression();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -76,6 +84,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.MapBlazorHub();
+app.MapHub<ChatHub>("/chathub");
 app.MapFallbackToPage("/_Host");
 
 app.Run();
