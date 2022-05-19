@@ -3,37 +3,55 @@ using System.Collections.Generic;
 using System.Linq;
 using MediaHub.Data.ContactsModule.Model;
 using MediaHub.Data.PersistencyLayer;
+using MediaHub.Data.ProfileModule.Model;
 
 namespace MediaHub.Test.ContactTest;
 
 public sealed class ContactDatabaseFixture : IDisposable
 {
-    private readonly List<string> MockUsers;
+    private readonly List<string> MockUserIds;
     
     public ContactDatabaseFixture()
     {
-        MockUsers = MockUser.GetMockUsers();
-        var contact1 = new Contact(MockUsers[0], MockUsers[1]);
-        var contact2 = new Contact(MockUsers[1], MockUsers[2]);
-        var contact3 = new Contact(MockUsers[2], MockUsers[3]);
-
-        using MediaHubDBContext context = new();
-        context.Contacts.Add(contact1);
-        context.Contacts.Add(contact2);
-        context.Contacts.Add(contact3);
-        context.SaveChanges();
+        MockUserIds = MockUser.GetMockUserIds();
+        AddUserProfiles();
+        AddContacts();
     }
 
     public void Dispose()
     {
         using MediaHubDBContext context = new();
-        var contact1 = context.Contacts.First(c => c.UserId == MockUsers[1]);
-        var contact2 = context.Contacts.First(c => c.UserId == MockUsers[2]);
-        var contact3 = context.Contacts.First(c => c.UserId == MockUsers[3]);
 
-        context.Contacts.Remove(contact1);
-        context.Contacts.Remove(contact2);
-        context.Contacts.Remove(contact3);
+        var contacts = context.Contacts.Where(c => MockUserIds.Contains(c.UserId));
+        context.Contacts.RemoveRange(contacts);
+
+        var users = context.UserProfiles.Where(up => MockUserIds.Contains(up.UserId));
+        context.UserProfiles.RemoveRange(users);
+
+        context.SaveChanges();
+    }
+
+    private void AddUserProfiles()
+    {
+        List<UserProfile> users = new();
+        MockUserIds.ForEach(id => users.Add(new UserProfile(id)));
+
+        using MediaHubDBContext context = new();
+        context.UserProfiles.AddRange(users);
+        context.SaveChanges();
+    }
+
+    private void AddContacts()
+    {
+        List<Contact> contacts = new()
+        {
+            new Contact(MockUserIds[0], MockUserIds[1]),
+            new Contact(MockUserIds[1], MockUserIds[2]),
+            new Contact(MockUserIds[2], MockUserIds[3])
+        };
+
+        using MediaHubDBContext context = new();
+        context.Contacts.AddRange(contacts);
         context.SaveChanges();
     }
 }
