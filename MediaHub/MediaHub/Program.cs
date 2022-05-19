@@ -16,8 +16,11 @@ using MediaHub.Data.ProfileModule.Persistency;
 using MediaHub.Data.MessagingModule.Persistency;
 using MediaHub.Data.MediaModule.Persistency;
 using MediaHub.Data.UserSuggestionModule.Persistency;
-using MediaHub.Data.UserSuggestionModule.Model;
+using MediaHub.Data.FeedModule.ViewModel;
+using MediaHub.Data.FeedModule.Persistency;
+using MediaHub.Data.FeedModule.Model;
 using MediaHub.Data.ContactsModule.Persistency;
+using MediaHub.Data.UserSuggestionModule.Model;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,15 +48,17 @@ builder.Services.AddTransient<IEmailSender, EmailSender>();
 var profileManager = new UserProfileDataManager();
 var userSuggestionDataManager = new UserSuggestionDataManager();
 var contactDataManager = new ContactDataManager();
+var feedService = new FeedService(new FeedDataManager(), contactDataManager);
 IChatDataManager chatDataManager = new ChatDataManager();
 var mediaApi = new TmdbApi();
-builder.Services.AddScoped<IUserProfileViewModel>(_ => new UserProfileViewModel(profileManager));
-builder.Services.AddScoped<IUserSuggestionsViewModel>(_ => new UserSuggestionsViewModel(userSuggestionDataManager, contactDataManager));
+builder.Services.AddScoped<IUserProfileViewModel>(_ => new UserProfileViewModel(profileManager, feedService));
+builder.Services.AddScoped<IUserSuggestionsViewModel>(_ => new UserSuggestionsViewModel(new UserSuggestionDataManager(), contactDataManager));
 builder.Services.AddScoped<IMediaSearchViewModel>(_ => new MediaSearchViewModel(mediaApi));
 builder.Services.AddSingleton(ILogService.Singleton);
-builder.Services.AddScoped<IRatingViewModel>(_ => new RatingViewModel(profileManager, new UserSuggestionEngine(userSuggestionDataManager, contactDataManager)));
+builder.Services.AddScoped<IRatingViewModel>(_ => new RatingViewModel(profileManager, new UserSuggestionEngine(userSuggestionDataManager, contactDataManager), feedService));
 builder.Services.AddScoped<IMediaTableViewModel>(_ => new MediaTableViewModel(mediaApi, profileManager));
 builder.Services.AddScoped<IChatViewModel>(_ => new ChatViewModel(chatDataManager, profileManager));
+builder.Services.AddScoped<IFeedViewModel>(_ => new FeedViewModel(feedService));
 builder.Services.AddScoped<IMediaCommentViewModel>(_ => new MediaCommentViewModel(new MediaCommentDataManager()));
 
 var app = builder.Build();

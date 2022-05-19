@@ -448,3 +448,23 @@ img.card-img-top {
     max-height: 300px;
     object-fit: cover;
 }
+
+.FilterBarWrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    background-color: rgb(0, 0, 150, 0.1);
+    border-radius: 0.3em;
+}
+
+.FilterBarItem {
+    background-color: rgb(0,0,150, 0.2);
+    border-radius: 0.3em;
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+    padding: 0.2em;
+}
+.FilterBarItem > input{
+    margin-right: 5px;
+}
