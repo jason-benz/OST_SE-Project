@@ -8,22 +8,42 @@ namespace MediaHub.Test.ContactTest
     {
         public bool AcceptContactRequest(string userId, string contactId)
         {
-            throw new NotImplementedException();
+            if (userId == "MockId-1" && contactId == "MockId-1-Contact")
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public bool AddContact(string userId, string contactId)
         {
-            throw new NotImplementedException();
+            if (userId == "MockId-2" && contactId == "MockId-2-Contact")
+            {
+                return true;
+            }
+            
+            return false;
         }
 
         public bool AreContacts(string userId, string contactId)
         {
-            throw new System.NotImplementedException();
+            if (userId == "MockId-1" && contactId == "MockId-1-Contact")
+            {
+                return true;
+            }
+            
+            return false;
         }
 
         public bool BlockContact(string userId, string contactId)
         {
-            throw new System.NotImplementedException();
+            if (userId == "MockId-1" && contactId == "MockId-1-Contact")
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public Contact GetContact(string userId)
@@ -37,6 +57,12 @@ namespace MediaHub.Test.ContactTest
             {
                 case "MockId-1":
                     return new List<string> { $"{userId}-Contact" };
+                case "MockId-2":
+                    return new List<string> 
+                    { 
+                        $"{userId}-Contact-1",
+                        $"{userId}-Contact-2"
+                    };
                 default:
                     throw new NotImplementedException();
             }
@@ -44,7 +70,12 @@ namespace MediaHub.Test.ContactTest
 
         public bool RemoveContact(string userId, string contactId)
         {
-            throw new System.NotImplementedException();
+            if (userId == "MockId-1" && contactId == "MockId-1-Contact")
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

@@ -67,7 +67,10 @@ namespace MediaHub.Areas.Identity.Pages.Account
                 return;
             }
 
-            var userProfile = new UserProfile(userId);
+            var userProfile = new UserProfile(userId)
+            {
+                ProfilePicture = DefaultProfilePicture.GetDefaultProfilePicture()
+            };
             context.Add(userProfile);
             context.SaveChanges();
         }
