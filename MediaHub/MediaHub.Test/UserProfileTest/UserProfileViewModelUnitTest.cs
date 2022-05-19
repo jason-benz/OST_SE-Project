@@ -3,6 +3,7 @@ using MediaHub.Data.ProfileModule.ViewModel;
 using MediaHub.Data.ProfileModule.Model;
 using MediaHub.Data.PersistencyLayer;
 using MediaHub.Test.LogTests;
+using MediaHub.Test.FeedTest;
 
 namespace MediaHub.Test.UserProfileTest
 {
@@ -14,7 +15,7 @@ namespace MediaHub.Test.UserProfileTest
         public UserProfileViewModelUnitTest()
         {
             ILogService.Singleton = new LogServiceMock();
-            _userProfileViewModel = new UserProfileViewModel(new UserProfileDataManagerMock());            
+            _userProfileViewModel = new UserProfileViewModel(new UserProfileDataManagerMock(), new FeedServiceMock(new FeedDataManagerMock()));
         }
 
         [Fact, Trait("Category", "Unit")]

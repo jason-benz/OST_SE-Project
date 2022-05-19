@@ -2,7 +2,7 @@ using MediaHub.Data.ContactsModule.Model;
 
 namespace MediaHub.Data.ContactsModule.ViewModel;
 
-public class ContactViewModel
+public class ContactViewModel : IContactViewModel
 {
     private readonly IContactDataManager _contactDataManager;
     public ContactViewModel(IContactDataManager contactDataManager)
