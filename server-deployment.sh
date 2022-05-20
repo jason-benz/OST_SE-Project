@@ -20,6 +20,7 @@ checkout_repository () {
 
 build_container () {
     echo "Starting to build the docker container ${CONTAINER_NAME} locally"
+    docker prune -f
     cd ${CODEFOLDER}/MediaHub
     docker build -f ./MediaHub/Dockerfile -t ${CONTAINER_NAME} .
 }
