@@ -70,7 +70,7 @@
             <form class="comment-form" @onsubmit="UpdateComment" @onreset="CancelEditComment">
                 <textarea id="editCommentText" class="form-control" maxlength="500" @bind="_editCommentText"/>
                 <button type="submit" class="btn btn-primary">Save Changes</button>
-                <button type="reset" class="btn btn-secondary">Cancle</button>
+                <button type="reset" class="btn btn-secondary">Cancel</button>
                 <button type="button" @onclick="DeleteComment" class="btn btn-danger">Delete</button>
             </form>
         }
