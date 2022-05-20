@@ -9,25 +9,25 @@ namespace MediaHub.Test.ContactTest
         private readonly IContactViewModel _contactViewModel = new ContactViewModel(new ContactDataManagerMock());
 
         [Fact, Trait("Category", "Unit")]
-        public void GetContacts_SingleResults()
+        public void GetContactIds_SingleResults()
         {
             var userId = "MockId-1";
             var contactId = "MockId-1-Contact";
 
-            var contacts = _contactViewModel.GetContacts(userId);
+            var contacts = _contactViewModel.GetContactIds(userId);
 
             Assert.True(contacts.Any());
             Assert.Equal(contacts.First(), contactId);
         }
 
         [Fact, Trait("Category", "Unit")]
-        public void GetContacts_MultipleResults()
+        public void GetContactIds_MultipleResults()
         {
             var userId = "MockId-2";
             var contactId1 = "MockId-2-Contact-1";
             var contactId2 = "MockId-2-Contact-2";
 
-            var contacts = _contactViewModel.GetContacts(userId);
+            var contacts = _contactViewModel.GetContactIds(userId);
 
             Assert.True(contacts.Any());
             Assert.Equal(contacts[0], contactId1);

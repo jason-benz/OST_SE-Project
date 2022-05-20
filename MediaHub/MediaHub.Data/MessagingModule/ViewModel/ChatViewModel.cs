@@ -38,7 +38,7 @@ public class ChatViewModel : IChatViewModel
 
     public void LoadAllContactUserProfiles(string userId)
     {
-        var contactIds = _contactDataManager.GetContacts(userId);
+        var contactIds = _contactDataManager.GetContactIds(userId);
         contactIds.Remove(User.UserId);
         ContactList = _userProfileDataManager.GetUserProfilesById(contactIds);
     }
