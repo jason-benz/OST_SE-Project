@@ -1,5 +1,7 @@
 using MediaHub.Data.ContactsModule.Model;
 using MediaHub.Data.PersistencyLayer;
+using MediaHub.Data.ProfileModule.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace MediaHub.Data.ContactsModule.Persistency;
 
@@ -13,16 +15,33 @@ public class ContactDataManager : IContactDataManager
         return contact;
     }
 
-    public List<string> GetContacts(string userId)
+    public List<Contact> GetContacts(string userId, bool includeAllUsers)
     {
         using MediaHubDBContext context = new();
 
-        var contacts = context.Contacts
+        var query = context.Contacts
+            .Include(c => c.UserProfile)
+            .Include(c => c.ContactUserProfile)
+            .Where(c => c.UserId == userId || c.ContactId == userId);
+        
+        if (!includeAllUsers) 
+        {
+            query = query.Where(c => !c.IsBlocked && !c.OpenRequest); 
+        }
+
+        return query.ToList();
+    }
+
+    public List<string> GetContactIds(string userId)
+    {
+        using MediaHubDBContext context = new();
+
+        var contactIds = context.Contacts
             .Where(c => c.UserId == userId || c.ContactId == userId)
             .Where(c => !c.IsBlocked && !c.OpenRequest)
             .Select(c => c.UserId == userId ? c.ContactId : c.UserId)
             .ToList();
-        return contacts;
+        return contactIds;
     }
     
     public bool RemoveContact(string userId, string contactId)

@@ -1,8 +1,14 @@
-﻿namespace MediaHub.Data.ContactsModule.ViewModel
+﻿using MediaHub.Data.ContactsModule.Model;
+
+namespace MediaHub.Data.ContactsModule.ViewModel
 {
     public interface IContactViewModel
     {
-        List<string> GetContacts(string userId);
+        List<Contact> Contacts { get; set; }
+        
+        List<Contact> GetContacts(string userId);
+        
+        List<string> GetContactIds(string userId);
 
         bool AddContact(string userId, string contactId);
 

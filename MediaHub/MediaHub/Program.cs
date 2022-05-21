@@ -22,6 +22,7 @@ using MediaHub.Data.FeedModule.Persistency;
 using MediaHub.Data.FeedModule.Model;
 using MediaHub.Data.ContactsModule.Persistency;
 using MediaHub.Data.UserSuggestionModule.Model;
+using MediaHub.Data.ContactsModule.ViewModel;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -67,6 +68,7 @@ builder.Services.AddScoped<IMediaTableViewModel>(_ => new MediaTableViewModel(me
 builder.Services.AddScoped<IChatViewModel>(_ => new ChatViewModel(chatDataManager, profileManager, contactDataManager));
 builder.Services.AddScoped<IFeedViewModel>(_ => new FeedViewModel(feedService));
 builder.Services.AddScoped<IMediaCommentViewModel>(_ => new MediaCommentViewModel(new MediaCommentDataManager()));
+builder.Services.AddScoped<IContactViewModel>(_ => new ContactViewModel(new ContactDataManager()));
 
 var app = builder.Build();
 app.UseResponseCompression();
