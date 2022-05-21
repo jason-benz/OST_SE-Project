@@ -51,7 +51,7 @@ namespace MediaHub.Test.ContactTest
             throw new System.NotImplementedException();
         }
 
-        public List<string> GetContacts(string userId)
+        public List<string> GetContactIds(string userId)
         {
             switch (userId)
             {
@@ -66,6 +66,11 @@ namespace MediaHub.Test.ContactTest
                 default:
                     throw new NotImplementedException();
             }
+        }
+
+        public List<Contact> GetContacts(string userId, bool includeAllUsers)
+        {
+            throw new NotImplementedException();
         }
 
         public bool RemoveContact(string userId, string contactId)
