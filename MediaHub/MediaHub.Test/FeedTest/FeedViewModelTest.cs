@@ -43,7 +43,7 @@ namespace MediaHub.Test.FeedTest
             Assert.Equal(userId, feedItems.First().UserId);
         }
 
-        [Fact]
+        [Fact, Trait("Category", "Unit")]
         public void FilterBarChange()
         {
             // Inverts UserProfileUpdate filter, therefore only MediaRating should be loaded
