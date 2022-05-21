@@ -49,6 +49,11 @@ else
     [Parameter]
     public string? Username { get; set; }
 
+    protected override void OnParametersSet()
+    {
+        OnInitialized();
+    }
+
     protected override void OnInitialized()
     {
         string userId;
