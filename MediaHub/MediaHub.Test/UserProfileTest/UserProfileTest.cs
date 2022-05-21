@@ -15,6 +15,14 @@ namespace MediaHub.Test.UserProfileTest
             Assert.Equal(userProfile1.Equals(userProfile2), expectedResult);
         }
 
+        [Fact]
+        public void UserProfileEquals_Null()
+        {
+            var userProfile1 = CreateUserProfile("Test");
+            UserProfile? userProfile2 = null;
+            Assert.False(userProfile1.Equals(userProfile2));
+        }
+
         [Theory, Trait("Category", "Unit")]
         [InlineData("user1", "user1", true)]
         [InlineData("user1", "user2", false)]

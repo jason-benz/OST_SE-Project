@@ -8,11 +8,19 @@ namespace MediaHub.Test.UserSuggestionTest
         [Theory, Trait("Category", "Unit")]
         [InlineData("user1", "user1", true)]
         [InlineData("user1", "user2", false)]
-        public void UserProfileEquals(string userId1, string userId2, bool expectedResult)
+        public void UserSuggestionEquals(string userId1, string userId2, bool expectedResult)
         {
             var userSuggestion1 = CreateUserSuggestion(userId1);
             var userSuggestion2 = CreateUserSuggestion(userId2);
             Assert.Equal(userSuggestion1.Equals(userSuggestion2), expectedResult);
+        }
+
+        [Fact]
+        public void UserSuggestionEquals_Null()
+        {
+            var userSuggestion1 = CreateUserSuggestion("Test");
+            UserSuggestion? userSuggestion2 = null;
+            Assert.False(userSuggestion1.Equals(userSuggestion2));
         }
 
         [Theory, Trait("Category", "Unit")]
