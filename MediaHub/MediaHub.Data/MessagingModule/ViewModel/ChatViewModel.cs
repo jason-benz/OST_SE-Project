@@ -33,7 +33,7 @@ public class ChatViewModel : IChatViewModel
 
     public IEnumerable<UserProfile> GetAllContactUserProfiles(string userId)
     {
-        var contactIds = _contactDataManager.GetContacts(userId);
+        var contactIds = _contactDataManager.GetContactIds(userId);
         contactIds.Remove(Sender.UserId);
         return _userProfileDataManager.GetUserProfilesById(contactIds);
     }

@@ -25,18 +25,6 @@ namespace MediaHub.Test.FeedTest
             }
         }
 
-        public IEnumerable<FeedItem> LoadAllFeedItems(IEnumerable<string> userIds)
-        {
-            List<FeedItem> feedItems = new();
-
-            foreach (var userId in userIds)
-            {
-                feedItems.Add(new FeedItem(userId));
-            }
-
-            return feedItems;
-        }
-
         public IEnumerable<FeedItem> LoadFilteredFeedItems(IEnumerable<string> userIds, IEnumerable<Table> selectedTables)
         {
             List<FeedItem> feedItems = new List<FeedItem>();
