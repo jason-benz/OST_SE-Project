@@ -39,7 +39,7 @@ namespace MediaHub.Data.UserSuggestionModule.Model
 
         private IEnumerable<string> GetContacts(string userId)
         {
-            return _contactDataManager.GetContacts(userId);
+            return _contactDataManager.GetContactIds(userId);
         }
 
         private void AddUserSuggestion(string userId1, string userId2)

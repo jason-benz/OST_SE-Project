@@ -4,6 +4,7 @@ using MediaHub.Data.ProfileModule.Model;
 using MediaHub.Data.PersistencyLayer;
 using MediaHub.Test.LogTests;
 using MediaHub.Test.FeedTest;
+using System;
 
 namespace MediaHub.Test.UserProfileTest
 {
@@ -42,10 +43,12 @@ namespace MediaHub.Test.UserProfileTest
             Assert.Equal(username, userProfile?.Username);
         }
 
-        [Fact, Trait("Category", "Unit")]
-        public void GetUserProfileByUsername_Null()
+        [Theory, Trait("Category", "Unit")]
+        [InlineData("MockUser-2")]
+        [InlineData("MockUser-3")]
+        [InlineData("asdf wasd")]
+        public void GetUserProfileByUsername_Null(string username)
         {
-            string username = "MockUser-2";
             UserProfile? userProfile = _userProfileViewModel.GetUserProfileByUsername(username);
             Assert.Null(userProfile);
         }
@@ -54,6 +57,7 @@ namespace MediaHub.Test.UserProfileTest
         public void UpdateUserProfile_WithoutException()
         {
             var userProfile = new UserProfile("MockId-1");
+            userProfile.Biography = new string('a', 300);
             var exception = Record.Exception(() => _userProfileViewModel.UpdateUserProfile(userProfile));
             Assert.Null(exception);
         }
