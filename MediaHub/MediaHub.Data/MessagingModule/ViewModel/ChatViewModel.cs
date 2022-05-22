@@ -21,6 +21,7 @@ public class ChatViewModel : IChatViewModel
     {
         CurrentMessage = "";
         Messages = new List<Message>();
+        ContactList = new List<UserProfile>();
         _chatDataManager = chatDataManager;
         _userProfileDataManager = userProfileDataManager;
         _contactDataManager = contactDataManager;
