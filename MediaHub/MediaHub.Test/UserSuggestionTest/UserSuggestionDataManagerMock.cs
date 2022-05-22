@@ -26,6 +26,8 @@ namespace MediaHub.Test.UserSuggestionTest
                     return new List<UserSuggestion>();
                 case "MockId-2":
                     return LoadMockUserSuggestions("MockId-2", loadIgnoredSuggestions);
+                case "MockId-3":
+                    throw new Exception();
                 default:
                     throw new ArgumentOutOfRangeException(nameof(userId));
             }
@@ -50,7 +52,15 @@ namespace MediaHub.Test.UserSuggestionTest
 
         public void UpdateUserSuggestion(UserSuggestion userSuggestion)
         {
-            // No action required
+            switch (userSuggestion.UserId1)
+            {
+                case "MockId-1":
+                    break;
+                case "MockId-2":
+                    throw new Exception();
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(userSuggestion));
+            }
         }
 
         private IEnumerable<UserSuggestion> LoadMockUserSuggestions(string userId, bool loadIgnoredSuggestions)
