@@ -30,6 +30,21 @@ namespace MediaHub.Test.UserProfileTest
                     return profile;
                 case "MockId-2":
                     return null;
+                case "MockId-4":
+                    var profile4 = new UserProfile(userId)
+                    {
+                        Username = "MockId-4 Mock test username",
+                        Biography = "Mock test biography",
+                        Ratings = new List<MediaRating>(),
+                        ProfilePicture = ProfilePicture.GetTestProfilePicture()
+                    };
+                    if (TestRating != null)
+                    {
+                        TestRating.Profile = profile4;
+                        profile4.Ratings.Add(TestRating);
+                    }
+
+                    return profile4;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(userId));
             }
@@ -37,7 +52,7 @@ namespace MediaHub.Test.UserProfileTest
 
         public UserProfile? GetUserProfileByIdLazyLoading(string userId)
         {
-            throw new NotImplementedException();
+            return GetUserProfileById(userId);
         }
 
         public UserProfile? GetUserProfileByIdNoTracking(string userId)
