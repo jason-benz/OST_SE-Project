@@ -70,9 +70,7 @@ public class ContactDataManagerIntegrationTest : IClassFixture<ContactDatabaseFi
         using MediaHubDBContext context = new();
         var contact = context.Contacts
             .First(c => c.UserId == MockUserIds[0]);
-        contact.IsBlocked = true;
-        context.SaveChanges();
-        
+
         Assert.True(contact.IsBlocked);
     }
 

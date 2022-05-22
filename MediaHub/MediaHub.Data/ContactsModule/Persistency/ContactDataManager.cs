@@ -110,6 +110,7 @@ public class ContactDataManager : IContactDataManager
         }
 
         contact.IsBlocked = true;
+        context.SaveChanges();
         return true;
     }
 
