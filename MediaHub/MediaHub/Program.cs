@@ -96,7 +96,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.MapBlazorHub();
-app.MapHub<ChatHub>("/chathub");
 app.MapFallbackToPage("/_Host");
 
 app.Run();
