@@ -22,7 +22,7 @@ else
 {
     <div id="chat-container">
         <div id="contactlist-container">
-            <h3>Contact List:</h3>
+            <h2>Contact List:</h2>
             <ul id="contactlist">
                 @foreach (var contact in _chatViewModel.ContactList)
                 {
@@ -55,6 +55,7 @@ else
                         }
                     </div>
                 }
+                 </div>
             </div>
             <div id="chat-input-container">
                 <form @onsubmit=_chatViewModel.SendMessage>

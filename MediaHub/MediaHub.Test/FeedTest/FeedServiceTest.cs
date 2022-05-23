@@ -26,17 +26,6 @@ namespace MediaHub.Test.FeedTest
             Assert.Null(exception);
         }
 
-        [Fact, Trait("Category", "Unit")]
-        public void LoadAllFeedItems()
-        {
-            var userId = "MockId-1";
-            var contactId = "MockId-1-Contact";
-
-            var feedItems = _feedService.LoadAllFeedItems(userId);
-            Assert.True(feedItems.Any());
-            Assert.Equal(contactId, feedItems.First().UserId);
-        }
-
         [Theory, Trait("Category", "Unit")]
         [InlineData("Media Ratings", true, Table.MediaRating)]
         [InlineData("User profile update", true, Table.UserProfile)]

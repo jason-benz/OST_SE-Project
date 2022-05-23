@@ -24,15 +24,6 @@ namespace MediaHub.Data.FeedModule.Persistency
                 .Any();
         }
 
-        public IEnumerable<FeedItem> LoadAllFeedItems(IEnumerable<string> userIds)
-        {
-            using MediaHubDBContext context = new();
-            return context.FeedItems
-                .Include(f => f.UserProfile)
-                .Where(f => userIds.Contains(f.UserId))
-                .ToList();
-        }
-
         public IEnumerable<FeedItem> LoadFilteredFeedItems(IEnumerable<string> userIds, IEnumerable<Table> selectedTables)
         {
             using MediaHubDBContext context = new();

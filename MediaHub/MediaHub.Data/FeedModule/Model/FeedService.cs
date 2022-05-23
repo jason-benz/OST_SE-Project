@@ -34,12 +34,6 @@ namespace MediaHub.Data.FeedModule.Model
             _feedDataManager.AddFeedItem(feedItem);
         }
 
-        public IEnumerable<FeedItem> LoadAllFeedItems(string userId)
-        {
-            var contactIds = _contactDataManager.GetContactIds(userId);
-            return _feedDataManager.LoadAllFeedItems(contactIds);
-        }
-
         public IEnumerable<FeedItem> LoadFilteredFeedItems(string userId, Dictionary<string, bool> filterSettings)
         {
             var contactIds = _contactDataManager.GetContactIds(userId);

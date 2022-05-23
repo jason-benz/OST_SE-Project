@@ -1,5 +1,6 @@
 ﻿using MediaHub.Data.FeedModule.Model;
 using MediaHub.Data.FeedModule.ViewModel;
+using System;
 using System.Linq;
 using Xunit;
 
@@ -41,6 +42,29 @@ namespace MediaHub.Test.FeedTest
 
             Assert.True(feedItems.Any());
             Assert.Equal(userId, feedItems.First().UserId);
+        }
+
+        [Fact, Trait("Category", "Unit")]
+        public void FilterBarChange()
+        {
+            // Inverts UserProfileUpdate filter, therefore only MediaRating should be loaded
+            _feedViewModel.FilterbarViewModel.OnChange("User profile update");
+            var feedItems = _feedViewModel.FeedItems;
+            
+            Assert.True(feedItems.Any());
+            Assert.Equal(Table.MediaRating, feedItems.First().ChangedTable);
+        }
+
+        [Fact, Trait("Category", "Unit")]
+        public void FilterBarChange_AdditionalInvoke()
+        {
+            _feedViewModel.RefreshRequested += () => Console.WriteLine("Test");
+            // Inverts UserProfileUpdate filter, therefore only MediaRating should be loaded
+            _feedViewModel.FilterbarViewModel.OnChange("User profile update");
+            var feedItems = _feedViewModel.FeedItems;
+
+            Assert.True(feedItems.Any());
+            Assert.Equal(Table.MediaRating, feedItems.First().ChangedTable);
         }
     }
 }

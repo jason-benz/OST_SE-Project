@@ -22,12 +22,6 @@ namespace MediaHub.Test.FeedTest
             // No action required in the mock
         }
 
-        public IEnumerable<FeedItem> LoadAllFeedItems(string userId)
-        {
-            var userIds = new List<string> { userId };
-            return _feedDataManager.LoadAllFeedItems(userIds);
-        }
-
         public IEnumerable<FeedItem> LoadFilteredFeedItems(string userId, Dictionary<string, bool> filterSettings)
         {
             var userIds = new List<string> { userId };

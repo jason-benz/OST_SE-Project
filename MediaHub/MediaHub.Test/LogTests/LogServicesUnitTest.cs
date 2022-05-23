@@ -12,7 +12,7 @@ namespace MediaHub.Test.LogTests
     [Collection("Sequential")]
     public class LogServicesUnitTest : IDisposable
     {
-        private ILogService _logService;
+        private LogService _logService;
 
         private string _logFileName = "./log.txt";
         private Logger _logConfig;
@@ -29,43 +29,43 @@ namespace MediaHub.Test.LogTests
         [Fact, Trait("Category", "Unit")]
         public void GetSingletonbeforeCreateThrows()
         {
-            ILogService.Singleton = null; //other tests might interfere, so this resets Singleton to its default value
-            var exception = Record.Exception(() => ILogService.Singleton);
+            LogService.Singleton = null; //other tests might interfere, so this resets Singleton to its default value
+            var exception = Record.Exception(() => LogService.Singleton);
             Assert.NotNull(exception);
         }
 
         [Fact, Trait("Category", "Unit")]
         public void InformationLogTypeTest()
         {
-            _logService.LogInformation("testinfo", ILogService.LogCategory.Chat);
+            _logService.LogInformation("testinfo", LogService.LogCategory.Chat);
             AssertLogType("[INF]");
         }
 
         [Fact, Trait("Category", "Unit")]
         public void InformationLoggedModuleTest()
         {
-            _logService.LogInformation("testinfo", ILogService.LogCategory.Chat);
+            _logService.LogInformation("testinfo", LogService.LogCategory.Chat);
             AssertLoggedModule("Chat");
         }
 
         [Fact, Trait("Category", "Unit")]
         public void InformationLogMessageTest()
         {
-            _logService.LogInformation("testinfo", ILogService.LogCategory.Chat);
+            _logService.LogInformation("testinfo", LogService.LogCategory.Chat);
             AssertLogMessage("testinfo");
         }
 
         [Fact, Trait("Category", "Unit")]
         public void ErrorLogTypeTest()
         {
-            _logService.LogException("testinfo", ILogService.LogCategory.Chat, new Exception("testexception"));
+            _logService.LogException("testinfo", LogService.LogCategory.Chat, new Exception("testexception"));
             AssertLogType("[ERR]");
         }
 
         [Fact, Trait("Category", "Unit")]
         public void ErrorExceptionMessageTest()
         {
-            _logService.LogException("testinfo", ILogService.LogCategory.Chat, new Exception("testexception"));
+            _logService.LogException("testinfo", LogService.LogCategory.Chat, new Exception("testexception"));
             Assert.Equal("testexception", ReadExceptionMessage());
         }
 

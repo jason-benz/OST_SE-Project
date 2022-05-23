@@ -8,12 +8,12 @@ using Xunit;
 
 namespace MediaHub.Test.MediaRatingTest;
 
-public class MediaRatingPersistencyTest : IDisposable
+public class MediaRatingIntegrationTest : IDisposable
 {
     private UserProfile profile;
     private MediaRating rating;
 
-    public MediaRatingPersistencyTest()
+    public MediaRatingIntegrationTest()
     {
         using (MediaHubDBContext context = new())
         {

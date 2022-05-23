@@ -71,7 +71,7 @@ public class ContactDataManager : IContactDataManager
             return false;
         }
 
-        if (userId != String.Empty && contactId != String.Empty)
+        if (userId != string.Empty && contactId != string.Empty)
         {
             Contact contact = new Contact(userId, contactId);
             contact.OpenRequest = true;
@@ -110,6 +110,7 @@ public class ContactDataManager : IContactDataManager
         }
 
         contact.IsBlocked = true;
+        context.SaveChanges();
         return true;
     }
 
