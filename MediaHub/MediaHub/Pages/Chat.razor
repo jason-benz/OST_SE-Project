@@ -22,7 +22,7 @@ else
 {
     <div id="chat-container">
         <div id="contactlist-container">
-            <h3>Contact List:</h3>
+            <h2>Contact List:</h2>
             <ul id="contactlist">
                 @foreach (var contact in _userProfilesOfContacts)
                 {
@@ -42,6 +42,7 @@ else
 
         <div id="chat-input-and-messages-container">
             <div id="chat-messages-container">
+                <div>
                 @foreach (var message in _messages)
                 {
                     <div class="msg-line">
@@ -55,6 +56,7 @@ else
                         }
                     </div>
                 }
+                 </div>
             </div>
             <div id="chat-input-container">
                 <form @onsubmit=SendMessage>
