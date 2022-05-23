@@ -4,8 +4,6 @@ namespace MediaHub.Data.ContactsModule.ViewModel
 {
     public interface IContactViewModel
     {
-        List<Contact> Contacts { get; set; }
-        
         List<Contact> GetContacts(string userId);
         
         List<string> GetContactIds(string userId);
@@ -13,6 +11,8 @@ namespace MediaHub.Data.ContactsModule.ViewModel
         bool AddContact(string userId, string contactId);
 
         bool AcceptContactRequest(string userId, string contactId);
+
+        List<Contact> GetPendingRequests(string userId);
 
         bool RemoveContact(string userId, string contactId);
 

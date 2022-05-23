@@ -62,9 +62,8 @@ public class TmdbApi : IMediaApi
         return await response.Content.ReadAsStringAsync();
     }
 
-    private Uri BuildRequestUri(string endpoint, Dictionary<string, string>? urlParams)
+    private Uri BuildRequestUri(string endpoint, Dictionary<string, string> urlParams)
     {
-        urlParams = urlParams ?? new Dictionary<string, string>();
         urlParams.Add("api_key", _apiKeyV3);
         urlParams.Add("language", "en-US");
         urlParams.Add("page", "1");
