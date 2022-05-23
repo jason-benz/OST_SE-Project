@@ -22,6 +22,10 @@ namespace MediaHub.Test.ContactTest
             {
                 return true;
             }
+            else if (userId == "MockId-3" && contactId == "MockId-3-Contact")
+            {
+                throw new Exception();
+            }
             
             return false;
         }

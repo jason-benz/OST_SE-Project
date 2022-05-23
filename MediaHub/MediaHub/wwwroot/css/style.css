@@ -205,6 +205,7 @@ a, .btn-link {
     max-width: 80vw;
     margin: auto;
     padding: 2vh 2vw;
+    border-radius: 8px;
     overflow-y: hidden;
 }
 
@@ -302,16 +303,21 @@ a, .btn-link {
 /* start of style rules for chat */
 #chat-container {
     display: flex;
+    column-gap:50px;
 }
 
 #contactlist {
-    list-style-type: none; 
+    list-style-type: none;
+}
+
+#contactlist > li{
+    margin-top: 15px;
 }
 
 #contactlist-container {
     width: fit-content;
-    margin-right: 20px;
-    overflow-y: scroll;
+    overflow-y: auto;
+    flex-basis: 20%;
 }
 
 #chat-input-and-messages-container {
@@ -326,9 +332,17 @@ button.focus {
 }
 
 #chat-messages-container {
-    overflow-y: scroll;
-    height: 400px;
+    overflow-y: auto;
+    height: 60vh;
     margin-bottom: 2em;
+    background: #F0F0F0;
+    border-radius: 8px;
+    transform: scaleY(-1);
+}
+
+#chat-messages-container > div{
+    overflow: hidden;
+    transform: scaleY(-1);
 }
 
 #chat-input-container {
@@ -362,17 +376,20 @@ button.focus {
 }
 
 .received-msg {
-    background-color: orange;
+    background-color: moccasin;
     float: left;
+    margin-left: 2em;
 }
 
 .sent-msg {
     float: right;
+    margin-right: 2em;
 }
 
 .contactlist-element {
     border-radius: 1em;
     border-style: none;
+    width: 100%;
     background-color: dodgerblue;
 }
 
@@ -412,6 +429,12 @@ button.focus {
 .userProfileOverview > img{
     margin-top: 10px;
     grid-area: image;
+    transition: 0.6s ease;
+    clip-path: circle(130px at center);
+}
+
+.userProfileOverview > img:hover{
+    clip-path: circle(100% at center);
 }
 
 .userProfileOverview > .biography {
@@ -467,7 +490,7 @@ button.focus {
 }
 
 .card {
-    max-width: 300px;
+    width: 250px;
 }
 
 img.card-img-top {

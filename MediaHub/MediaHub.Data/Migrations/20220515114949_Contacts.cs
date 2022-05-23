@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System.Diagnostics.CodeAnalysis;
 
 #nullable disable
 
 namespace MediaHub.Data.Migrations
 {
+    [ExcludeFromCodeCoverage]
     public partial class Contacts : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

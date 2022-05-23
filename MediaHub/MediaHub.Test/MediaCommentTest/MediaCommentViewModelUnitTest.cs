@@ -16,7 +16,7 @@ public class MediaCommentViewModelUnitTest
     public MediaCommentViewModelUnitTest()
     {
         _mediaCommentViewModel = new MediaCommentViewModel(new MediaCommentDataManagerMock());
-        ILogService.Singleton = new LogServiceMock();
+        LogService.Singleton = new LogServiceMock();
     }
 
     [Fact, Trait("Category", "Unit")]
