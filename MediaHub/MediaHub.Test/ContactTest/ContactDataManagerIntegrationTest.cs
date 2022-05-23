@@ -38,7 +38,7 @@ public class ContactDataManagerIntegrationTest : IClassFixture<ContactDatabaseFi
     [Fact]
     public void GetContacts()
     {
-        var contacts = _contactDataManager.GetContacts(MockUserIds[0], false);
+        var contacts = _contactDataManager.GetContacts(MockUserIds[0]);
         Assert.All(contacts, contact => Assert.True(MockUserIds[1] == contact.UserId || MockUserIds[1] == contact.ContactId));
     }
 
