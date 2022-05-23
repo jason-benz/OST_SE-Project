@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using MediaHub.Data.MessagingModule.Model;
 using MediaHub.Data.MessagingModule.ViewModel;
 using MediaHub.Pages;
@@ -76,6 +77,17 @@ public class ChatViewModelTest
         Assert.Single(newMessages);
     }
 
+    [Fact, Trait("Category", "Unit")]
+    public void TestSendMessage_AdditionalInvoke()
+    {
+        _chatViewModel.RefreshRequested += () => Console.WriteLine("Test");
+        _chatViewModel.OpenChat("MockId-4");
+        _chatViewModel.CurrentMessage = "Message3";
+        _chatViewModel.SendMessage();
+
+        var newMessages = _chatViewModel.Messages.Where(m => m.Content == "Message3");
+        Assert.Single(newMessages);
+    }
 
     private static bool IsReceiverOrSender(string userId, Message message)
     {
