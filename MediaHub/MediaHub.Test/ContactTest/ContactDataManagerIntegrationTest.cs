@@ -22,14 +22,14 @@ public class ContactDataManagerIntegrationTest : IClassFixture<ContactDatabaseFi
     }
 
     [Fact]
-    public void GetContact()
+    public void GetContactTest()
     {
         var contact = _contactDataManager.GetContact(MockUserIds[3]);
         Assert.Equal(MockUserIds[2], contact.UserId);
     }
 
     [Fact]
-    public void GetContacts()
+    public void GetContactsId()
     {
         var contacts = _contactDataManager.GetContactIds(MockUserIds[0]);
         Assert.All(contacts, contact => Assert.Contains(MockUserIds[1], contact));
