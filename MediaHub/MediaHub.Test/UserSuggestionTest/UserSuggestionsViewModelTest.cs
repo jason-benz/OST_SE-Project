@@ -16,7 +16,7 @@ namespace MediaHub.Test.UserSuggestionTest
         public UserSuggestionsViewModelTest()
         {
             _userSuggestionsViewModel = new UserSuggestionsViewModel(new UserSuggestionDataManagerMock(), new ContactDataManagerMock());
-            ILogService.Singleton = new LogServiceMock();
+            LogService.Singleton = new LogServiceMock();
         }
 
         [Theory, Trait("Category", "Unit")]
