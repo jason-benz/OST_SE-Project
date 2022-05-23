@@ -37,16 +37,21 @@ public class TmdbJsonParser
         var genreJson = (JArray)json.Property("genres")?.Value;
         List<string> genres = ParseGenreIdsToString(genreJson);
 
-        return new Movie(int.Parse(json.Property("id")?.Value.ToString()!))
+        if (int.TryParse(json.Property("id")?.Value.ToString(), out var movieId))
         {
-            Title = json.Property("title")?.Value.ToString(),
-            PosterUrl = _basePosterPath + json.Property("poster_path")?.Value,
-            Genres = genres,
-            Rating = ParseRating(json.Property("vote_average")?.Value.ToString()),
-            Overview = json.Property("overview")?.Value.ToString(),
-            Runtime = json.Property("runtime")?.Value.ToString(),
-            ReleaseDate = json.Property("release_date")?.Value.ToString()
-        };
+            return new Movie(movieId)
+            {
+                Title = json.Property("title")?.Value.ToString(),
+                PosterUrl = _basePosterPath + json.Property("poster_path")?.Value,
+                Genres = genres,
+                Rating = ParseRating(json.Property("vote_average")?.Value.ToString()),
+                Overview = json.Property("overview")?.Value.ToString(),
+                Runtime = json.Property("runtime")?.Value.ToString(),
+                ReleaseDate = json.Property("release_date")?.Value.ToString()
+            };
+        }
+
+        return null;
     }
 
     private static List<string> ParseGenreIdsToString(JArray? genreIds)
