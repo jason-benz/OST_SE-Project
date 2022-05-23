@@ -3,13 +3,13 @@ using MediaHub.Data.PersistencyLayer;
 
 namespace MediaHub.Test.LogTests;
 
-public class LogServiceMock : ILogService
+public class LogServiceMock : LogService
 {
-    public void LogInformation(string message, ILogService.LogCategory category)
+    public override void LogInformation(string message, LogService.LogCategory category)
     {
     }
 
-    public void LogException(string message, ILogService.LogCategory category, Exception exception)
+    public override void LogException(string message, LogService.LogCategory category, Exception exception)
     {
     }
 }

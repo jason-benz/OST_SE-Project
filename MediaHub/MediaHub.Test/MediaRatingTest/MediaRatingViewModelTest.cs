@@ -15,7 +15,7 @@ namespace MediaHub.Test.MediaRatingTest;
 
 public class MediaRatingVieModelTest
 {
-    private readonly UserProfileDataManagerMock _profileDataManager = new UserProfileDataManagerMock();
+    private readonly UserProfileDataManagerMock _profileDataManager = new ();
     private readonly IUserSuggestionEngine _userSuggestionEngine = new UserSuggestionEngineMock();
     private readonly IFeedService _feedService = new FeedServiceMock(new FeedDataManagerMock());
     private readonly IRatingViewModel _ratingViewModel;
@@ -80,6 +80,15 @@ public class MediaRatingVieModelTest
         Assert.Equal("MockId-1", _profileDataManager.UpdatedUserProfile.Ratings.ElementAt(0).Profile.UserId);
     }
 
+    [Fact, Trait("Category", "Unit")]
+    public void TestLoadTwiceDoesNotChangeRating()
+    {
+        InjectTestRating(44);
+        LoadViewModel();
+        var rating = _ratingViewModel.Rating;
+        LoadViewModel();
+        Assert.Equal(rating, _ratingViewModel.Rating);
+    }
     private void InjectTestRating()
     {
         _profileDataManager.TestRating = new MediaRating();
