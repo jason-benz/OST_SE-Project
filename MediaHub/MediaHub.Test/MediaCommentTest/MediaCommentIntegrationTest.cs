@@ -44,13 +44,27 @@ public class MediaCommentIntegrationTest : IDisposable
     }
 
     [Fact]
-    public void DelteExistingCommentOfMedia()
+    public void UpdateComment_Exception()
+    {
+        var comment = AddCommentToDBUser();
+        Assert.Throws<InvalidOperationException>(() => _mediaCommentDataManager.UpdateComment(comment.Id, "Invalid user id", "New Text"));
+    }
+
+    [Fact]
+    public void DeleteExistingCommentOfMedia()
     {
         var comment = AddCommentToDBUser();
         _mediaCommentDataManager.DeleteComment(comment.Id, _userId);
         bool commentNotDeleted = _mediaCommentDataManager.LoadComments(_mediaId).Any(c => c.MediaId == _mediaId);
 
         Assert.False(commentNotDeleted);
+    }
+
+    [Fact]
+    public void DeleteComment_Exception()
+    {
+        var comment = AddCommentToDBUser();
+        Assert.Throws<InvalidOperationException>(() => _mediaCommentDataManager.DeleteComment(comment.Id, "Invalid user id"));
     }
 
     private MediaComment AddCommentToDBUser()
