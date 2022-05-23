@@ -13,4 +13,5 @@ public interface IContactDataManager
     public bool AreContacts(string userId, string contactId);
     public bool BlockContact(string userId, string contactId);
     public bool AcceptContactRequest(string userId, string contactId);
+    public List<Contact> GetPendingRequests(string userId);
 }
