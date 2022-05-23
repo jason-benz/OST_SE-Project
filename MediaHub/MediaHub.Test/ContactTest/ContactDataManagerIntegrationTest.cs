@@ -22,7 +22,7 @@ public class ContactDataManagerIntegrationTest : IClassFixture<ContactDatabaseFi
     }
 
     [Fact]
-    public void GetContactTest()
+    public void GetSingleContact()
     {
         var contact = _contactDataManager.GetContact(MockUserIds[3]);
         Assert.Equal(MockUserIds[2], contact.UserId);
