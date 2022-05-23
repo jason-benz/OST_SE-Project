@@ -10,12 +10,12 @@
 
 <h3>Contacts</h3>
 
-@if (_contactViewModel.Contacts.Where(c => c.OpenRequest && c.ContactId == _personalUserId).Any())
+@if (_contactViewModel.GetContacts(_personalUserId).Any())
 {
     <h4>Open contact requests</h4>
 
     <div class="d-flex flex-row flex-wrap">
-        @foreach (var contact in _contactViewModel.Contacts.Where(c => c.OpenRequest && c.ContactId == _personalUserId))
+        @foreach (var contact in _contactViewModel.GetPendingRequests(_personalUserId))
         {
             { ChooseContactProfile(contact); }
 
@@ -36,7 +36,7 @@
 
 <h4>Contact list</h4>
 
-@if (_contactViewModel.Contacts.Where(c => !c.OpenRequest && !c.IsBlocked).Any())
+@if (_contactViewModel.GetContacts(_personalUserId).Any())
 {
     <div class="d-flex flex-row flex-wrap">
         @foreach (var contact in _contactViewModel.Contacts.Where(c => !c.OpenRequest && !c.IsBlocked))
