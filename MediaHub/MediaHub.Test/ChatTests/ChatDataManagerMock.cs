@@ -47,7 +47,8 @@ public class ChatDataManagerMock : IChatDataManager
 
     public List<Message> GetMessagesBetweenTwoUsers(string userId1, string userId2)
     {
-        return _messages;
+        return _messages.Where(message => IsReceiverOrSender(userId1, message)
+        && IsReceiverOrSender(userId2, message)).ToList();
     }
     
     private static bool IsReceiverOrSender(string userId, Message message)
