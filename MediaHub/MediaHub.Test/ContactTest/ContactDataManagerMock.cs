@@ -55,8 +55,12 @@ namespace MediaHub.Test.ContactTest
         {
             throw new System.NotImplementedException();
         }
-        
-        
+
+        public List<Contact> GetContacts(string userId)
+        {
+            throw new NotImplementedException();
+        }
+
 
         public List<string> GetContactIds(string userId)
         {
