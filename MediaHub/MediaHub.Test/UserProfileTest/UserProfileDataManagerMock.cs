@@ -80,7 +80,14 @@ namespace MediaHub.Test.UserProfileTest
 
         public IEnumerable<UserProfile> GetUserProfilesById(IEnumerable<string> userIds)
         {
-            throw new NotImplementedException();
+            List<UserProfile> userProfiles = new();
+
+            foreach (var userId in userIds)
+            {
+                userProfiles.Add(new UserProfile(userId));
+            }
+
+            return userProfiles;
         }
 
         public bool IsUsernameAvailable(string username)

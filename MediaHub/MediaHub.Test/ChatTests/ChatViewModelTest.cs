@@ -26,6 +26,28 @@ public class ChatViewModelTest
     }
 
     [Fact, Trait("Category", "Unit")]
+    public void TestLoadAllContactUserProfiles()
+    {
+        var userId = "MockId-1";
+        var expectedContactId = $"{userId}-Contact";
+
+        _chatViewModel.LoadAllContactUserProfiles(userId);
+
+        Assert.Single(_chatViewModel.ContactList);
+        Assert.Equal(expectedContactId, _chatViewModel.ContactList.First().UserId);
+    }
+
+    [Fact, Trait("Category", "Unit")]
+    public void TestLoadAllContactUserProfiles_Empty()
+    {
+        var userId = "MockId-3";
+
+        _chatViewModel.LoadAllContactUserProfiles(userId);
+
+        Assert.Empty(_chatViewModel.ContactList);
+    }
+
+    [Fact, Trait("Category", "Unit")]
     public void TestOpenChatContactId()
     {
         _chatViewModel.OpenChat("MockId-4");
