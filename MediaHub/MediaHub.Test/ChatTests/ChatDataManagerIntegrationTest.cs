@@ -30,6 +30,7 @@ namespace MediaHub.Test.ChatTests
             _chatDataManager.InsertMessage(expectedMessage);
 
             var actualMessages = _chatDataManager.GetMessagesBetweenTwoUsers(expectedMessage.Sender.UserId, expectedMessage.Receiver.UserId);
+            RemoveTestMessageFromDB(expectedMessage);
 
             Assert.Single(actualMessages);
             Assert.Equal(expectedMessage.MessageId, actualMessages.First().MessageId);
