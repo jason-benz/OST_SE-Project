@@ -43,7 +43,7 @@ public class MediaTableViewModel : IMediaTableViewModel
     public IEnumerable<IMediaTableViewModel.MovieAndRating> GetMoviesOfUserProfileByUserIdAsync(string userId)
     {
         var userProfile = _userProfileDataManager.GetUserProfileById(userId);
-        var userRatings = userProfile?.Ratings
+        var userRatings = userProfile!.Ratings
             .Where(r => r.IsAddedToProfile);
 
         foreach (var rating in userRatings)
