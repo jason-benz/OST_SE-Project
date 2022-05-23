@@ -1,4 +1,5 @@
 using MediaHub.Data.ContactsModule.Model;
+using MediaHub.Data.Migrations;
 using MediaHub.Data.PersistencyLayer;
 using MediaHub.Data.ProfileModule.Model;
 using Microsoft.EntityFrameworkCore;
@@ -15,19 +16,15 @@ public class ContactDataManager : IContactDataManager
         return contact;
     }
 
-    public List<Contact> GetContacts(string userId, bool includeAllUsers)
+    public List<Contact> GetContacts(string userId)
     {
         using MediaHubDBContext context = new();
 
         var query = context.Contacts
             .Include(c => c.UserProfile)
             .Include(c => c.ContactUserProfile)
-            .Where(c => c.UserId == userId || c.ContactId == userId);
-        
-        if (!includeAllUsers) 
-        {
-            query = query.Where(c => !c.IsBlocked && !c.OpenRequest); 
-        }
+            .Where(c => (c.UserId == userId || c.ContactId == userId) &&
+                !c.IsBlocked && !c.OpenRequest);
 
         return query.ToList();
     }
@@ -129,5 +126,15 @@ public class ContactDataManager : IContactDataManager
             return true;
         }
         return false;
+    }
+
+    public List<Contact> GetPendingRequests(string userId)
+    {
+        using MediaHubDBContext context = new();
+        var contacts = context.Contacts
+            .Include(c => c.UserProfile)
+            .Include(c => c.ContactUserProfile)   
+            .Where(c => c.ContactId == userId && c.OpenRequest == true);
+        return contacts.ToList();
     }
 }

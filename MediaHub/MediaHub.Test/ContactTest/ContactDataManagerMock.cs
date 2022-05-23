@@ -16,6 +16,11 @@ namespace MediaHub.Test.ContactTest
             return false;
         }
 
+        public List<Contact> GetPendingRequests(string userId)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool AddContact(string userId, string contactId)
         {
             if (userId == "MockId-2" && contactId == "MockId-2-Contact")
@@ -54,6 +59,12 @@ namespace MediaHub.Test.ContactTest
         {
             throw new System.NotImplementedException();
         }
+
+        public List<Contact> GetContacts(string userId)
+        {
+            throw new NotImplementedException();
+        }
+
 
         public List<string> GetContactIds(string userId)
         {

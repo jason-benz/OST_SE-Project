@@ -6,8 +6,6 @@ public class ContactViewModel : IContactViewModel
 {
     private readonly IContactDataManager _contactDataManager;
 
-    public List<Contact> Contacts { get; set; }
-
     public ContactViewModel(IContactDataManager contactDataManager)
     {
         _contactDataManager = contactDataManager;
@@ -15,8 +13,7 @@ public class ContactViewModel : IContactViewModel
 
     public List<Contact> GetContacts(string userId)
     {
-        Contacts = _contactDataManager.GetContacts(userId, true);
-        return Contacts;
+        return _contactDataManager.GetContacts(userId);;
     }
 
     public List<string> GetContactIds(string userId)
@@ -37,6 +34,11 @@ public class ContactViewModel : IContactViewModel
     public bool AcceptContactRequest(string userId, string contactId)
     {
         return _contactDataManager.AcceptContactRequest(userId, contactId);
+    }
+
+    public List<Contact> GetPendingRequests(string userId)
+    {
+        return _contactDataManager.GetPendingRequests(userId);
     }
 
     public bool RemoveContact(string userId, string contactId)
