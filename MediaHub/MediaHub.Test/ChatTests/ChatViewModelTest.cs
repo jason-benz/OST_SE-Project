@@ -49,7 +49,9 @@ public class ChatViewModelTest
         _chatViewModel.OpenChat("MockId-4");
         _chatViewModel.CurrentMessage = "Message3";
         _chatViewModel.SendMessage();
-        Assert.True(_chatViewModel.Messages.Where(m => m.Content == "Message3").ToList().Count == 1);
+
+        var newMessages = _chatViewModel.Messages.Where(m => m.Content == "Message3");
+        Assert.Single(newMessages);
     }
 
 
