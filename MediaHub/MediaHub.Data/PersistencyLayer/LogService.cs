@@ -1,6 +1,6 @@
 namespace MediaHub.Data.PersistencyLayer;
 
-public interface ILogService
+public class ILogService
 {
     public enum LogCategory
     {
