@@ -16,19 +16,15 @@ public class ContactDataManager : IContactDataManager
         return contact;
     }
 
-    public List<Contact> GetContacts(string userId, bool includeAllUsers)
+    public List<Contact> GetContacts(string userId)
     {
         using MediaHubDBContext context = new();
 
         var query = context.Contacts
             .Include(c => c.UserProfile)
             .Include(c => c.ContactUserProfile)
-            .Where(c => c.UserId == userId || c.ContactId == userId);
-        
-        if (!includeAllUsers) 
-        {
-            query = query.Where(c => !c.IsBlocked && !c.OpenRequest); 
-        }
+            .Where(c => (c.UserId == userId || c.ContactId == userId) &&
+                !c.IsBlocked && !c.OpenRequest);
 
         return query.ToList();
     }
