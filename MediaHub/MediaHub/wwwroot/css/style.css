@@ -504,7 +504,7 @@ img.card-img-top {
 }
 
 img.card-img-top:hover {
-    clip-path: circle(55% at center);
+    clip-path: circle(60% at center);
 }
 
 .FilterBarWrapper {
