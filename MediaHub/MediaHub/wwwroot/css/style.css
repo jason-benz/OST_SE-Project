@@ -499,6 +499,12 @@ img.card-img-top {
     max-width: 300px;
     max-height: 300px;
     object-fit: cover;
+    transition: 0.5s ease;
+    clip-path: circle(100px at center);
+}
+
+img.card-img-top:hover {
+    clip-path: circle(55% at center);
 }
 
 .FilterBarWrapper {
