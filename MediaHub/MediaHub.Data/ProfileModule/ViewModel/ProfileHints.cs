@@ -1,5 +1,8 @@
-﻿namespace MediaHub.Data.ProfileModule.ViewModel
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace MediaHub.Data.ProfileModule.ViewModel
 {
+    [ExcludeFromCodeCoverage]
     public struct ProfileHints
     {
         public static KeyValuePair<string, bool> ChangesSaved => new("Changes were saved successfully", true);

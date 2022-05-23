@@ -23,7 +23,7 @@ namespace MediaHub.Data.ProfileModule.ViewModel
             }
             catch (Exception ex)
             {
-                ILogService.Singleton.LogException("An unknown error occured while reading the userprofile from the database", ILogService.LogCategory.UserSuggestion, ex);
+                LogService.Singleton.LogException("An unknown error occured while reading the userprofile from the database", LogService.LogCategory.UserSuggestion, ex);
                 return null;
             }
         }
@@ -36,7 +36,7 @@ namespace MediaHub.Data.ProfileModule.ViewModel
             }
             catch (Exception e)
             {
-                ILogService.Singleton.LogException("An unknown error occured while reading the userprofile from the database", ILogService.LogCategory.Identity, e);
+                LogService.Singleton.LogException("An unknown error occured while reading the userprofile from the database", LogService.LogCategory.Identity, e);
                 return null;
             }
 
@@ -55,7 +55,7 @@ namespace MediaHub.Data.ProfileModule.ViewModel
             }
             catch (Exception e)
             {
-                ILogService.Singleton.LogException("An unknown Error occured, while updating the user profile", ILogService.LogCategory.Identity, e);
+                LogService.Singleton.LogException("An unknown Error occured, while updating the user profile", LogService.LogCategory.Identity, e);
                 throw;
             }
         }
