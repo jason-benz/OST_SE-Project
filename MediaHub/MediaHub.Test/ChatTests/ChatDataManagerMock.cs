@@ -13,22 +13,22 @@ public class ChatDataManagerMock : IChatDataManager
     {
         var message1 = new Message()
         {
-            Receiver = new UserProfile("Mock-Id1"),
-            Sender = new UserProfile("Mock-Id2"),
+            Receiver = new UserProfile("MockId-1"),
+            Sender = new UserProfile("MockId-2"),
             Content = "Message1"
         };
         _messages.Add(message1);
         var message2 = new Message()
         {
-            Receiver = new UserProfile("Mock-Id2"),
-            Sender = new UserProfile("Mock-Id1"),
+            Receiver = new UserProfile("MockId-2"),
+            Sender = new UserProfile("MockId-1"),
             Content = "Message2"
         };
         _messages.Add(message2);
         var message3 = new Message()
         {
-            Receiver = new UserProfile("Mock-Id5"),
-            Sender = new UserProfile("Mock-Id6"),
+            Receiver = new UserProfile("MockId-5"),
+            Sender = new UserProfile("MockId-6"),
             Content = "Message should not appear"
         };
         _messages.Add(message3);
@@ -38,8 +38,8 @@ public class ChatDataManagerMock : IChatDataManager
     {
         var message3 = new Message()
         {
-            Receiver = new UserProfile("Mock-Id4"),
-            Sender = new UserProfile("Mock-Id1"),
+            Receiver = new UserProfile("MockId-4"),
+            Sender = new UserProfile("MockId-1"),
             Content = "Message3"
         };
         _messages.Add(message3);
