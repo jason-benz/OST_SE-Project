@@ -3,7 +3,7 @@ using Serilog.Core;
 
 namespace MediaHub.Services;
 
-public class SerilogService : ILogService
+public class SerilogService : LogService
 {
     private Logger _logger;
     public SerilogService(Logger logger)
@@ -11,17 +11,17 @@ public class SerilogService : ILogService
         _logger = logger;
     }
 
-    public void LogInformation(string message, ILogService.LogCategory category)
+    public override void LogInformation(string message, LogService.LogCategory category)
     {
         _logger.Information(FormatString(message, category));
     }
 
-    public void LogException(string message, ILogService.LogCategory category, Exception exception)
+    public override void LogException(string message, LogService.LogCategory category, Exception exception)
     {
         _logger.Error(exception, FormatString(message, category));
     }
 
-    private string FormatString(string message, ILogService.LogCategory category)
+    private string FormatString(string message, LogService.LogCategory category)
     {
         return $"{category.ToString()} -> {message}";
     }

@@ -1,14 +1,14 @@
 namespace MediaHub.Data.PersistencyLayer;
 
-public class ILogService
+public abstract class LogService
 {
     public enum LogCategory
     {
         Chat, Media, Identity, UserSuggestion
     }
 
-    private static ILogService? _singleton = null;
-    public static ILogService? Singleton
+    private static LogService? _singleton = null;
+    public static LogService? Singleton
     {
         get
         {
@@ -24,6 +24,6 @@ public class ILogService
         }
     }
 
-    public void LogInformation(string message, LogCategory category);
-    public void LogException(string message, LogCategory category, Exception exception);
+    public abstract void LogInformation(string message, LogCategory category);
+    public abstract void LogException(string message, LogCategory category, Exception exception);
 }
