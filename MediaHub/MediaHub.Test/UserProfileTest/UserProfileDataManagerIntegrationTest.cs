@@ -2,6 +2,8 @@
 using MediaHub.Data.ProfileModule.Model;
 using MediaHub.Data.ProfileModule.Persistency;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace MediaHub.Test.UserProfileTest
@@ -17,7 +19,28 @@ namespace MediaHub.Test.UserProfileTest
             var actualUserProfile = _userProfileDataManager.GetUserProfileById(expectedUserProfile.UserId);
             RemoveTestUserProfileFromDB(expectedUserProfile);
 
-            Assert.True(actualUserProfile.Equals(expectedUserProfile));
+            Assert.Equal(expectedUserProfile, actualUserProfile);
+        }
+
+        [Fact]
+        public void GetUserProfileByIdLazyLoading()
+        {
+            var expectedUserProfile = InsertTestUserProfileInDB();
+            var actualUserProfile = _userProfileDataManager.GetUserProfileByIdLazyLoading(expectedUserProfile.UserId);
+            RemoveTestUserProfileFromDB(expectedUserProfile);
+
+            Assert.Equal(expectedUserProfile, actualUserProfile);
+            Assert.Null(actualUserProfile.Ratings);
+        }
+
+        [Fact]
+        public void GetUserProfileByIdNoTracking()
+        {
+            var expectedUserProfile = InsertTestUserProfileInDB();
+            var actualUserProfile = _userProfileDataManager.GetUserProfileByIdNoTracking(expectedUserProfile.UserId);
+            RemoveTestUserProfileFromDB(expectedUserProfile);
+
+            Assert.Equal(expectedUserProfile, actualUserProfile);
         }
 
         [Fact]
@@ -27,7 +50,34 @@ namespace MediaHub.Test.UserProfileTest
             var actualUserProfile = _userProfileDataManager.GetUserProfileByUsername(expectedUserProfile.Username);
             RemoveTestUserProfileFromDB(expectedUserProfile);
 
-            Assert.True(actualUserProfile.Equals(expectedUserProfile));
+            Assert.Equal(expectedUserProfile, actualUserProfile);
+        }
+
+        [Fact]
+        public void GetUserProfilesById_Single()
+        {
+            var expectedUserProfile = InsertTestUserProfileInDB();
+            var userIds = new List<string> { expectedUserProfile.UserId };
+
+            var actualUserProfiles = _userProfileDataManager.GetUserProfilesById(userIds);
+            RemoveTestUserProfileFromDB(expectedUserProfile);
+
+            Assert.Single(actualUserProfiles);
+            Assert.Equal(expectedUserProfile, actualUserProfiles.First());
+        }
+
+        [Fact]
+        public void GetUserProfilesById_Multiple()
+        {
+            var expectedUserProfile1 = InsertTestUserProfileInDB();
+            var expectedUserProfile2 = InsertTestUserProfileInDB();
+            var userIds = new List<string> { expectedUserProfile1.UserId, expectedUserProfile2.UserId };
+
+            var actualUserProfiles = _userProfileDataManager.GetUserProfilesById(userIds);
+            RemoveTestUserProfileFromDB(expectedUserProfile1);
+            RemoveTestUserProfileFromDB(expectedUserProfile2);
+
+            Assert.True(actualUserProfiles.Count() == 2);
         }
 
         [Fact]

@@ -17,12 +17,9 @@ namespace MediaHub.Test.MediaTableViewModelTest;
 
 public class MediaTableViewModelTest : IDisposable
 {
-    private MediaTableViewModel _vm;
-    private UserProfile profile;
-    private MediaRating rating;
-    private IMediaApi api;
-    private UserProfileDataManagerMock _userProfileDataManager;
-    private Movie movie;
+    private readonly MediaTableViewModel _vm;
+    private readonly UserProfile _profile;
+    private readonly Movie _movie;
 
     private class MockMovieAPI : IMediaApi
     {
@@ -33,41 +30,48 @@ public class MediaTableViewModelTest : IDisposable
 
         public Task<List<Movie>> Search(string query)
         {
-            throw new NotImplementedException();
+            throw new Exception("Movie not found");
         }
     }
 
     public MediaTableViewModelTest()
     {
-        api = new MockMovieAPI(); 
-        movie = api.GetMovieById(1).Result;
-        profile = new UserProfile("MockId-1");
-        _userProfileDataManager = new UserProfileDataManagerMock();
-        _userProfileDataManager.TestRating = new MediaRating()
+        IMediaApi api = new MockMovieAPI(); 
+        _movie = api.GetMovieById(1).Result;
+        _profile = new UserProfile("MockId-1");
+        var userProfileDataManager = new UserProfileDataManagerMock();
+        userProfileDataManager.TestRating = new MediaRating()
         {
-            MovieId = movie.Id,
-            Profile = profile,
+            MovieId = _movie.Id,
+            Profile = _profile,
             Rating = 10,
             IsAddedToProfile = true
         };
-        _vm = new MediaTableViewModel(api, _userProfileDataManager);
+        _vm = new MediaTableViewModel(api, userProfileDataManager);
         
     }
 
     [Fact, Trait("Category", "Unit")]
     public void TestMediaTableContainsMovie()
     {
-        IMediaTableViewModel.MovieAndRating mar = _vm.GetMoviesOfUserProfileByUserIdAsync(profile.UserId)
+        IMediaTableViewModel.MovieAndRating mar = _vm.GetMoviesOfUserProfileByUserIdAsync(_profile.UserId)
             .FirstOrDefault(new IMediaTableViewModel.MovieAndRating());
-        Assert.Equal(movie.Id, mar.Movie.Id);
+        Assert.Equal(_movie.Id, mar.Movie.Id);
     }
     
     [Fact, Trait("Category", "Unit")]
     public void TestMediaTableContainsRating()
     {
-        IMediaTableViewModel.MovieAndRating mar = _vm.GetMoviesOfUserProfileByUserIdAsync(profile.UserId)
+        IMediaTableViewModel.MovieAndRating mar = _vm.GetMoviesOfUserProfileByUserIdAsync(_profile.UserId)
             .FirstOrDefault(new IMediaTableViewModel.MovieAndRating());
         Assert.Equal(10, mar.UserRating);
+    }
+
+    [Fact, Trait("Category", "Unit")]
+    public void TestGetMoviesByNameAsyncOfUnknownMovieCatchesException()
+    {
+        var list = _vm.GetMoviesByNameAsync("asdf").Result;
+        Assert.Empty(list);
     }
     
     public void Dispose()
