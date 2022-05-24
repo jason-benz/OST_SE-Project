@@ -30,6 +30,8 @@ namespace MediaHub.Test.UserProfileTest
                     return profile;
                 case "MockId-2":
                     return null;
+                case "MockId-3":
+                    return new UserProfile(userId);
                 case "MockId-4":
                     var profile4 = new UserProfile(userId)
                     {

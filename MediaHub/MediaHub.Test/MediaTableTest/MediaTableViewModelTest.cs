@@ -58,6 +58,13 @@ public class MediaTableViewModelTest : IDisposable
             .FirstOrDefault(new IMediaTableViewModel.MovieAndRating());
         Assert.Equal(_movie.Id, mar.Movie.Id);
     }
+
+    [Fact, Trait("Category", "Unit")]
+    public void TestMediaTable_Empty()
+    {
+        var movieAndRatings = _vm.GetMoviesOfUserProfileByUserIdAsync("MockId-3").ToList();
+        Assert.Empty(movieAndRatings);
+    }
     
     [Fact, Trait("Category", "Unit")]
     public void TestMediaTableContainsRating()
