@@ -7,15 +7,17 @@ namespace MediaHub.Data.MessagingModule.ViewModel;
 
 public class ChatViewModel : IChatViewModel
 {
+    private readonly IChatDataManager _chatDataManager;
+    private readonly IUserProfileDataManager _userProfileDataManager;
+    private readonly IContactDataManager _contactDataManager;
+
     public event Action? RefreshRequested;
     public UserProfile? User { get; private set; }
     public UserProfile? Contact { get; private set; }
     public string? CurrentMessage { get; set; }
     public IEnumerable<UserProfile> ContactList { get; set; }
     public IEnumerable<Message> Messages { get; set; }
-    private readonly IChatDataManager _chatDataManager;
-    private readonly IUserProfileDataManager _userProfileDataManager;
-    private readonly IContactDataManager _contactDataManager;
+    
 
     public ChatViewModel(IChatDataManager chatDataManager, IUserProfileDataManager userProfileDataManager, IContactDataManager contactDataManager)
     {
@@ -27,14 +29,16 @@ public class ChatViewModel : IChatViewModel
         _contactDataManager = contactDataManager;
     }
 
+    public void OpenChat(string contactUserId)
+    {
+        SetContactById(contactUserId);
+        LoadAllMessagesForActiveChat();
+        RefreshRequested?.Invoke();
+    }
+
     public void SetUserById(string userId)
     {
         User = _userProfileDataManager.GetUserProfileByIdLazyLoading(userId);
-    }
-
-    private void SetContactById(string userId)
-    {
-        Contact = _userProfileDataManager.GetUserProfileByIdLazyLoading(userId);
     }
 
     public void LoadAllContactUserProfiles(string userId)
@@ -44,38 +48,9 @@ public class ChatViewModel : IChatViewModel
         ContactList = _userProfileDataManager.GetUserProfilesById(contactIds);
     }
 
-    public void LoadAllMessagesForActiveChat()
-    {
-        Messages = _chatDataManager.GetMessagesBetweenTwoUsers(Contact.UserId, User.UserId);
-    }
-
-    private Message? InsertMessage(string content)
-    {
-        if (User == null || Contact == null)
-        {
-            return null;
-        }
-
-        UserProfile senderProfile = User;
-        UserProfile receiverProfile = Contact;
-        DateTime timeSent = DateTime.Now;
-        Message m = new ();
-        m.Content = content;
-        m.Sender = senderProfile;
-        m.Receiver = receiverProfile;
-        m.TimeSent = timeSent;
-        _chatDataManager.InsertMessage(m);
-        return m;
-    }
-
-    private void ResetCurrentMessage()
-    {
-        CurrentMessage = "";
-    }
-
     public void SendMessage()
     {
-        if (Contact != null && CurrentMessage != null)
+        if (User != null && Contact != null && CurrentMessage != null)
         {
             InsertMessage(CurrentMessage);
             ResetCurrentMessage();
@@ -84,10 +59,32 @@ public class ChatViewModel : IChatViewModel
         }
     }
 
-    public void OpenChat(string contactUserId)
+    public void LoadAllMessagesForActiveChat()
     {
-        SetContactById(contactUserId);
-        LoadAllMessagesForActiveChat();
-        RefreshRequested?.Invoke();
+        Messages = _chatDataManager.GetMessagesBetweenTwoUsers(Contact.UserId, User.UserId);
+    }
+
+
+    private void SetContactById(string userId)
+    {
+        Contact = _userProfileDataManager.GetUserProfileByIdLazyLoading(userId);
+    }
+
+    private void InsertMessage(string content)
+    {
+        Message message = new()
+        {
+            Content = content,
+            Sender = User,
+            Receiver = Contact,
+            TimeSent = DateTime.Now
+        };
+
+        _chatDataManager.InsertMessage(message);
+    }
+
+    private void ResetCurrentMessage()
+    {
+        CurrentMessage = string.Empty;
     }
 }

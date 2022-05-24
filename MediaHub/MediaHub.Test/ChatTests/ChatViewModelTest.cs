@@ -21,13 +21,13 @@ public class ChatViewModelTest
     }
 
     [Fact, Trait("Category", "Unit")]
-    public void TestSetUserId()
+    public void SetUserId()
     {
         Assert.True(_chatViewModel.User?.UserId == "MockId-1");
     }
 
     [Fact, Trait("Category", "Unit")]
-    public void TestLoadAllContactUserProfiles()
+    public void LoadAllContactUserProfiles()
     {
         var userId = "MockId-1";
         var expectedContactId = $"{userId}-Contact";
@@ -39,7 +39,7 @@ public class ChatViewModelTest
     }
 
     [Fact, Trait("Category", "Unit")]
-    public void TestLoadAllContactUserProfiles_Empty()
+    public void LoadAllContactUserProfiles_Empty()
     {
         var userId = "MockId-3";
 
@@ -49,14 +49,14 @@ public class ChatViewModelTest
     }
 
     [Fact, Trait("Category", "Unit")]
-    public void TestOpenChatContactId()
+    public void OpenChatContactId()
     {
         _chatViewModel.OpenChat("MockId-4");
         Assert.True(_chatViewModel.Contact?.UserId == "MockId-4");
     }
 
     [Fact, Trait("Category", "Unit")]
-    public void TestOpenChatActiveMessages()
+    public void OpenChatActiveMessages()
     {
         _chatViewModel.OpenChat("MockId-4");
         foreach (var message in _chatViewModel.Messages)
@@ -67,7 +67,7 @@ public class ChatViewModelTest
     }
 
     [Fact, Trait("Category", "Unit")]
-    public void TestSendMessage()
+    public void SendMessage()
     {
         _chatViewModel.OpenChat("MockId-4");
         _chatViewModel.CurrentMessage = "Message3";
@@ -78,7 +78,22 @@ public class ChatViewModelTest
     }
 
     [Fact, Trait("Category", "Unit")]
-    public void TestSendMessage_AdditionalInvoke()
+    public void SendMessage_MessageNull()
+    {
+        var exception = Record.Exception(() => _chatViewModel.SendMessage());
+        Assert.Null(exception);
+    }
+
+    [Fact, Trait("Category", "Unit")]
+    public void SendMessage_UserNull()
+    {
+        _chatViewModel.OpenChat("MockId-1");
+        var exception = Record.Exception(() => _chatViewModel.SendMessage());
+        Assert.Null(exception);
+    }
+
+    [Fact, Trait("Category", "Unit")]
+    public void SendMessage_AdditionalInvoke()
     {
         _chatViewModel.RefreshRequested += () => Console.WriteLine("Test");
         _chatViewModel.OpenChat("MockId-4");
