@@ -60,10 +60,11 @@ public class ContactDataManager : IContactDataManager
     public bool AddContact(string userId, string contactId)
     {
         using MediaHubDBContext context = new();
-        var alreadyInDatabase = context.Contacts.Where(c => c.UserId == userId && c.ContactId == contactId ||
-                                    c.UserId == contactId && c.ContactId == userId);
+        var alreadyInDatabase = context.Contacts
+            .FirstOrDefault(c => (c.UserId == userId && c.ContactId == contactId) ||
+                                    (c.UserId == contactId && c.ContactId == userId));
 
-        if (alreadyInDatabase.Any())
+        if (alreadyInDatabase != null)
         {
             return false;
         }
