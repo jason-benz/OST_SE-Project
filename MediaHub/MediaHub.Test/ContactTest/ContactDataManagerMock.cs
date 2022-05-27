@@ -78,6 +78,8 @@ namespace MediaHub.Test.ContactTest
                         $"{userId}-Contact-1",
                         $"{userId}-Contact-2"
                     };
+                case "MockId-3":
+                    return new List<string>();
                 default:
                     throw new NotImplementedException();
             }

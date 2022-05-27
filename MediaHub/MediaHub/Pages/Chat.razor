@@ -13,10 +13,15 @@
 @inject IIdentityService _identityServiceInstance
 @inject IChatViewModel _chatViewModel
 @inject NavigationManager NavigationManager
+@inject IJSRuntime _jsRuntime
 
 @if (_identityServiceInstance.UserId == null)
 {
     <p>There is a problem with your profile. Please contact support.</p>
+}
+else if (!_chatViewModel.ContactList.Any())
+{
+    <p>No contacts were found. Please add some contacts to chat with.</p>
 }
 else
 {
@@ -24,103 +29,86 @@ else
         <div id="contactlist-container">
             <h2>Contact List:</h2>
             <ul id="contactlist">
-                @foreach (var contact in _userProfilesOfContacts)
+                @foreach (var contact in _chatViewModel.ContactList)
                 {
                     <li>
-                        @if (contact.UserId == _chatViewModel.Receiver?.UserId)
+                        @if (contact.UserId == _chatViewModel.Contact?.UserId)
                         {
-                            <button class="contactlist-element focus" @onclick="@(() => OpenChat(@contact.UserId))">@contact.Username</button>
+                            <button class="contactlist-element focus" @onclick="@(() => _chatViewModel.OpenChat(@contact.UserId))">@contact.Username</button>
                         }
                         else
                         {
-                            <button class="contactlist-element" @onclick="@(() => OpenChat(@contact.UserId))">@contact.Username</button>
+                            <button class="contactlist-element" @onclick="@(() => _chatViewModel.OpenChat(@contact.UserId))">@contact.Username</button>
                         }
                     </li>
                 }
             </ul>
         </div>
 
-        <div id="chat-input-and-messages-container">
-            <div id="chat-messages-container">
-                <div>
-                @foreach (var message in _messages)
-                {
-                    <div class="msg-line">
-                        @if (_identityServiceInstance.UserId.Equals(message.Sender.UserId))
-                        {
-                            <div class="single-msg sent-msg"> @message.Content </div>
-                        }
-                        else
-                        {
-                            <div class="single-msg received-msg"> @message.Content </div>
-                        }
-                    </div>
-                }
-                 </div>
+        @if (_chatViewModel.Contact != null)
+        {
+            <div id="chat-input-and-messages-container">
+                <div id="chat-messages-container">
+                    @foreach (var message in _chatViewModel.Messages)
+                    {
+                        <div class="msg-line">
+                            @if (_identityServiceInstance.UserId.Equals(message.Sender.UserId))
+                            {
+                                <div class="single-msg sent-msg"> @message.Content </div>
+                            }
+                            else
+                            {
+                                <div class="single-msg received-msg"> @message.Content </div>
+                            }
+                        </div>
+                    }
+                </div>
+                <div id="chat-input-container">
+                    <form @onsubmit=_chatViewModel.SendMessage>
+                        <input id="msg-input" type="text" placeholder="Type your message here" @bind="_chatViewModel.CurrentMessage" required/>
+                        <button id="send-msg-btn" type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
             </div>
-            <div id="chat-input-container">
-                <form @onsubmit=SendMessage>
-                    <input id="msg-input" type="text" placeholder="Type your message here" @bind="currentMessage" required/>
-                    <button id="send-msg-btn" type="submit" class="btn btn-primary">Send Message</button>
-                </form>
-            </div>
-        </div>
+        }
+        else
+        {
+            <p>Please select a contact to chat with.</p>
+        }
     </div>
 }
 
 @code
 {
-    private string currentMessage { get; set; }= "";
-    private List<Message> _messages = new();
-    private IEnumerable<MediaHub.Data.ProfileModule.Model.UserProfile> _userProfilesOfContacts;
-    private HubConnection? hubConnection;
-
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
+        _chatViewModel.RefreshRequested += RefreshPage;
         string userId = _identityServiceInstance.UserId;
-        SetupHubEndpoints();
-        _chatViewModel.SetSenderById(userId);
-        _userProfilesOfContacts = _chatViewModel.GetAllContactUserProfiles(userId);
-    }
-    
-    async void SendMessage()
-    {
-        var m = _chatViewModel.InsertMessage(currentMessage);
-        if (m == null)
-        {
-            return;
-        }
-        _messages.Add(m);
-        if (hubConnection is not null)
-        {
-            await hubConnection.SendAsync("SendMessage", m);
-        }
-        currentMessage = "";
+        _chatViewModel.SetUserById(userId);
+        _chatViewModel.LoadAllContactUserProfiles(userId);
+        StartPollingMessages();
     }
 
-    public void OpenChat(string userId)
+    protected async override Task OnAfterRenderAsync(bool firstRender)
     {
-        _chatViewModel.SetReceiverById(userId);
-        _messages = _chatViewModel.GetAllMessagesForActiveChat();
-    }
-
-    public void ReceiveMessage(Message m)
-    {
-        if (m.Receiver.UserId == _identityServiceInstance.UserId && m.Sender.UserId == _chatViewModel.Receiver.UserId)
+        if (!firstRender)
         {
-            _messages.Add(m);
-            InvokeAsync(StateHasChanged);
+            await _jsRuntime.InvokeVoidAsync("ScrollToBottom");
         }
     }
-    
-    public async void SetupHubEndpoints()
-    {
-        hubConnection = new HubConnectionBuilder()
-            .WithUrl(NavigationManager.ToAbsoluteUri("/chathub")).Build();
-        
-        hubConnection.On("ReceiveMessage", (Message message) => ReceiveMessage(message));
 
-        await hubConnection.StartAsync();
+    async Task StartPollingMessages()
+    {
+        while (true)
+        {
+            await Task.Delay(2000);
+            _chatViewModel.LoadAllMessagesForActiveChat();
+        }
+    }
+
+    private void RefreshPage()
+    {
+        StateHasChanged();
     }
 }
 
