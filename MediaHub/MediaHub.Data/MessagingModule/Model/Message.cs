@@ -16,7 +16,6 @@ public class Message
     public UserProfile? Receiver { get; set; }
     [Column(Order = 3)]
     public DateTime TimeSent { get; set; }
-    // TODO Implement logic for timereceived field 
     public DateTime? TimeReceived { get; set; }
     public string Content { get; set; }
 }
