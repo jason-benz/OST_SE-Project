@@ -61,9 +61,17 @@ public class ChatViewModel : IChatViewModel
 
     public void LoadAllMessagesForActiveChat()
     {
-        Messages = _chatDataManager.GetMessagesBetweenTwoUsers(Contact.UserId, User.UserId);
-    }
+        if (Contact != null && User != null)
+        {
+            var oldMessageCount = Messages.Count();
+            Messages = _chatDataManager.GetMessagesBetweenTwoUsers(Contact.UserId, User.UserId);
 
+            if (oldMessageCount != Messages.Count())
+            {
+                RefreshRequested?.Invoke();
+            }
+        }
+    }
 
     private void SetContactById(string userId)
     {
