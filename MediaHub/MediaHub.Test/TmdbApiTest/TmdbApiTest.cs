@@ -12,23 +12,41 @@ public class TmdbApiTest
         tmdb = new TmdbApi();
     }
 
-    /* Note to devs:
-      Insert a breakpoint in the tests and check whether values seem to be correct, before pushing code.
-      Cannot be done automatically as Search is non-deterministic. */
+    /// <summary>
+    /// Note to devs:
+    /// Insert a breakpoint in the tests and check whether values seem to be correct, before pushing code.
+    /// Cannot be done automatically as Search is non-deterministic.
+    /// </summary>
     [Fact]
-    public async void TestSearchEndpoint()
+    public void TmdbSearch_Multiple()
     {
-        var res = await tmdb.Search("matrix");
-        foreach (var movie in res)
+        var searchResult = tmdb.Search("matrix").Result;
+        foreach (var movie in searchResult)
         {
             Assert.NotNull(movie);
         }
     }
 
     [Fact]
-    public async void TestMovieEndpoint()
+    public void TmdbSearch_Empty()
     {
-        var movie = await tmdb.GetMovieById(675353);
+        var searchResult = tmdb.Search(string.Empty).Result;
+        Assert.Empty(searchResult);
+    }
+
+    [Fact]
+    public void TmdbGetMovieById()
+    {
+        var movieId = 675353;
+        var movie = tmdb.GetMovieById(movieId).Result;
         Assert.NotNull(movie);
+        Assert.Equal(movieId, movie.Id);
+    }
+
+    [Fact]
+    public void TmdbGetMovieById_NoResult()
+    {
+        var movie = tmdb.GetMovieById(-1).Result;
+        Assert.Null(movie);
     }
 }

@@ -5,11 +5,23 @@ namespace MediaHub.Data.MessagingModule.ViewModel;
 
 public interface IChatViewModel
 {
-    public UserProfile Receiver { get; }
-    public UserProfile Sender { get; }
-    public Message? InsertMessage(string content);
-    public List<Message> GetAllMessagesForActiveChat();
-    public void SetReceiverById(string userId);
-    public void SetSenderById(string userId);
-    public IEnumerable<UserProfile> GetAllContactUserProfiles(string userId);
+    public event Action RefreshRequested;
+
+    public UserProfile? Contact { get; }
+    
+    public string CurrentMessage { get; set; }
+    
+    public IEnumerable<UserProfile> ContactList { get; set; }
+    
+    public IEnumerable<Message> Messages { get; set; }
+    
+    public void OpenChat(string contactUserId);
+
+    public void SetUserById(string userId);
+    
+    public void LoadAllContactUserProfiles(string userId);
+    
+    public void SendMessage();
+    
+    public void LoadAllMessagesForActiveChat();
 }
