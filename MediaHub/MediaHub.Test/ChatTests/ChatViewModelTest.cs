@@ -104,6 +104,14 @@ public class ChatViewModelTest
         Assert.Single(newMessages);
     }
 
+    [Fact, Trait("Category", "Unit")]
+    public void LoadAllMessagesForActiveChat_Empty()
+    {
+        _chatViewModel.LoadAllMessagesForActiveChat();
+        Assert.Null(_chatViewModel.Contact);
+        Assert.Empty(_chatViewModel.Messages);
+    }
+
     private static bool IsReceiverOrSender(string userId, Message message)
     {
         return message?.Receiver?.UserId == userId || message?.Sender.UserId == userId;
