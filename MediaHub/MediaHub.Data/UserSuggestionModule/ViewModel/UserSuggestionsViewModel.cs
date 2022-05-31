@@ -23,7 +23,7 @@ namespace MediaHub.Data.UserSuggestionModule.ViewModel
             } 
             catch(Exception ex)
             {
-                LogService.Singleton.LogException("An unknown error occured while loading user suggestions", LogService.LogCategory.Identity, ex);
+                LogService.Singleton!.LogException("An unknown error occured while loading user suggestions", LogService.LogCategory.Identity, ex);
                 return new List<UserSuggestion>();
             }
         }
@@ -37,7 +37,7 @@ namespace MediaHub.Data.UserSuggestionModule.ViewModel
             }
             catch (Exception ex)
             {
-                LogService.Singleton.LogException("An unknown error occured while ignoring the user suggestion", LogService.LogCategory.Identity, ex);
+                LogService.Singleton!.LogException("An unknown error occured while ignoring the user suggestion", LogService.LogCategory.Identity, ex);
             }
         }
 
@@ -49,7 +49,7 @@ namespace MediaHub.Data.UserSuggestionModule.ViewModel
             }
             catch (Exception ex)
             {
-                LogService.Singleton.LogException("An unknown error occured while adding the user suggestion to the contacts", LogService.LogCategory.Identity, ex);
+                LogService.Singleton!.LogException("An unknown error occured while adding the user suggestion to the contacts", LogService.LogCategory.Identity, ex);
             }
         }
     }

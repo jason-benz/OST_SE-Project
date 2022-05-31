@@ -1,7 +1,5 @@
 using MediaHub.Data.ContactsModule.Model;
-using MediaHub.Data.Migrations;
 using MediaHub.Data.PersistencyLayer;
-using MediaHub.Data.ProfileModule.Model;
 using Microsoft.EntityFrameworkCore;
 
 namespace MediaHub.Data.ContactsModule.Persistency;
@@ -87,7 +85,7 @@ public class ContactDataManager : IContactDataManager
         var contact = context.Contacts
             .Where(c => c.UserId == userId && c.ContactId == contactId ||
                 c.UserId == contactId && c.ContactId == userId)
-            .Where(c => c.IsBlocked == false && c.OpenRequest == false);
+            .Where(c => !(c.IsBlocked || c.OpenRequest));
         if (contact.Any())
         {
             return true;
@@ -118,7 +116,7 @@ public class ContactDataManager : IContactDataManager
         var contact = context.Contacts
             .FirstOrDefault(c => (c.UserId == userId && c.ContactId == contactId) ||
                         (c.UserId == contactId && c.ContactId == userId) &&
-                        (c.OpenRequest == true));
+                        (c.OpenRequest));
 
         if (contact != null)
         {
@@ -135,7 +133,7 @@ public class ContactDataManager : IContactDataManager
         var contacts = context.Contacts
             .Include(c => c.UserProfile)
             .Include(c => c.ContactUserProfile)   
-            .Where(c => c.ContactId == userId && c.OpenRequest == true);
+            .Where(c => c.ContactId == userId && c.OpenRequest);
         return contacts.ToList();
     }
 }

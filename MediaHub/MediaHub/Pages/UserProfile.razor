@@ -43,7 +43,6 @@ else
 @code {
     private Data.ProfileModule.Model.UserProfile? _userProfile;
     private List<Movie> _media = new List<Movie>();
-    private IEnumerable<MediaRating> _userRatings;
     private IEnumerable<IMediaTableViewModel.MovieAndRating>? _moviesAndRatings;
 
     [Parameter]
@@ -59,7 +58,7 @@ else
         string userId;
         if(Username == null)
         {
-            userId = _identityServiceInstance.UserId;
+            userId = _identityServiceInstance.UserId!;
             _userProfile = _userProfileServiceInstance.GetUserProfileById(userId);
         }
         else
@@ -67,6 +66,7 @@ else
             _userProfile = _userProfileServiceInstance.GetUserProfileByUsername(Username);
             userId = _userProfile==null?null:_userProfile.UserId;
         }
+
         _moviesAndRatings = _mediaTableViewModel.GetMoviesOfUserProfileByUserIdAsync(userId);
     }
 }

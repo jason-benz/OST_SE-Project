@@ -1,7 +1,7 @@
-﻿using MediaHub.Data.MessagingModule.Model;
+﻿using MediaHub.Data.ChatModule.Model;
 using MediaHub.Data.ProfileModule.Model;
 
-namespace MediaHub.Data.MessagingModule.ViewModel;
+namespace MediaHub.Data.ChatModule.ViewModel;
 
 public interface IChatViewModel
 {
