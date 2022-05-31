@@ -43,7 +43,7 @@ else
 
     protected override void OnInitialized()
     {
-        _personalUserId = _identityServiceInstance.UserId;
+        _personalUserId = _identityServiceInstance.UserId!;
         _suggestions = _userSuggestionsViewModel.GetUserSuggestions(_personalUserId, false);
     }
 

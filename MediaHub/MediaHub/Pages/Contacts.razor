@@ -67,7 +67,7 @@ else
 
     protected override void OnInitialized()
     {
-        _personalUserId = _identityServiceInstance.UserId;
+        _personalUserId = _identityServiceInstance.UserId!;
     }
 
     private void ChooseContactProfile(Contact contact)

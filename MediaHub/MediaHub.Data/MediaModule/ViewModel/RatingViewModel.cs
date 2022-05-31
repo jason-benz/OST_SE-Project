@@ -8,8 +8,8 @@ namespace MediaHub.Data.MediaModule.ViewModel;
 public class RatingViewModel : IRatingViewModel
 {
     private MediaRating? _rating;
-    private UserProfile _profile;
-    private Movie _movie;
+    private UserProfile? _profile;
+    private Movie? _movie;
     private readonly IUserProfileDataManager _profileDataManager;
     private readonly IUserSuggestionEngine _userSuggestionEngine;
     private readonly IFeedService _feedService;
@@ -54,13 +54,13 @@ public class RatingViewModel : IRatingViewModel
 
     private void LoadRatings()
     {
-        bool ratingsExist = _profile.Ratings.Any(r => r.MovieId == _movie.Id);
+        bool ratingsExist = _profile!.Ratings.Any(r => r.MovieId == _movie!.Id);
         if (!ratingsExist)
             MakeNewRatingForProfile();
         else
         {
             _rating = _profile.Ratings
-                           .Where(r => r.MovieId == _movie.Id)
+                           .Where(r => r.MovieId == _movie!.Id)
                            .FirstOrDefault(new MediaRating());
         }
 
@@ -70,17 +70,17 @@ public class RatingViewModel : IRatingViewModel
     {
         _rating = new MediaRating()
         {
-            Profile = _profile, 
-            MovieId = _movie.Id 
+            Profile = _profile!, 
+            MovieId = _movie!.Id 
         };
-        _profile.Ratings.Add(_rating);
+        _profile!.Ratings.Add(_rating);
     }
 
     private void UpdateProfile()
     {
-        _profileDataManager.UpdateUserProfile(_profile);
-        _userSuggestionEngine.StartUserSuggestionEngine(_profile.UserId);
-        _feedService.AddToFeed(_profile.UserId, Table.MediaRating, _movie.Title);
+        _profileDataManager.UpdateUserProfile(_profile!);
+        _userSuggestionEngine.StartUserSuggestionEngine(_profile!.UserId);
+        _feedService.AddToFeed(_profile.UserId, Table.MediaRating, _movie!.Title);
     }
 
     private void ExceptionIfNotLoadedFirst()
