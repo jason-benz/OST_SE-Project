@@ -34,7 +34,7 @@ public class MediaTableViewModel : IMediaTableViewModel
             }
             return moviesAndRatings;
         }
-        catch (Exception)
+        catch (Exception) //Expected behavior: _api.Search might throw on unrecognized patterns.
         {
             return new List<IMediaTableViewModel.MovieAndRating>();
         }
