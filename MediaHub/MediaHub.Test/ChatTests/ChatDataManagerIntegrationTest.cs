@@ -1,5 +1,5 @@
-﻿using MediaHub.Data.MessagingModule.Model;
-using MediaHub.Data.MessagingModule.Persistency;
+﻿using MediaHub.Data.ChatModule.Model;
+using MediaHub.Data.ChatModule.Persistency;
 using MediaHub.Data.PersistencyLayer;
 using MediaHub.Data.ProfileModule.Model;
 using System;

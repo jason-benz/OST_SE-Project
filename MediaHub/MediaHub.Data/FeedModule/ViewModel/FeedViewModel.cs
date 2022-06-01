@@ -1,4 +1,5 @@
 ﻿using MediaHub.Data.FeedModule.Model;
+using MediaHub.Data.PersistencyLayer;
 
 namespace MediaHub.Data.FeedModule.ViewModel
 {
@@ -45,7 +46,18 @@ namespace MediaHub.Data.FeedModule.ViewModel
 
         public void LoadFeedItems()
         {
-            LoadFilteredFeedItems(FilterbarViewModel.FilterSettings);
+            try
+            {
+                LoadFilteredFeedItems(FilterbarViewModel.FilterSettings);
+            }
+            catch (Exception ex)
+            {
+                LogService.Singleton.LogException("An unknown error occured while loading feed items from the database", LogService.LogCategory.Identity, ex);
+                if (FeedItems == null)
+                {
+                    FeedItems = new List<FeedItem>();
+                }
+            }
         }
 
         private void LoadFilteredFeedItems(Dictionary<string, bool> filterSettings)

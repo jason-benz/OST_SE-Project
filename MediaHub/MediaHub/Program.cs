@@ -8,13 +8,13 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using MediaHub.Data.MediaModule.ViewModel;
-using MediaHub.Data.MessagingModule.Model;
+using MediaHub.Data.ChatModule.Model;
 using MediaHub.Data.UserSuggestionModule.ViewModel;
 using MediaHub.Data.ProfileModule.ViewModel;
 using MediaHub.Data.PersistencyLayer;
-using MediaHub.Data.MessagingModule.ViewModel;
+using MediaHub.Data.ChatModule.ViewModel;
 using MediaHub.Data.ProfileModule.Persistency;
-using MediaHub.Data.MessagingModule.Persistency;
+using MediaHub.Data.ChatModule.Persistency;
 using MediaHub.Data.MediaModule.Persistency;
 using MediaHub.Data.UserSuggestionModule.Persistency;
 using MediaHub.Data.FeedModule.ViewModel;
@@ -37,7 +37,7 @@ LogService.Singleton = new SerilogService(logger);
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlServer(connectionString!));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -48,7 +48,7 @@ builder.Services.AddResponseCompression(opts =>
     opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
         new[] { "application/octet-stream" });
 });
-builder.Services.AddServerSideBlazor().AddCircuitOptions(options => { options.DetailedErrors = true; }); // TODO Remove circuit options
+builder.Services.AddServerSideBlazor().AddCircuitOptions(options => { options.DetailedErrors = true; });
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 builder.Services.AddScoped<IIdentityService>(_ => new IdentityService());

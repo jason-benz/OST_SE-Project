@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using MediaHub.Data.MessagingModule.Model;
+using MediaHub.Data.ChatModule.Model;
 using MediaHub.Data.ProfileModule.Model;
 
 namespace MediaHub.Test.ChatTests;

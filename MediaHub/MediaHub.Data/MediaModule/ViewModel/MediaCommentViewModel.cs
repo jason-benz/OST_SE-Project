@@ -18,7 +18,7 @@ public class MediaCommentViewModel : IMediaCommentViewModel
             _mediaCommentDataManager.AddComment(mediaId, userId, text);
         } catch (Exception ex)
         {
-            LogService.Singleton.LogException("An error occured while adding a Media Comment to the Database", LogService.LogCategory.Identity, ex);
+            LogService.Singleton!.LogException("An error occured while adding a Media Comment to the Database", LogService.LogCategory.Identity, ex);
             throw;
         }
     }
@@ -30,7 +30,7 @@ public class MediaCommentViewModel : IMediaCommentViewModel
             return _mediaCommentDataManager.LoadComments(mediaId);
         } catch (Exception ex)
         {
-            LogService.Singleton.LogException("An unknown error occured while loading Media Comments from Database", LogService.LogCategory.Identity, ex);
+            LogService.Singleton!.LogException("An unknown error occured while loading Media Comments from Database", LogService.LogCategory.Identity, ex);
             return new List<MediaComment>();
         }
     }
@@ -42,7 +42,7 @@ public class MediaCommentViewModel : IMediaCommentViewModel
             _mediaCommentDataManager.UpdateComment(Id, userId, text);
         } catch(Exception ex)
         {
-            LogService.Singleton.LogException("An error occured while updating a Media Comments in Database", LogService.LogCategory.Identity, ex);
+            LogService.Singleton!.LogException("An error occured while updating a Media Comments in Database", LogService.LogCategory.Identity, ex);
             throw;
         }
     }
@@ -55,7 +55,7 @@ public class MediaCommentViewModel : IMediaCommentViewModel
         }
         catch (Exception ex)
         {
-            LogService.Singleton.LogException("An error occured while deleting a Media Comment from Database", LogService.LogCategory.Identity, ex);
+            LogService.Singleton!.LogException("An error occured while deleting a Media Comment from Database", LogService.LogCategory.Identity, ex);
             throw;
         }
     }

@@ -5,8 +5,8 @@ namespace MediaHub.Data.MediaModule.ViewModel;
 
 public class MediaTableViewModel : IMediaTableViewModel
 {
-    private IMediaApi _api;
-    private IUserProfileDataManager _userProfileDataManager;
+    private readonly IMediaApi _api;
+    private readonly IUserProfileDataManager _userProfileDataManager;
 
     public MediaTableViewModel(IMediaApi api, IUserProfileDataManager userProfileDataManager)
     {

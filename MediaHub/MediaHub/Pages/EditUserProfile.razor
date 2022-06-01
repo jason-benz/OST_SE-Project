@@ -42,7 +42,7 @@ else
 
 @code {
     private Data.ProfileModule.Model.UserProfile _userProfile;
-    private KeyValuePair<string, bool> _showedHint = new (string.Empty, false);
+    private KeyValuePair<string, bool> _showedHint = new (string.Empty, true);
 
     private string _newUsername = string.Empty;
     private string NewUsername
@@ -53,8 +53,8 @@ else
 
     protected override void OnInitialized()
     {
-        string userId = _identityServiceInstance.UserId;
-        _userProfile = _userProfileViewModel.GetUserProfileById(userId);
+        string userId = _identityServiceInstance.UserId!;
+        _userProfile = _userProfileViewModel.GetUserProfileById(userId)!;
     }
 
     private void SaveChanges()

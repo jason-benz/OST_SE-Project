@@ -13,7 +13,7 @@ public class ContactViewModel : IContactViewModel
 
     public List<Contact> GetContacts(string userId)
     {
-        return _contactDataManager.GetContacts(userId);;
+        return _contactDataManager.GetContacts(userId);
     }
 
     public List<string> GetContactIds(string userId)

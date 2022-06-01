@@ -1,7 +1,7 @@
 ﻿@page "/chat"
 
-@using MediaHub.Data.MessagingModule.Model
-@using MediaHub.Data.MessagingModule.ViewModel
+@using MediaHub.Data.ChatModule.Model
+@using MediaHub.Data.ChatModule.ViewModel
 @using MediaHub.Services
 @using Microsoft.AspNetCore.Routing.Matching
 @using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
@@ -82,8 +82,8 @@ else
 {
     protected override void OnInitialized()
     {
-        _chatViewModel.RefreshRequested += RefreshPage;
-        string userId = _identityServiceInstance.UserId;
+        _chatViewModel.RefreshRequested += StateHasChanged;
+        string userId = _identityServiceInstance.UserId!;
         _chatViewModel.SetUserById(userId);
         _chatViewModel.LoadAllContactUserProfiles(userId);
         StartPollingMessages();
@@ -104,11 +104,6 @@ else
             await Task.Delay(2000);
             _chatViewModel.LoadAllMessagesForActiveChat();
         }
-    }
-
-    private void RefreshPage()
-    {
-        StateHasChanged();
     }
 }
 

@@ -1,4 +1,4 @@
-﻿namespace MediaHub.Data.MessagingModule.Model;
+﻿namespace MediaHub.Data.ChatModule.Model;
 
 public interface IChatDataManager
 {

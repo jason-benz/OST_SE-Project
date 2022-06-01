@@ -4,7 +4,7 @@ namespace MediaHub.Data.ContactsModule.Model;
 
 public interface IContactDataManager
 {
-    public Contact GetContact(string userId);
+    public Contact? GetContact(string userId);
     public List<Contact> GetContacts(string userId);
     public List<string> GetContactIds(string userId);
     public bool RemoveContact(string userId, string contactId);
