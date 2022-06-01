@@ -27,14 +27,14 @@ public class Movie
         return Id == other.Id
                && string.Equals(Title, other.Title)
                && string.Equals(PosterUrl, other.PosterUrl)
-               && compareGenres(Genres, other.Genres) //Genres.All(other.Genres.Contains))
+               && CompareGenres(Genres!, other.Genres!) //Genres.All(other.Genres.Contains))
                && Equals(Rating, other.Rating)
                && string.Equals(Overview, other.Overview)
                && string.Equals(Runtime, other.Runtime)
                && string.Equals(ReleaseDate, other.ReleaseDate);
     }
 
-    private bool compareGenres(List<string> genres1, List<string> genres2)
+    private bool CompareGenres(List<string> genres1, List<string> genres2)
     {
         var firstNotSecond = genres1.Except(genres2).ToList();
         var secondNotFirst = genres2.Except(genres1).ToList();

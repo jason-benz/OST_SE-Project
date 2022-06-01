@@ -1,4 +1,3 @@
-using MediaHub.Data.ProfileModule.Model;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,4 +13,11 @@ public class MediaComment
     public string UserId { get; set; }
     public DateTime Created { get; set; }
     public string CommentText { get; set; }
+
+#pragma warning disable CS8618
+    /// <summary>
+    /// Empty ctor needed for EF
+    /// </summary>
+    public MediaComment() { }
+#pragma warning restore CS8618
 }

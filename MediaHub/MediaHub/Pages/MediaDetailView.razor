@@ -25,7 +25,7 @@
             <button class="btn btn-primary" @onclick="_ratingViewModel.ToggleIsAddedToProfile"><span class="oi oi-plus" aria-hidden="true"></span> Add to favorites</button>
         }
     </div>
-    <img alt="Poster" width="100px" src="@_movie.PosterUrl">
+    <img alt="Poster" src="@_movie.PosterUrl">
     <table class="media-data-table">
         <tbody>
             <tr>
@@ -110,12 +110,12 @@
 
     private string _userId;
 
-    private Movie? _movie;
+    private Movie _movie;
 
     private List<MediaComment>? _mediaComments;
 
-    private string _addCommentText;
-    private string _editCommentText;
+    private string? _addCommentText;
+    private string? _editCommentText;
     private int _editCommentId;
 
     private bool _showAddComment = false;
@@ -125,8 +125,8 @@
     {
         if (!string.IsNullOrWhiteSpace(_addCommentText))
         {
-           _mediaCommentViewModel.AddComment(_movie.Id, _userId, _addCommentText);
-           LoadComments();
+            _mediaCommentViewModel.AddComment(_movie.Id, _userId, _addCommentText);
+            LoadComments();
         }
         ToggleShowAddComment();
     }

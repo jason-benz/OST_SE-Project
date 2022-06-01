@@ -39,7 +39,7 @@ else
     protected override void OnInitialized()
     {
         _feedViewModel.RefreshRequested += RefreshPage;
-        _feedViewModel.UserId = _identityServiceInstance.UserId;
+        _feedViewModel.UserId = _identityServiceInstance.UserId!;
         _feedViewModel.LoadFeedItems();
     }
 

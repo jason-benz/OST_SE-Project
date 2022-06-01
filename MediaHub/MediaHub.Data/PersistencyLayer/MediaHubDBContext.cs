@@ -1,7 +1,7 @@
 using MediaHub.Data.ContactsModule.Model;
 using MediaHub.Data.FeedModule.Model;
 using MediaHub.Data.MediaModule.Model;
-using MediaHub.Data.MessagingModule.Model;
+using MediaHub.Data.ChatModule.Model;
 using MediaHub.Data.ProfileModule.Model;
 using MediaHub.Data.UserSuggestionModule.Model;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +23,7 @@ public class MediaHubDBContext : DbContext
 
     public DbSet<MediaComment> MediaComments { get; set; }
 
+#pragma warning disable CS8618
     public MediaHubDBContext()
     {
     }
@@ -30,7 +31,7 @@ public class MediaHubDBContext : DbContext
     public MediaHubDBContext(DbContextOptions options) : base(options)
     {
     }
-
+#pragma warning restore CS8618
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)

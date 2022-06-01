@@ -1,5 +1,3 @@
-using MediaHub.Data.MediaModule.Model;
-
 namespace MediaHub.Data.MediaModule.Model;
 
 public interface IMediaCommentDataManager

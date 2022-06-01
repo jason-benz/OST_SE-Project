@@ -18,6 +18,13 @@ namespace MediaHub.Data.UserSuggestionModule.Model
 
         public bool IgnoreSuggestion { get; set; }
 
+#pragma warning disable CS8618
+        /// <summary>
+        /// Empty ctor needed for EF
+        /// </summary>
+        public UserSuggestion() { }
+#pragma warning restore CS8618
+
         /// <summary>
         /// Compares all UserSuggestion properties
         /// </summary>

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
-using MediaHub.Data.MessagingModule.Model;
-using MediaHub.Data.MessagingModule.ViewModel;
+using MediaHub.Data.ChatModule.Model;
+using MediaHub.Data.ChatModule.ViewModel;
 using MediaHub.Pages;
 using MediaHub.Test.ContactTest;
 using MediaHub.Test.UserProfileTest;

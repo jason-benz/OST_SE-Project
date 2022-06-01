@@ -24,9 +24,16 @@ public class MediaRating
         {
             if (value > RatingRangeMax)
             {
-                throw new ArgumentOutOfRangeException("Rating cannot be greater than 10");
+                throw new ArgumentOutOfRangeException("Rating", "Rating cannot be greater than 10");
             }
             _rating = value;
         }
     }
+
+#pragma warning disable CS8618
+    /// <summary>
+    /// Empty ctor needed for EF
+    /// </summary>
+    public MediaRating() { }
+#pragma warning restore CS8618
 }

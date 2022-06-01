@@ -57,7 +57,7 @@
 }
 else
 {
-    <p>No contacts were found.</p>
+    <p>No contacts were found. Please check your user suggestions to add some contacts.</p>
 }
 
 @code {
@@ -67,7 +67,7 @@ else
 
     protected override void OnInitialized()
     {
-        _personalUserId = _identityServiceInstance.UserId;
+        _personalUserId = _identityServiceInstance.UserId!;
     }
 
     private void ChooseContactProfile(Contact contact)
