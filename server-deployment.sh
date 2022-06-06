@@ -3,7 +3,7 @@
 PROJECT="MediaHub"
 VERSION="1.0.0"
 CONTAINER_NAME="mediahubapplication"
-CODEFOLDER=/tmp/code
+CODEFOLDER=/code/code
 
 echo "Script version ${VERSION}"
 echo "Starting to update the deplyoment of ${PROJECT} "
@@ -13,8 +13,8 @@ checkout_repository () {
     cd ${CODEFOLDER}
     git reset --hard
     git pull
-    cp /tmp/config/appsettings.json ${CODEFOLDER}/MediaHub/MediaHub/appsettings.json
-    cp /tmp/config/appsettings_data.json ${CODEFOLDER}/MediaHub/MediaHub.Data/appsettings.json
+    cp /code/config/appsettings.json ${CODEFOLDER}/MediaHub/MediaHub/appsettings.json
+    cp /code/config/appsettings_data.json ${CODEFOLDER}/MediaHub/MediaHub.Data/appsettings.json
     echo "Repository updated"
 }
 
