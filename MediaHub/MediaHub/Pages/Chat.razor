@@ -31,16 +31,7 @@ else
             <ul id="contactlist">
                 @foreach (var contact in _chatViewModel.ContactList)
                 {
-                    <li>
-                        @if (contact.UserId == _chatViewModel.Contact?.UserId)
-                        {
-                            <button class="contactlist-element focus" @onclick="@(() => _chatViewModel.OpenChat(@contact.UserId))">@contact.Username</button>
-                        }
-                        else
-                        {
-                            <button class="contactlist-element" @onclick="@(() => _chatViewModel.OpenChat(@contact.UserId))">@contact.Username</button>
-                        }
-                    </li>
+                    <li><button class="btn btn-primary @(contact.UserId == _chatViewModel.Contact?.UserId?"focus":"")" @onclick="@(() => _chatViewModel.OpenChat(@contact.UserId))">@contact.Username</button></li>
                 }
             </ul>
         </div>
@@ -52,14 +43,7 @@ else
                     @foreach (var message in _chatViewModel.Messages)
                     {
                         <div class="msg-line">
-                            @if (_identityServiceInstance.UserId.Equals(message.Sender.UserId))
-                            {
-                                <div class="single-msg sent-msg"> @message.Content </div>
-                            }
-                            else
-                            {
-                                <div class="single-msg received-msg"> @message.Content </div>
-                            }
+                            <div class="single-msg @(_identityServiceInstance.UserId.Equals(message.Sender.UserId)?"sent-msg":"received-msg")"> @message.Content </div>
                         </div>
                     }
                 </div>
