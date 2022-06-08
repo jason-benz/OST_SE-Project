@@ -311,13 +311,17 @@ a, .btn-link {
 }
 
 #contactlist > li{
-    margin-top: 15px;
+    margin-top: 8px;
 }
 
 #contactlist-container {
     width: fit-content;
     overflow-y: auto;
     flex-basis: 20%;
+}
+
+#contactlist-container > h2{
+    margin-bottom: 20px;
 }
 
 #chat-input-and-messages-container {
@@ -384,22 +388,24 @@ button.focus {
     margin-right: 2em;
 }
 
-.contactlist-element {
-    border-radius: 1em;
-    border-style: none;
+#contactlist button {
+    padding: 4px 8px;
+    margin-top: 0;
     width: 100%;
-    background-color: dodgerblue;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    border: hidden;
 }
+
+#contactlist button.focus{
+    background-color: #0d6efd;
+}
+
 
 .userProfileOverview {
     display: grid;
-    grid:
-        "title1 title1" auto
-        "image title2" 35px
-        "image movies" 280px
-        "biography movies" 20vh
-        "genres movies" 40vh
-        / 1fr 1.5fr;
+    grid: "title1 title1" auto "image title2" 35px "image movies" 280px "biography movies" 20vh "genres movies" 40vh / 1fr 1.5fr;
     column-gap: 50px;
     max-width: 100vw;
     margin: auto;
