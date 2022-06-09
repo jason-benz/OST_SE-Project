@@ -22,7 +22,7 @@ else
 {
     <div class="userProfileOverview">
         <div class="profile-page-heading">
-            @if(Username == null)
+            @if(_isMyProfile)
             {
                 <NavLink href="editUserProfile" ><button class="btn btn-secondary oi oi-pencil"/></NavLink>
             }
@@ -35,7 +35,7 @@ else
         </div>
         <h2>Media added to profile:</h2>
         <div class="addedMovies">
-            <MediaTable DisplayUserRatings="true" ShowReleaseDate="false" MoviesAndRatings="_moviesAndRatings" AlternativeText="There is currently no media added to this profile"/>
+            <MediaTable MyProfile="_isMyProfile" DisplayUserRatings="true" ShowReleaseDate="false" MoviesAndRatings="_moviesAndRatings" AlternativeText="There is currently no media added to this profile"/>
         </div>  
     </div>
 }
@@ -44,6 +44,7 @@ else
     private Data.ProfileModule.Model.UserProfile? _userProfile;
     private List<Movie> _media = new List<Movie>();
     private IEnumerable<IMediaTableViewModel.MovieAndRating>? _moviesAndRatings;
+    private bool _isMyProfile = true;
 
     [Parameter]
     public string? Username { get; set; }
@@ -60,11 +61,13 @@ else
         {
             userId = _identityServiceInstance.UserId!;
             _userProfile = _userProfileServiceInstance.GetUserProfileById(userId);
+            _isMyProfile = true;
         }
         else
         {
             _userProfile = _userProfileServiceInstance.GetUserProfileByUsername(Username);
             userId = _userProfile==null?null:_userProfile.UserId;
+            _isMyProfile = false;
         }
 
         _moviesAndRatings = _mediaTableViewModel.GetMoviesOfUserProfileByUserIdAsync(userId);
