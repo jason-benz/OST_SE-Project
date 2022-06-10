@@ -178,6 +178,21 @@ a, .btn-link {
     box-shadow: inset 0 -2px 0 #000000;
 }
 
+.media-table #table-column-add{
+    text-align: center;
+    vertical-align: middle;
+}
+
+.media-table #table-column-add > button {
+    margin-top: 0;
+    margin-bottom: 20px;
+    position: unset;
+}
+
+.media-table #table-column-year {
+    width: 110px;
+}
+
 .center-heading {
     margin-top: 50px;
     margin-bottom: 20px;
