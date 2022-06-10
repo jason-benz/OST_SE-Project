@@ -1,5 +1,8 @@
 @namespace MediaHub.View
 @using MediaHub.Data.MediaModule.ViewModel
+@using MediaHub.Services
+@inject IRatingViewModel _ratingViewModel
+@inject IIdentityService _identityService
 
 @if (MoviesAndRatings != null && MoviesAndRatings.Count()!=0)
 {
@@ -16,8 +19,12 @@
                    }
                    @if (DisplayUserRatings)
                    {
-                   <th>My Rating</th>
+                       <th>My Rating</th>
                    }
+                @if (MyProfile)
+                {
+                    <th>Add/Remove</th>
+                }
                </tr>
            </thead>
            <tbody>
@@ -38,6 +45,10 @@
                            <Rating StarSize="10px" ReadOnly="true" CurrentValue="(byte) movieAndRating.UserRating"/>
                        </td>
                    }
+                    @if (MyProfile)
+                    {
+                        <td><button class="btn btn-primary oi @(LoadIsAddedToProfile(movieAndRating)?"oi-minus":"oi-plus")" @onclick="_ => DisplayAddedToProfileButton(movieAndRating)"></button></td>
+                    }
                </tr>
            }
            </tbody>
@@ -61,5 +72,26 @@ else
 
     [Parameter]
     public string AlternativeText { get; set; } = "No media found.";
+
+    [Parameter]
+    public bool MyProfile { get; set; } = true;
+
+    private string _myUserId;
+
+    private void DisplayAddedToProfileButton(IMediaTableViewModel.MovieAndRating movieAndRating)
+    {
+        _ratingViewModel.Load(_myUserId, movieAndRating.Movie);
+        _ratingViewModel.ToggleIsAddedToProfile();
+    }
+
+    private bool LoadIsAddedToProfile(IMediaTableViewModel.MovieAndRating movieAndRating){
+        _ratingViewModel.Load(_myUserId, movieAndRating.Movie);
+        return _ratingViewModel.IsAddedToProfile;
+    }
+
+    protected override void OnInitialized()
+    {
+        _myUserId = _identityService!.UserId!;
+    }
 
 }
