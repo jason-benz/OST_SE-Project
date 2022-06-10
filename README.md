@@ -1,5 +1,5 @@
 # MediaHub
-This repository contains the code for our engineering project.
+A social media platform with a focus on the media interests of users. This repository contains the code, the documentation and the presentation of the software engineering project (SE Project) at OST - Eastern Switzerland University of Applied Sciences.
 
 ## Contribution information
 - Contributors:
