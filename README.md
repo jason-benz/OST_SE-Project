@@ -1,5 +1,7 @@
 # MediaHub
-A social media platform with a focus on the media interests of users. This repository contains the code, the documentation and the presentation of the software engineering project (SE Project) at OST - Eastern Switzerland University of Applied Sciences.
+A social media platform with a focus on the media interests of users.
+
+This repository contains the [code](./MediaHub), the [documentation](./SEProj_MediaHub_Documentation.pdf) and the [finale presentation](./SEProj_MediaHub_Presentation.pdf) of the software engineering project (SE Project) at OST - Eastern Switzerland University of Applied Sciences.
 
 ## Contribution information
 - Contributors:
