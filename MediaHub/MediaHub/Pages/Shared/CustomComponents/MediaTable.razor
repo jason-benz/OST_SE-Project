@@ -37,7 +37,7 @@
                    <td>@movieAndRating.Movie.Rating</td>
                    @if (ShowReleaseDate)
                    {
-                       <td>@movieAndRating.Movie.ReleaseDate</td>
+                       <td id="table-column-year">@movieAndRating.Movie.ReleaseDate</td>
                    }
                    @if (DisplayUserRatings)
                    {
@@ -47,7 +47,7 @@
                    }
                     @if (MyProfile)
                     {
-                        <td><button class="btn btn-primary oi @(LoadIsAddedToProfile(movieAndRating)?"oi-minus":"oi-plus")" @onclick="_ => DisplayAddedToProfileButton(movieAndRating)"></button></td>
+                        <td id="table-column-add"><button class="btn btn-primary oi @(LoadIsAddedToProfile(movieAndRating)?"oi-minus":"oi-plus")" @onclick="_ => DisplayAddedToProfileButton(movieAndRating)"></button></td>
                     }
                </tr>
            }
