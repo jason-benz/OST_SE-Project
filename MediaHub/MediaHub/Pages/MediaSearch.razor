@@ -30,14 +30,17 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        var result = await SessionStorage.GetAsync<string>("SearchString");
-        if (result.Success)
+        @if (firstRender)
         {
-            if(result.Value != null)
+            var result = await SessionStorage.GetAsync<string>("SearchString");
+            if (result.Success)
             {
-                searchString = result.Value;
-                await SearchCall();
-                StateHasChanged();
+                if(result.Value != null)
+                {
+                    searchString = result.Value;
+                    await SearchCall();
+                    StateHasChanged();
+                }
             }
         }
     }
