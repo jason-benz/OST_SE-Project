@@ -14,6 +14,7 @@ This repository contains the [code](./MediaHub), the [documentation](./SEProj_Me
 - Module: SE Project (SEProj)
 - Semester: Spring 2022
 - Advisor: Thomas Kälin
+- Final grade: 5.6 / 6
 
 ## Management Summary
 ### The Problem
